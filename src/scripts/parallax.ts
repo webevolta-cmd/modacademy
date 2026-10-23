@@ -31,8 +31,9 @@ export function initParallax(): void {
 
   const tick = () => {
     const vh = window.innerHeight;
-    for (const it of visible) {
-      const r = it.box.getBoundingClientRect();
+    // Read every box first, then write, so the loop never forces a style recalculation per item.
+    const boxes = [...visible].map((it) => [it, it.box.getBoundingClientRect()] as const);
+    for (const [it, r] of boxes) {
       const progress = clamp((r.top + r.height / 2 - vh / 2) / (vh / 2 + r.height / 2), -1, 1);
       const amp = it.explicit > 0 ? it.explicit : ((it.scale - 1) / 2) * r.height * 0.85;
       it.el.style.setProperty('--py', `${(progress * amp).toFixed(1)}px`);

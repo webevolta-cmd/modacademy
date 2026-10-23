@@ -11,7 +11,7 @@ Higgsfield from a student’s 3Ds Max render.
 
 ## Requirements
 
-- Node.js **22.12 or newer** (`.nvmrc`), npm 10+.
+- Node.js **22.19 or newer** (`.nvmrc` pins 22.22.0, the version the site is built and tested with), npm 10+.
 
 ## Commands
 
@@ -20,6 +20,7 @@ npm ci            # install exactly what package-lock.json specifies
 npm run dev       # local development server (http://localhost:4321)
 npm run build     # production build into dist/
 npm run preview   # serve dist/ locally
+npm run check     # type-check .astro and .ts files (astro check)
 ```
 
 ## Deploying on Netlify
@@ -32,7 +33,7 @@ project → GitHub →** choose this repository. Netlify reads:
 | Production branch | the branch you choose (this work is on `claude/mod-academy-website-ba1v5x`; merge it into `main` or select it) |
 | Build command | `npm run build` |
 | Publish directory | `dist` |
-| Node version | `22.12.0` (set in `netlify.toml`) |
+| Node version | `22.22.0` (set in `netlify.toml`) |
 
 After the first deploy:
 
@@ -49,17 +50,22 @@ After the first deploy:
 
 | Variable | Default | Purpose |
 |---|---|---|
-| `SITE_URL` | Netlify `URL`, else `https://modacademy.netlify.app` | Absolute site URL for canonical/OG/sitemap |
+| `SITE_URL` | Netlify `URL`, else `http://localhost:4321` | Absolute site URL for canonical/OG/sitemap. A build without `SITE_URL`/`URL` is always `noindex` |
 | `SITE_INDEXABLE` | `true` on Netlify production, `false` elsewhere | Search indexing (`robots` meta, `robots.txt`, sitemap) |
 | `FORM_ENDPOINT` | empty | Send inquiries to another form service (e.g. Formspree) instead of Netlify Forms |
+
+For local builds the same variables can go in a `.env` file (copy `.env.example`); `site.config.mjs` reads it,
+and values set in the shell or on Netlify take precedence.
 
 ## How the inquiry form works
 
 - On Netlify the form posts to Netlify Forms (AJAX, with a no-JavaScript fallback to `/inquiry-sent/`).
-- With `FORM_ENDPOINT` set it posts there instead.
+  The Netlify attributes (`data-netlify`, honeypot) are only rendered in this mode.
+- With `FORM_ENDPOINT` set it posts there instead (also without JavaScript: the form's `action` is the endpoint).
 - On any other host with neither available (e.g. the review preview), the site does **not** pretend to
   send: after validation it explains that online submission is not active and offers a pre-filled email,
-  a phone call and Instagram Direct.
+  a phone call and Instagram Direct. Without JavaScript the submit button is replaced by the phone number and
+  email address.
 - A success message is shown only after the receiving service answers with a 2xx status. An inquiry is
   clearly labelled as not being an enrollment confirmation.
 
@@ -69,7 +75,7 @@ After the first deploy:
 src/
   data/          site.ts, courses.ts, media.ts, faq.ts, journey.ts — all content, easy to update
   components/    Hero, About, Courses, Finder, Journey, Work, Practice, Teaching, Faq, Contact, …
-  pages/         index, courses/[slug], inquiry-sent, 404, robots.txt
+  pages/         index, courses/ (index + [slug]), inquiry-sent, 404, robots.txt, build-info.json
   scripts/       hero scroll engine, reveals, parallax, filters, finder, lightbox, form, map
   styles/        global.css — design tokens, type, layout, motion
 public/
@@ -91,10 +97,16 @@ tests/           Playwright end-to-end tests
 
 ## Hero film
 
-`public/media/hero/hero-1440.mp4` (desktop, 8 MB) and `hero-900x1200.mp4` (portrait screens, 3.8 MB) are
-loaded after the page has rendered, into memory, and scrubbed by scroll position. The exact first frame of
-each encode is the poster, so the swap is invisible. Visitors with *reduced motion* or *data saver*
-get the poster and a static layout; all text and links are available without the animation.
+`public/media/hero/hero-desktop-v2.mp4` (1280×1280, 5.2 MB) and `hero-mobile-v2.mp4` (portrait screens,
+900×1200, 3.5 MB) are loaded after the page has rendered, into memory, and scrubbed by scroll position. Both
+are H.264 with short keyframe intervals and no B-frames, which keeps seeking fast. The exact first frame of
+each encode is the poster, so the swap is invisible; the video element joins the page only on the first
+scroll, so the poster stays the page's Largest Contentful Paint. Encoding commands: `media-source/README.md`.
+When re-encoding, give the files a new version suffix (the files are cached for a week).
+
+The hero pins and scrubs only when motion is allowed and the screen is at least 540 px tall. Visitors with
+*reduced motion*, short screens (landscape phones, strongly zoomed-in browsers), *data saver* or a slow
+connection get the poster and/or a static layout; all text and links are available without the animation.
 
 ## Tests
 

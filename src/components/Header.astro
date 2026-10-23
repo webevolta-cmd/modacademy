@@ -23,9 +23,9 @@ const { ctaHref = '/#inquiry' } = Astro.props;
     </nav>
 
     <div class="header__actions">
-      <a class="header__phone" href={site.phone.href} aria-label={`Զանգահարել ${site.phone.display}`}>
+      <a class="header__phone" href={site.phone.href}>
         <Icon name="phone" />
-        <span>{site.phone.local}</span>
+        <span class="visually-hidden">Զանգահարել </span><span>{site.phone.local}</span>
       </a>
       <a class="btn btn--red btn--sm header__cta" href={ctaHref}>Ուղարկել հայտ</a>
       <button
@@ -33,6 +33,7 @@ const { ctaHref = '/#inquiry' } = Astro.props;
         type="button"
         aria-haspopup="dialog"
         aria-controls="site-menu"
+        aria-expanded="false"
         data-menu-open
       >
         <Icon name="menu" />
@@ -42,7 +43,7 @@ const { ctaHref = '/#inquiry' } = Astro.props;
   </div>
 </header>
 
-<dialog class="menu" id="site-menu" aria-label="Ընտրացանկ" data-menu>
+<dialog class="menu on-dark" id="site-menu" aria-label="Ընտրացանկ" data-menu>
   <div class="menu__inner">
     <div class="menu__top">
       <Logo class="menu__logo" />
@@ -100,6 +101,7 @@ const { ctaHref = '/#inquiry' } = Astro.props;
   .header.is-dark .header__nav a[aria-current='true'] { color: var(--on-night); }
   .header.is-dark .header__menu-btn { border-color: var(--line-night); color: var(--on-night); }
   .header.is-dark .header__menu-btn:hover { background: var(--night-2); }
+  .header.is-dark :global(:focus-visible) { outline-color: var(--on-night); }
 
   .header__bar {
     height: 100%;
@@ -241,7 +243,7 @@ const { ctaHref = '/#inquiry' } = Astro.props;
     border-bottom: 1px solid var(--line-night);
     font-family: var(--font-display);
     font-stretch: 87.5%;
-    font-size: clamp(1.9rem, 1.2rem + 3vw, 2.8rem);
+    font-size: clamp(1.6rem, 0.9rem + 3.4vw, 2.8rem);
     font-weight: 380;
     line-height: 1.15;
     text-decoration: none;
@@ -251,6 +253,15 @@ const { ctaHref = '/#inquiry' } = Astro.props;
 
   .menu__foot { display: grid; gap: 14px; }
   .menu__foot .btn { width: 100%; }
+
+  @media (min-width: 600px) {
+    .menu__foot .btn { width: auto; justify-self: start; }
+  }
+
+  @media (max-height: 680px) {
+    .menu__inner { gap: 18px; }
+    .menu__list a { padding-block: 6px; }
+  }
 
   .menu__contact {
     display: inline-flex;

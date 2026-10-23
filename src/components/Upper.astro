@@ -1,0 +1,12 @@
+---
+// Text shown in an uppercase label. CSS uppercasing turns «և» into the classical «ԵՒ», so text
+// containing it is uppercased here instead; assistive technology still gets the normal spelling.
+import { hyUpper } from '../lib/text';
+
+interface Props {
+  text: string;
+}
+const { text } = Astro.props;
+const needsCare = text.includes('և');
+---
+{needsCare ? <><span aria-hidden="true">{hyUpper(text)}</span><span class="visually-hidden">{text}</span></> : text}

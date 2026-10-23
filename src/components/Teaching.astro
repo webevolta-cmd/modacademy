@@ -5,24 +5,25 @@ import SplitText from './SplitText.astro';
 import Icon from './Icon.astro';
 import { site } from '../data/site';
 import { extraImages } from '../data/media';
+import { keep } from '../lib/text';
 ---
 <section class="teach section" id="teaching" aria-labelledby="teach-title">
   <div class="wrap teach__grid">
     <div class="teach__text">
-      <SectionIndex n="07" label="Դասախոսներ" />
+      <SectionIndex n="07" label="Դասընթացավարներ" />
       <SplitText id="teach-title" class="h1" text="Ուղղորդում՝ փորձառու մասնագետներից" accent="մասնագետներից" />
       <div class="teach__body" data-reveal>
         <p class="lead">
-          Ըստ ակադեմիայի՝ դասընթացները վարում են փորձառու դասախոսներ, իսկ գործնական դասերի ժամանակ ուսանողներին իրենց
-          փորձով կիսվում են նաև գործընկեր սրահների մասնագետները։
+          Ըստ ակադեմիայի՝ դասընթացները վարում են փորձառու դասախոսներ, իսկ գործնական դասերի ժամանակ իրենց փորձով
+          ուսանողների հետ կիսվում են նաև դիզայնի սրահների մասնագետները։
         </p>
         <p class="muted">
-          Յուրաքանչյուր խմբի դասախոսի և նրա մասնագիտական փորձի մասին կարող եք հարցնել հայտ ուղարկելիս կամ
+          Յուրաքանչյուր խմբի դասընթացավարի և նրա մասնագիտական փորձի մասին կարող եք հարցնել հայտ ուղարկելիս կամ
           զանգահարելով։
         </p>
       </div>
       <a class="teach__studio" href={site.studio.instagram} target="_blank" rel="noopener" data-reveal>
-        <span class="label label--red">Ակադեմիայի ստուդիան</span>
+        <span class="label label--red">Ակադեմիայի հետ կապված ստուդիա</span>
         <span class="teach__studio-name">{site.studio.name}</span>
         <span class="teach__studio-meta">{site.studio.handle}<Icon name="arrow-up-right" /></span>
       </a>
@@ -33,7 +34,7 @@ import { extraImages } from '../data/media';
         <div class="frame teach__frame">
           <Picture
             src={extraImages.salesTrainer}
-            alt="Դասախոսը բացատրում է նյութը «Վաճառքի կառավարում» դասընթացի ժամանակ"
+            alt="Դասը վարողը բացատրում է նյութը «Վաճառքի կառավարում» դասընթացի ժամանակ"
             widths={[360, 540, 720]}
             sizes="(min-width: 1000px) 26vw, 60vw"
             formats={['avif', 'webp']}
@@ -43,7 +44,7 @@ import { extraImages } from '../data/media';
             style="--ps:1.12"
           />
         </div>
-        <figcaption class="credit">«Վաճառքի կառավարում» դասընթացի դաս, 2026 թ. հոկտեմբեր</figcaption>
+        <figcaption class="credit">«Վաճառքի կառավարում» դասընթացի դաս · ակադեմիայի հրապարակումից, 09.10.2026</figcaption>
       </figure>
       <figure class="teach__fig teach__fig--b" data-reveal="fade" style="--i:1">
         <div class="frame teach__frame">
@@ -59,7 +60,7 @@ import { extraImages } from '../data/media';
             style="--ps:1.12"
           />
         </div>
-        <figcaption class="credit">Գործնական դաս Classis Decor Armenia-ում, 08.10.2026</figcaption>
+        <figcaption class="credit">{keep('Գործնական դաս Classis Decor Armenia-ում · ակադեմիայի հրապարակումից, 08.10.2026')}</figcaption>
       </figure>
     </div>
   </div>
@@ -88,7 +89,7 @@ import { extraImages } from '../data/media';
 
   .teach__media { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 16px; align-items: start; }
   .teach__fig--a { grid-column: 1 / span 7; }
-  .teach__fig--b { grid-column: 7 / span 6; margin-top: 30%; }
+  .teach__fig--b { grid-column: 8 / span 5; grid-row: 1; margin-top: 30%; }
   .teach__frame { aspect-ratio: 4 / 5; }
   .teach__frame :global(img) { width: 100%; height: 100%; object-fit: cover; }
 

@@ -5,6 +5,7 @@ import SplitText from './SplitText.astro';
 import { site } from '../data/site';
 import { courses } from '../data/courses';
 import { practice, work, student } from '../data/media';
+import { keep } from '../lib/text';
 
 const pillars = [
   {
@@ -13,11 +14,11 @@ const pillars = [
   },
   {
     t: 'Աշխատանք՝ պորտֆոլիոյի համար',
-    d: 'Ուսանողական աշխատանքները ակադեմիան ներկայացնում է որպես պորտֆոլիո՝ հեղինակի անունով։',
+    d: 'Ուսանողական աշխատանքներն ակադեմիան ներկայացնում է որպես պորտֆոլիո՝ հեղինակի անունով։',
   },
   {
-    t: 'Գործող ստուդիա',
-    d: `Ակադեմիան ունի նաև ինտերիերի և ճարտարապետության ստուդիա՝ ${site.studio.name}։`,
+    t: 'Ստուդիա',
+    d: `Ակադեմիայի Instagram էջում որպես «մեր ստուդիա» նշված է ${site.studio.name} ինտերիերի և ճարտարապետության ստուդիան։`,
   },
   {
     t: 'Վկայական',
@@ -27,8 +28,9 @@ const pillars = [
 
 const figures = [
   ...site.stats.map((s) => ({ ...s, note: true })),
-  { value: courses.length, suffix: '', label: 'դասընթացային ուղղություն', note: false },
+  { value: courses.length, suffix: '', label: 'դասընթաց', note: false },
 ];
+const format = (n: number) => n.toLocaleString('en-US').replace(/,/g, '\u202f');
 ---
 <section class="about section" id="about" aria-labelledby="about-title">
   <div class="wrap">
@@ -52,18 +54,16 @@ const figures = [
       </div>
     </div>
 
-    <dl class="about__figures" data-reveal-group>
+    <ul class="about__figures" role="list">
       {figures.map((f, i) => (
-        <div class="about__figure" data-reveal style={`--i:${i}`}>
-          <dt class="visually-hidden">{f.label}</dt>
-          <dd>
-            <span class="num about__n" data-count={f.value} data-suffix={f.suffix}>{f.value}{f.suffix}</span>
-            <span class="about__l">{f.label}{f.note && <sup aria-hidden="true">*</sup>}</span>
-          </dd>
-        </div>
+        <li class="about__figure" data-reveal style={`--i:${i}`}>
+          <span class="visually-hidden">{format(f.value)}{f.suffix} {f.label}{f.note && ` (${site.statsSource.charAt(0).toLowerCase()}${site.statsSource.slice(1)})`}</span>
+          <span class="num about__n" aria-hidden="true" data-count={f.value} data-suffix={f.suffix}>{format(f.value)}{f.suffix}</span>
+          <span class="about__l" aria-hidden="true">{f.label}{f.note && <sup>*</sup>}</span>
+        </li>
       ))}
-    </dl>
-    <p class="about__source muted">* {site.statsSource}</p>
+    </ul>
+    <p class="about__source muted" aria-hidden="true">* {site.statsSource}</p>
 
     <div class="about__visual">
       <figure class="about__img about__img--a" data-reveal="fade">
@@ -80,7 +80,7 @@ const figures = [
             style="--ps:1.14"
           />
         </div>
-        <figcaption class="credit">Գործնական դաս {practice[2].partner}-ում, 2026 թ. հոկտեմբեր</figcaption>
+        <figcaption class="credit">{keep(`Գործնական դաս ${practice[2].partner}-ում · ակադեմիայի հրապարակումից, 2026 թ. հոկտեմբեր`)}</figcaption>
       </figure>
       <figure class="about__img about__img--b" data-reveal="fade">
         <div class="frame about__frame-b">
@@ -131,7 +131,7 @@ const figures = [
     border-top: 1px solid var(--line-strong);
   }
 
-  .about__figure dd { margin: 0; display: grid; gap: 6px; padding-top: 18px; }
+  .about__figure { display: grid; gap: 6px; align-content: start; padding-top: 18px; }
 
   .about__n {
     font-size: clamp(2.4rem, 1.4rem + 4vw, 5.6rem);

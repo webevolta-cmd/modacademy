@@ -8,8 +8,8 @@ import { motionAllowed } from './motion';
 const EMAIL = 'mod.modacademy@gmail.com';
 
 const messages = {
-  name: 'Խնդրում ենք նշել ձեր անունը։',
-  contact: 'Նշեք հեռախոսահամար կամ էլ. փոստ, որպեսզի ակադեմիան կարողանա կապվել ձեզ հետ։',
+  name: 'Խնդրում ենք նշել Ձեր անունը։',
+  contact: 'Նշեք հեռախոսահամար կամ էլ. փոստ, որպեսզի ակադեմիան կարողանա կապվել Ձեզ հետ։',
   phone: 'Հեռախոսահամարը ճիշտ չէ։ Օրինակ՝ 093 950 960 կամ +374 93 950 960։',
   email: 'Էլ. փոստի հասցեն ճիշտ չէ։ Օրինակ՝ name@example.com',
   summary: 'Ստուգեք նշված դաշտերը։',
@@ -98,10 +98,10 @@ export function initInquiry(wrapper: HTMLElement): void {
     const data = new FormData(form);
     const course = String(data.get('course') ?? '');
     const lines = [
-      `Անուն: ${data.get('name') ?? ''}`,
-      `Հեռախոս: ${data.get('phone') ?? ''}`,
-      `Էլ. փոստ: ${data.get('email') ?? ''}`,
-      `Դասընթաց: ${course}`,
+      `Անուն՝ ${data.get('name') ?? ''}`,
+      `Հեռախոս՝ ${data.get('phone') ?? ''}`,
+      `Էլ. փոստ՝ ${data.get('email') ?? ''}`,
+      `Դասընթաց՝ ${course}`,
       '',
       String(data.get('message') ?? ''),
     ];
@@ -109,7 +109,7 @@ export function initInquiry(wrapper: HTMLElement): void {
   };
 
   const showFallback = (offline: boolean) => {
-    fallbackTitle.textContent = offline ? 'Ուղարկեք հայտը ուղղակիորեն' : 'Հայտը չհաջողվեց ուղարկել';
+    fallbackTitle.textContent = offline ? 'Ուղարկեք հայտն ուղղակիորեն' : 'Հայտը չհաջողվեց ուղարկել';
     fallbackText.textContent = offline
       ? 'Կայքի այս տարբերակում առցանց հայտերի ընդունումը դեռ միացված չէ։ Ձեր լրացրած տվյալները պահպանված են․ ուղարկեք դրանք էլ. փոստով կամ կապվեք ակադեմիայի հետ։'
       : 'Կապի խնդիր առաջացավ, և հայտը չի ուղարկվել։ Ձեր տվյալները պահպանված են․ փորձեք կրկին կամ կապվեք ակադեմիայի հետ ստորև նշված եղանակներով։';

@@ -7,6 +7,8 @@ import { resolve, dirname } from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
+// CSS uppercase would render «և» as the classical «ԵՒ»; modern spelling is «ԵՎ» (see src/lib/text.ts).
+const hyUpper = (s) => s.replace(/և/g, 'եվ').toLocaleUpperCase('hy');
 const p = (...x) => resolve(root, ...x);
 const { mark, red, word } = JSON.parse(readFileSync(p('scripts/logo-paths.json'), 'utf8'));
 
@@ -25,7 +27,7 @@ const fontCss = `
 @font-face{font-family:Sans;src:url(${font('noto-sans-armenian', 'noto-sans-armenian-armenian-wdth-normal.woff2')}) format('woff2');font-weight:100 900;font-stretch:62.5% 100%;unicode-range:U+0530-058F,U+FB13-FB17}
 @font-face{font-family:Sans;src:url(${font('noto-sans-armenian', 'noto-sans-armenian-latin-wdth-normal.woff2')}) format('woff2');font-weight:100 900;font-stretch:62.5% 100%;unicode-range:U+0000-00FF,U+2000-206F}`;
 
-const poster = pathToFileURL(p('public/media/hero/hero-1440-poster.webp')).href;
+const poster = pathToFileURL(p('public/media/hero/hero-desktop-v2-poster.webp')).href;
 const pages = {
   favicon32: { w: 32, h: 32, html: `<body style="margin:0">${arcOnly.replace('<svg ', '<svg width="32" height="32" ')}</body>`, out: 'public/favicon-32.png' },
   touch: {
@@ -58,7 +60,7 @@ const pages = {
       .meta{font-size:16px;letter-spacing:.14em;text-transform:uppercase;font-weight:600;color:#5d5247}
       .img{position:relative;background:url(${poster}) 62% 50%/cover}
       .img:after{content:'';position:absolute;inset:18px;border:1px solid rgba(255,255,255,.55)}
-      </style><body><div class="t"><div style="width:190px">${logoSvg('#15120f')}</div><div><h1>Ստեղծի՛ր ապագայիդ <em>պրոֆեսիոնալ</em> ուղին</h1></div><div><p>Ինտերիեր դիզայն · 3Ds Max · Corona Renderer · Գրաֆիկ դիզայն · Վաճառքի կառավարում</p><p class="meta" style="margin-top:16px">Երևան · Տիգրան Մեծ 4</p></div></div><div class="img"></div></body>`,
+      </style><body><div class="t"><div style="width:190px">${logoSvg('#15120f')}</div><div><h1>Ստեղծի՛ր ապագայիդ <em>պրոֆեսիոնալ</em> ուղին</h1></div><div><p>Ինտերիեր դիզայն · 3Ds Max · Corona Renderer · Գրաֆիկ դիզայն · Վաճառքի կառավարում</p><p class="meta" style="margin-top:16px">${hyUpper('Երևան · Տիգրան Մեծ 4')}</p></div></div><div class="img"></div></body>`,
     out: 'public/media/og/mod-academy-og.jpg',
   },
 };

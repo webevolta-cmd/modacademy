@@ -31,17 +31,17 @@ const finderData = courses.map((c) => ({
 <section class="finder section section--tight" id="finder" aria-labelledby="finder-title" data-finder>
   <div class="wrap finder__grid">
     <div class="finder__intro">
-      <SectionIndex n="03" label="Գտիր քո դասընթացը" />
-      <SplitText id="finder-title" class="h1" text="Ո՞րն է քո առաջին քայլը" />
-      <p class="lead" data-reveal>Նշիր՝ ինչն է քեզ հետաքրքրում և որտեղից ես սկսում։ Կառաջարկենք համապատասխան դասընթացները և կբացատրենք՝ ինչու։</p>
+      <SectionIndex n="03" label="Գտեք Ձեր դասընթացը" />
+      <SplitText id="finder-title" class="h1" text="Ո՞րն է Ձեր առաջին քայլը" />
+      <p class="lead" data-reveal>Նշեք՝ ինչն է Ձեզ հետաքրքրում և որտեղից եք սկսում․ ստորև կհայտնվեն համապատասխան դասընթացները՝ բացատրությամբ։</p>
       <p class="finder__disclaimer muted" data-reveal>
-        Սա ուղղորդող առաջարկ է և ոչ թե մասնագիտական գնահատում։ Վերջնական ընտրության համար խորհրդակցեք ակադեմիայի հետ։
+        Սա ուղղորդող առաջարկ է, այլ ոչ թե մասնագիտական գնահատում։ Վերջնական ընտրության համար խորհրդակցեք ակադեմիայի հետ։
       </p>
     </div>
 
     <form class="finder__form" data-finder-form data-reveal>
       <fieldset class="finder__set">
-        <legend class="label">1 · Ի՞նչն է քեզ հետաքրքրում <span class="muted">(կարող ես ընտրել մի քանիսը)</span></legend>
+        <legend><span class="label">1 · Ի՞նչն է Ձեզ հետաքրքրում</span> <span class="finder__hint muted">(կարող եք ընտրել մի քանիսը)</span></legend>
         <div class="finder__options">
           {interests.map((o) => (
             <label class="opt">
@@ -53,7 +53,7 @@ const finderData = courses.map((c) => ({
         </div>
       </fieldset>
       <fieldset class="finder__set">
-        <legend class="label">2 · Քո փորձը</legend>
+        <legend><span class="label">2 · Ձեր փորձը</span></legend>
         <div class="finder__options finder__options--row">
           {levels.map((o, i) => (
             <label class="opt opt--radio">
@@ -65,12 +65,13 @@ const finderData = courses.map((c) => ({
         </div>
       </fieldset>
 
-      <div class="finder__results" aria-live="polite" data-finder-results>
-        <p class="finder__empty muted" data-finder-empty>Ընտրիր առնվազն մեկ հետաքրքրություն՝ առաջարկները տեսնելու համար։</p>
+      <div class="finder__results" data-finder-results>
+        <p class="visually-hidden" aria-live="polite" data-finder-status></p>
+        <p class="finder__empty muted" data-finder-empty>Ընտրեք առնվազն մեկ հետաքրքրություն՝ առաջարկները տեսնելու համար։</p>
         <ol class="finder__list" role="list" data-finder-list></ol>
       </div>
       <noscript>
-        <p class="muted">Առաջարկների համար անհրաժեշտ է JavaScript։ Բոլոր դասընթացները տես <a href="#courses">վերևում</a>։</p>
+        <p class="muted">Առաջարկների համար անհրաժեշտ է JavaScript։ Բոլոր դասընթացները տեսեք <a href="#courses">վերևում</a>։</p>
       </noscript>
     </form>
   </div>
@@ -94,8 +95,8 @@ const finderData = courses.map((c) => ({
   }
 
   .finder__set { border: 0; margin: 0; padding: 0; display: grid; gap: 14px; min-width: 0; }
-  .finder__set legend { padding: 0; margin-bottom: 14px; }
-  .finder__set legend .muted { text-transform: none; letter-spacing: 0; font-weight: 400; }
+  .finder__set legend { display: block; padding: 0; margin-bottom: 14px; }
+  .finder__hint { display: block; margin-top: 4px; font-size: 0.85rem; }
 
   .finder__options { display: grid; gap: 8px; }
   .finder__options--row { grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); }
@@ -113,7 +114,8 @@ const finderData = courses.map((c) => ({
     line-height: 1.35;
   }
 
-  .opt input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+  /* The input covers the whole option so focusing it scrolls the full row into view. */
+  .opt input { position: absolute; inset: 0; width: 100%; height: 100%; margin: 0; opacity: 0; cursor: pointer; }
 
   .opt__box {
     flex: none;
@@ -121,7 +123,7 @@ const finderData = courses.map((c) => ({
     place-items: center;
     width: 22px;
     height: 22px;
-    border: 1px solid var(--line-strong);
+    border: 1px solid var(--line-control);
     background: var(--paper);
     transition: background-color 0.3s ease, border-color 0.3s ease;
   }
@@ -155,6 +157,11 @@ const finderData = courses.map((c) => ({
   .finder__list :global(.match__badge) { font-size: 0.72rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--red); }
   .finder__list :global(.match__meta) { font-size: 0.85rem; color: var(--muted); }
   .finder__list :global(.match__links) { display: flex; flex-wrap: wrap; gap: 10px 20px; margin-top: 4px; }
+
+  @media (forced-colors: active) {
+    .opt--radio input:checked + .opt__box { border: 7px solid CanvasText; box-shadow: none; }
+    .opt input:checked + .opt__box { border-color: Highlight; }
+  }
 
   @keyframes match-in {
     from { opacity: 0; transform: translateY(10px); }

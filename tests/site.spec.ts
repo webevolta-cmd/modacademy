@@ -2,6 +2,7 @@ import { test, expect, type Page } from '@playwright/test';
 
 const pages = [
   '/',
+  '/courses/',
   '/courses/interior-design/',
   '/courses/3ds-max/',
   '/courses/corona-renderer/',
@@ -54,9 +55,11 @@ test.describe('hero', () => {
   test('scroll scrubs the film and reveals chapters', async ({ page }) => {
     const errors = trackErrors(page);
     await page.goto('/');
-    await expect(page.locator('html')).toHaveClass(/motion/);
+    await expect(page.locator('html')).toHaveClass(/hero-pin/);
     await expect(page.locator('#hero-title')).toBeVisible();
-    await expect(page.getByRole('link', { name: /Բացահայտել դասընթացները/ })).toBeVisible();
+    await expect(page.getByRole('link', { name: /Դիտել դասընթացները/ })).toBeVisible();
+    // The film stays out of rendering (and out of LCP) until the visitor scrolls.
+    await expect(page.locator('[data-hero-video]')).toBeHidden();
 
     const range = await page.evaluate(() => {
       const h = document.querySelector('[data-hero]') as HTMLElement;
@@ -78,6 +81,12 @@ test.describe('hero', () => {
     expect(state.time / state.duration).toBeLessThan(0.65);
     expect(state.clip).toMatch(/^inset\(0px( 0px){0,3}\)$/);
     await expect(page.locator('[data-chapter].is-on').first()).toBeVisible();
+    // Faded chapters stay in the accessibility tree; only invisible links leave the tab order.
+    const hiddenHeadings = await page.locator('[data-chapter] h2').evaluateAll((els) =>
+      els.filter((e) => getComputedStyle(e).visibility === 'hidden').length,
+    );
+    expect(hiddenHeadings).toBe(0);
+    expect(await page.locator('[data-chapter]:not(.is-on) [data-chapter-ctas]').evaluateAll((els) => els.every((e) => (e as HTMLElement).inert))).toBe(true);
 
     // Reverse direction returns to the start state.
     await page.evaluate(() => window.scrollTo(0, 0));
@@ -158,6 +167,16 @@ test('FAQ items open and close', async ({ page }) => {
 });
 
 test.describe('inquiry form', () => {
+  test('shows no error state before the visitor submits', async ({ page }) => {
+    await page.goto('/#inquiry');
+    await expect(page.locator('.field__error:visible')).toHaveCount(0);
+    const description = await page.locator('#inq-name').evaluate((el) => {
+      const ids = (el.getAttribute('aria-describedby') ?? '').split(' ');
+      return ids.map((id) => document.getElementById(id)).filter((n) => n && !n.hidden).map((n) => n!.textContent).join(' ');
+    });
+    expect(description.trim()).toBe('');
+  });
+
   test('validates required contact details with visible messages', async ({ page }) => {
     await page.goto('/#inquiry');
     await page.locator('[data-inq-submit]').click();
@@ -200,6 +219,75 @@ test('mobile menu opens as a dialog and closes with Escape', async ({ page, isMo
   await expect(page.locator('[data-menu-open]')).toBeFocused();
 });
 
+test('choosing a menu link moves focus to that section', async ({ page, isMobile }) => {
+  test.skip(!isMobile, 'menu button is only shown on small screens');
+  await page.goto('/');
+  await page.locator('[data-menu-open]').click();
+  await page.locator('[data-menu] a[href="/#faq"]').click();
+  await expect(page.locator('[data-menu]')).toBeHidden();
+  await expect(page.locator('#faq')).toBeFocused();
+});
+
+test.describe('typography', () => {
+  test('uppercase labels use modern spelling and the headline never splits a word', async ({ page }) => {
+    for (const path of ['/', '/courses/interior-design/']) {
+      await page.goto(path);
+      // innerText applies text-transform, so this is the text as rendered.
+      const text = await page.evaluate(() => document.body.innerText);
+      expect(text).not.toContain('ԵՒ');
+    }
+    await page.goto('/');
+    const split = await page.evaluate(() => {
+      const em = document.querySelector('.hero__title em') as HTMLElement;
+      return em.getClientRects().length;
+    });
+    expect(split).toBe(1);
+  });
+});
+
+test('the course index lists every course', async ({ page }) => {
+  await page.goto('/courses/');
+  await expect(page.locator('.ci__card')).toHaveCount(5);
+  await page.locator('.ci__card', { hasText: 'Corona Renderer Level UP' }).click();
+  await expect(page).toHaveURL(/\/courses\/corona-renderer\/$/);
+  await expect(page.locator('.cp__crumbs a[href="/courses/"]')).toBeVisible();
+});
+
+test('figures keep their real values for assistive technology', async ({ page }) => {
+  await page.goto('/');
+  const figures = await page.locator('.about__figure .visually-hidden').allTextContents();
+  expect(figures.join(' ')).toContain('7+');
+  expect(figures.join(' ')).toMatch(/1\D?000\+/);
+});
+
+test.describe('short screens', () => {
+  test.use({ viewport: { width: 844, height: 390 }, isMobile: true, hasTouch: true });
+
+  test('use the static hero so the heading and main button are reachable', async ({ page }) => {
+    const media: string[] = [];
+    page.on('request', (r) => {
+      if (r.url().endsWith('.mp4')) media.push(r.url());
+    });
+    await page.goto('/');
+    await expect(page.locator('html')).toHaveClass(/motion/);
+    await expect(page.locator('html')).not.toHaveClass(/hero-pin/);
+    const cta = page.getByRole('link', { name: /Դիտել դասընթացները/ });
+    await cta.scrollIntoViewIfNeeded();
+    await expect(cta).toBeInViewport({ ratio: 1 });
+    await page.waitForTimeout(600);
+    expect(media).toEqual([]);
+  });
+
+  test('switch layouts when the screen height changes', async ({ page }) => {
+    await page.setViewportSize({ width: 844, height: 900 });
+    await page.goto('/');
+    await expect(page.locator('html')).toHaveClass(/hero-pin/);
+    await page.setViewportSize({ width: 844, height: 390 });
+    await expect(page.locator('html')).not.toHaveClass(/hero-pin/);
+    expect(await page.locator('[data-hero-window]').evaluate((el) => (el as HTMLElement).style.clipPath)).toBe('');
+  });
+});
+
 test.describe('reduced motion', () => {
   test.use({ reducedMotion: 'reduce' });
 
@@ -209,7 +297,7 @@ test.describe('reduced motion', () => {
       if (r.url().endsWith('.mp4')) media.push(r.url());
     });
     await page.goto('/');
-    await expect(page.locator('html')).not.toHaveClass(/motion/);
+    await expect(page.locator('html')).not.toHaveClass(/motion|hero-pin/);
     await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight / 3));
     await page.waitForTimeout(800);
     expect(media).toEqual([]);

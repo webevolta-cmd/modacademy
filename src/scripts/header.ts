@@ -75,14 +75,31 @@ export function initMenu(): void {
     openBtn.setAttribute('aria-expanded', 'true');
   });
 
+  // When a menu link is chosen, focus follows the visitor to that section instead of
+  // returning to the menu button at the top of the page.
+  let destination: HTMLElement | null = null;
+
   dialog.addEventListener('close', () => {
     root.style.overflow = '';
     openBtn.setAttribute('aria-expanded', 'false');
-    openBtn.focus({ preventScroll: true });
+    if (destination) {
+      const target = destination;
+      destination = null;
+      if (!target.hasAttribute('tabindex')) target.setAttribute('tabindex', '-1');
+      target.focus({ preventScroll: true });
+    } else {
+      openBtn.focus({ preventScroll: true });
+    }
   });
 
   dialog.querySelector('[data-menu-close]')?.addEventListener('click', () => dialog.close());
-  dialog.querySelectorAll('[data-menu-link]').forEach((a) => a.addEventListener('click', () => dialog.close()));
+  dialog.querySelectorAll<HTMLAnchorElement>('[data-menu-link]').forEach((a) =>
+    a.addEventListener('click', () => {
+      const samePage = a.pathname === location.pathname && a.hash.length > 1;
+      destination = samePage ? document.getElementById(decodeURIComponent(a.hash.slice(1))) : null;
+      dialog.close();
+    }),
+  );
   dialog.addEventListener('click', (e) => {
     if (e.target === dialog) dialog.close();
   });

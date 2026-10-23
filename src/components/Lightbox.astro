@@ -1,7 +1,7 @@
 ---
 import Icon from './Icon.astro';
 ---
-<dialog class="lb" aria-label="Պատկերների դիտում" data-lightbox>
+<dialog class="lb on-dark" aria-label="Պատկերների դիտում" data-lightbox>
   <div class="lb__stage" data-lb-stage>
     <figure class="lb__figure">
       <div class="lb__media">
@@ -116,6 +116,17 @@ import Icon from './Icon.astro';
   .lb__btn :global(svg) { width: 20px; height: 20px; }
   .lb__btn:hover { background: var(--on-night); color: var(--night); }
   .lb__btn[disabled] { opacity: 0.35; pointer-events: none; }
+
+  /* Landscape phones: image beside its caption and controls, using the full height. */
+  @media (orientation: landscape) and (max-height: 500px) {
+    .lb[open] { grid-template-rows: none; grid-template-columns: minmax(0, 1fr) auto; }
+    .lb__stage { padding: 16px 8px 16px max(16px, env(safe-area-inset-left)); }
+    .lb__figure { grid-template-columns: auto minmax(140px, 15rem); align-items: center; justify-items: start; gap: 18px; }
+    .lb__img { max-height: calc(100svh - 32px); }
+    .lb__cap { text-align: left; }
+    .lb__bar { flex-direction: column; justify-content: center; padding: 16px max(16px, env(safe-area-inset-right)) 16px 8px; }
+    .lb__nav { flex-direction: column; }
+  }
 
   @keyframes lb-in { from { opacity: 0; } }
   @keyframes lb-spin { to { transform: rotate(360deg); } }

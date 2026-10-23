@@ -15,10 +15,11 @@ const each = (selector: string, fn: (el: HTMLElement) => void) =>
 
 initHeader();
 initMenu();
+// Parallax reads layout before the hero writes styles in the same frame.
+initParallax();
 each('[data-hero]', initHero);
 initReveal();
 initCounters();
-initParallax();
 each('[data-courses]', initCourseFilter);
 each('[data-finder]', initFinder);
 each('[data-journey]', initJourney);

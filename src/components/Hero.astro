@@ -1,5 +1,6 @@
 ---
 import Icon from './Icon.astro';
+import Upper from './Upper.astro';
 import { site } from '../data/site';
 import { student } from '../data/media';
 ---
@@ -10,30 +11,32 @@ import { student } from '../data/media';
         <picture class="hero__poster" data-hero-poster>
           <source
             media="(max-aspect-ratio: 4/5)"
-            srcset="/media/hero/hero-900x1200-poster.webp"
+            srcset="/media/hero/hero-mobile-v2-poster.webp"
             type="image/webp"
             width="900"
             height="1200"
           />
           <img
-            src="/media/hero/hero-1440-poster.webp"
+            src="/media/hero/hero-desktop-v2-poster.webp"
             alt=""
-            width="1440"
-            height="1440"
+            width="1280"
+            height="1280"
             fetchpriority="high"
             decoding="async"
           />
         </picture>
+        <!-- Stays out of rendering until the first scroll: the poster is the exact first frame. -->
         <video
           data-hero-video
+          hidden
           muted
           playsinline
           preload="none"
           disablepictureinpicture
-          disableremoteplayback
+          disableRemotePlayback
           tabindex="-1"
-          data-src-desktop="/media/hero/hero-1440.mp4"
-          data-src-mobile="/media/hero/hero-900x1200.mp4"
+          data-src-desktop="/media/hero/hero-desktop-v2.mp4"
+          data-src-mobile="/media/hero/hero-mobile-v2.mp4"
         ></video>
         <div class="hero__shade" data-hero-shade></div>
       </div>
@@ -41,7 +44,7 @@ import { student } from '../data/media';
     <div class="hero__slot" data-hero-slot aria-hidden="true"><span class="hero__ticks"></span></div>
 
     <div class="hero__intro" data-hero-intro>
-      <p class="label hero__eyebrow"><span class="hero__dot" aria-hidden="true"></span>MOD Academy · Երևան</p>
+      <p class="label hero__eyebrow"><span class="hero__dot" aria-hidden="true"></span><Upper text="MOD Academy · Երևան" /></p>
       <h1 id="hero-title" class="display hero__title">
         <span class="visually-hidden">MOD Academy — </span>Ստեղծի՛ր ապագայիդ <em class="accent">պրոֆեսիոնալ</em> ուղին
       </h1>
@@ -49,48 +52,48 @@ import { student } from '../data/media';
         Ինտերիեր դիզայն, 3Ds Max և Corona Renderer, գրաֆիկ դիզայն ու վաճառքի կառավարում՝ գործնական դասերով և
         ուսանողական պորտֆոլիոյով։
       </p>
-      <div class="hero__ctas">
+      <div class="hero__ctas" data-hero-ctas>
         <a class="btn btn--red" href="#courses">
-          Բացահայտել դասընթացները<Icon name="arrow" class="btn__icon" />
+          Դիտել դասընթացները<Icon name="arrow" class="btn__icon" />
         </a>
-        <a class="btn btn--ghost" href="#work">Դիտել ուսանողների աշխատանքները</a>
+        <a class="btn btn--ghost" href="#work">Ուսանողական աշխատանքներ</a>
       </div>
-      <dl class="hero__stats">
-        {site.stats.map((s) => (
-          <div>
-            <dt class="visually-hidden">{s.label}</dt>
-            <dd>
+      <div class="hero__facts">
+        <ul class="hero__stats" role="list">
+          {site.stats.map((s) => (
+            <li>
               <span class="num hero__stat-n">{s.value}{s.suffix}</span>
               <span class="hero__stat-l">{s.label}</span>
-            </dd>
-          </div>
-        ))}
-      </dl>
+            </li>
+          ))}
+        </ul>
+        <p class="hero__source">{site.statsSource}</p>
+      </div>
     </div>
 
     <p class="hero__credit" data-hero-credit>
-      <span class="label">Ուսանողական աշխատանք · «{student.course}»</span>
-      <span>{student.name}-ի ռենդերի հիման վրա ստեղծված AI կինեմատոգրաֆիկ շարժում</span>
+      <span class="label">Ուսանողական աշխատանք · «{student.course}» դասընթաց</span>
+      <span>Տեսանյութը ստեղծված է արհեստական բանականությամբ (AI)՝ {student.nameGenitive} ռենդերի հիման վրա</span>
     </p>
 
     <div class="hero__chapters" data-hero-chapters>
       <article class="hero__chapter" data-chapter>
         <p class="label">01 · Տեսնել տարածությունը</p>
         <h2 class="h1">Լույս, նյութ, համամասնություն</h2>
-        <p>Դիզայնը սկսվում է ուշադրությունից՝ ինչպես է լույսն ընկնում պատին, ինչպես են նյութերը խոսում միմյանց հետ։</p>
+        <p>Դիզայնը սկսվում է ուշադրությունից՝ ինչպես է լույսն ընկնում պատին, ինչպես են նյութերը համադրվում միմյանց հետ։</p>
       </article>
       <article class="hero__chapter" data-chapter>
         <p class="label">02 · Ուսանողի աշխատանք</p>
         <h2 class="h1">Այս ինտերիերը ստեղծել է շրջանավարտը</h2>
         <p>
-          Վիզուալիզացիան «{student.course}» դասընթացի շրջանավարտ {student.name}-ի պորտֆոլիոյից է։ Տեսահոլովակը
-          նրա ռենդերի կինեմատոգրաֆիկ ներկայացումն է։
+          Վիզուալիզացիան «{student.course}» դասընթացի շրջանավարտ {student.nameGenitive} պորտֆոլիոյից է։ Տեսանյութը նրա
+          ռենդերի հիման վրա AI-ով ստեղծված կինեմատոգրաֆիկ ներկայացում է։
         </p>
       </article>
       <article class="hero__chapter" data-chapter>
         <p class="label">03 · Հերթը քոնն է</p>
         <h2 class="h1">Սկսիր քո առաջին նախագիծը</h2>
-        <div class="hero__ctas">
+        <div class="hero__ctas" data-chapter-ctas>
           <a class="btn btn--light" href="#courses">Ընտրել դասընթաց<Icon name="arrow" class="btn__icon" /></a>
           <a class="btn btn--ghost-light" href="#inquiry">Ստանալ մանրամասներ</a>
         </div>
@@ -98,15 +101,15 @@ import { student } from '../data/media';
     </div>
 
     <div class="hero__progress" aria-hidden="true"><span data-hero-bar></span></div>
-    <a class="hero__scroll" href="#about" data-hero-scroll>
-      <span>Թերթիր</span><span class="hero__scroll-line" aria-hidden="true"></span>
-    </a>
   </div>
 </section>
 
 <style>
-  /* ── Static layout (no JS / reduced motion): editorial split, no pinning ── */
+  /* ── Static layout (no JS, reduced motion, short screens): editorial split, no pinning ── */
   .hero {
+    /* Left edge of the centred 1440px frame, so the hero lines up with the header and sections. */
+    --hero-x: max(var(--gutter), calc((100vw - var(--maxw)) / 2 + var(--gutter)));
+    --hero-extra: calc(var(--hero-x) - var(--gutter));
     --s-top: calc(var(--header-h) + 14px);
     --s-right: 12px;
     --s-bottom: 46svh;
@@ -126,7 +129,7 @@ import { student } from '../data/media';
     position: relative;
     margin-inline: var(--s-left) var(--s-right);
     aspect-ratio: 3 / 4;
-    max-height: 62svh;
+    max-height: 40svh;
     overflow: hidden;
     background: var(--paper-3);
   }
@@ -154,8 +157,8 @@ import { student } from '../data/media';
     position: absolute;
     inset: 0;
     background:
-      linear-gradient(180deg, rgb(17 15 13 / 0) 30%, rgb(17 15 13 / 0.72) 100%),
-      linear-gradient(90deg, rgb(17 15 13 / 0.55) 0%, rgb(17 15 13 / 0) 62%);
+      linear-gradient(180deg, rgb(17 15 13 / 0) 30%, rgb(17 15 13 / 0.75) 100%),
+      linear-gradient(90deg, rgb(17 15 13 / 0.66) 0%, rgb(17 15 13 / 0.3) 45%, rgb(17 15 13 / 0) 72%);
     opacity: 0;
   }
 
@@ -180,27 +183,31 @@ import { student } from '../data/media';
   }
 
   .hero__title {
-    font-size: clamp(2.3rem, min(1.1rem + 5.2vw, 9svh), 6.4rem);
-    max-width: 11ch;
+    font-size: clamp(2.3rem, min(1rem + 4.9vw, 9svh), 6.4rem);
+    /* Wide enough for «պրոֆեսիոնալ» (~11.6ch), so the accent word never splits. */
+    max-width: 12.5ch;
+    overflow-wrap: normal;
   }
 
   .hero__lead { max-width: 32em; }
 
   .hero__ctas { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 4px; }
 
-  .hero__stats {
-    display: flex;
-    gap: clamp(24px, 4vw, 56px);
+  .hero__facts {
+    display: grid;
+    gap: 8px;
     margin-top: 10px;
     padding-top: 18px;
     border-top: 1px solid var(--line);
   }
 
-  .hero__stats dd { margin: 0; display: grid; gap: 2px; }
+  .hero__stats { display: flex; gap: clamp(24px, 4vw, 56px); }
+  .hero__stats li { display: grid; gap: 2px; }
 
   .hero__stat-n { font-size: clamp(1.7rem, 1.2rem + 1.4vw, 2.6rem); line-height: 1; font-weight: 400; }
 
   .hero__stat-l { font-size: 0.82rem; color: var(--muted); }
+  .hero__source { font-size: 0.72rem; color: var(--muted); }
 
   .hero__credit {
     display: grid;
@@ -219,7 +226,7 @@ import { student } from '../data/media';
     padding: 48px var(--gutter) 72px;
   }
 
-  .hero__chapter { display: grid; gap: 12px; max-width: 36rem; }
+  .hero__chapter { display: grid; gap: 12px; max-width: 36rem; align-content: start; }
   .hero__chapter .label { color: var(--red); }
   .hero__chapter .h1 { font-size: var(--fs-h2); }
   .hero__chapter p:not(.label) { color: var(--ink-soft); }
@@ -227,19 +234,18 @@ import { student } from '../data/media';
   .hero__chapter .btn--light { --btn-bg: var(--ink); --btn-fg: var(--paper); }
   .hero__chapter .btn--ghost-light { --btn-fg: var(--ink); border-color: var(--line-strong); }
 
-  .hero__progress,
-  .hero__scroll { display: none; }
+  .hero__progress { display: none; }
 
   @media (min-width: 900px) {
     .hero {
       --s-top: calc(var(--header-h) + 12px);
-      --s-right: clamp(12px, 1.6vw, 28px);
+      --s-right: calc(var(--hero-extra) + clamp(12px, 1.6vw, 28px));
       --s-bottom: clamp(16px, 3vh, 36px);
-      --s-left: 47vw;
+      --s-left: calc(var(--hero-extra) + 0.47 * min(100vw, var(--maxw)));
     }
 
     .hero__stage {
-      grid-template-columns: 47vw minmax(0, 1fr);
+      grid-template-columns: var(--s-left) minmax(0, 1fr);
       min-height: 100svh;
       padding-top: var(--s-top);
       padding-bottom: var(--s-bottom);
@@ -258,7 +264,7 @@ import { student } from '../data/media';
       grid-column: 1;
       grid-row: 1;
       align-self: center;
-      padding: 0 clamp(24px, 3vw, 56px) 0 var(--gutter);
+      padding: 0 clamp(24px, 3vw, 56px) 0 var(--hero-x);
       gap: 22px;
     }
 
@@ -266,22 +272,23 @@ import { student } from '../data/media';
       grid-column: 1;
       grid-row: 2;
       align-self: end;
-      padding: 0 32px 0 var(--gutter);
-      max-width: 40rem;
+      padding: 28px 32px 0 var(--hero-x);
+      max-width: calc(40rem + var(--hero-x));
     }
 
     .hero__chapters {
       grid-column: 1 / -1;
       grid-template-columns: repeat(3, minmax(0, 1fr));
       gap: 40px;
-      padding-top: 72px;
+      padding: 72px var(--hero-x) 72px;
     }
   }
 
-  /* ── Scroll-driven mode (JS + motion allowed). html.motion is set before first paint. ── */
-  :global(.motion) .hero { height: 330svh; }
+  /* ── Scroll-driven mode. html.hero-pin is set before first paint when motion is allowed
+     and the screen is tall enough for the pinned layout. ── */
+  :global(.hero-pin) .hero { height: 330svh; }
 
-  :global(.motion) .hero__stage {
+  :global(.hero-pin) .hero__stage {
     position: sticky;
     top: 0;
     height: 100svh;
@@ -292,7 +299,7 @@ import { student } from '../data/media';
     background: var(--paper);
   }
 
-  :global(.motion) .hero__window {
+  :global(.hero-pin) .hero__window {
     position: absolute;
     inset: 0;
     margin: 0;
@@ -304,13 +311,13 @@ import { student } from '../data/media';
     z-index: 0;
   }
 
-  :global(.motion) .hero__media {
+  :global(.hero-pin) .hero__media {
     transform: scale(var(--z, 1.06));
     transform-origin: 50% 46%;
     will-change: transform;
   }
 
-  :global(.motion) .hero__slot {
+  :global(.hero-pin) .hero__slot {
     display: block;
     position: absolute;
     top: var(--s-top);
@@ -321,7 +328,7 @@ import { student } from '../data/media';
     z-index: 1;
   }
 
-  :global(.motion) .hero__ticks {
+  :global(.hero-pin) .hero__ticks {
     position: absolute;
     inset: -7px;
     opacity: var(--ticks, 1);
@@ -336,9 +343,9 @@ import { student } from '../data/media';
       linear-gradient(var(--ink), var(--ink)) bottom right / 1px 18px no-repeat;
   }
 
-  :global(.motion) .hero__shade { opacity: var(--shade, 0); }
+  :global(.hero-pin) .hero__shade { opacity: var(--shade, 0); }
 
-  :global(.motion) .hero__intro {
+  :global(.hero-pin) .hero__intro {
     position: absolute;
     left: 0;
     right: 0;
@@ -350,13 +357,13 @@ import { student } from '../data/media';
     z-index: 2;
     opacity: var(--intro-o, 1);
     transform: translate3d(0, var(--intro-y, 0px), 0);
-    filter: blur(var(--intro-b, 0px));
-    will-change: transform, opacity, filter;
+    will-change: transform, opacity;
   }
 
-  :global(.motion) .hero__intro.is-gone { visibility: hidden; }
+  /* Faded out: stays in the accessibility tree; its links are made inert by the script. */
+  :global(.hero-pin) .hero__intro.is-gone { pointer-events: none; }
 
-  :global(.motion) .hero__credit {
+  :global(.hero-pin) .hero__credit {
     position: absolute;
     left: calc(var(--s-left) + 14px);
     right: calc(var(--s-right) + 14px);
@@ -366,16 +373,17 @@ import { student } from '../data/media';
     width: fit-content;
     max-width: min(26rem, calc(100% - var(--s-left) - var(--s-right) - 28px));
     padding: 9px 12px;
-    color: rgb(255 255 255 / 0.94);
-    background: rgb(17 15 13 / 0.52);
+    color: rgb(255 255 255 / 0.95);
+    background: rgb(17 15 13 / 0.6);
     -webkit-backdrop-filter: blur(8px);
     backdrop-filter: blur(8px);
     opacity: var(--credit-o, 1);
   }
 
-  :global(.motion) .hero__credit .label { color: #fff; }
+  :global(.hero-pin) .hero__credit.is-gone { visibility: hidden; }
+  :global(.hero-pin) .hero__credit .label { color: #fff; }
 
-  :global(.motion) .hero__chapters {
+  :global(.hero-pin) .hero__chapters {
     position: absolute;
     inset: 0;
     display: block;
@@ -385,27 +393,36 @@ import { student } from '../data/media';
     color: var(--on-night);
   }
 
-  :global(.motion) .hero__chapter {
+  /* Chapters fade with opacity and transform only, and stay readable by assistive technology. */
+  :global(.hero-pin) .hero__chapter {
     position: absolute;
     left: var(--gutter);
     right: var(--gutter);
     bottom: clamp(88px, 14svh, 150px);
     max-width: 40rem;
     opacity: 0;
-    visibility: hidden;
     transform: translate3d(0, 24px, 0);
-    filter: blur(6px);
-    will-change: transform, opacity, filter;
+    will-change: transform, opacity;
+    text-shadow: 0 1px 18px rgb(0 0 0 / 0.45);
   }
 
-  :global(.motion) .hero__chapter.is-on { visibility: visible; pointer-events: auto; }
-  :global(.motion) .hero__chapter .label { color: #ff8a82; }
-  :global(.motion) .hero__chapter .h1 { font-size: var(--fs-h1); color: #fff; }
-  :global(.motion) .hero__chapter p:not(.label) { color: rgb(241 235 226 / 0.9); font-size: var(--fs-lead); line-height: 1.5; }
-  :global(.motion) .hero__chapter .btn--light { --btn-bg: var(--paper); --btn-fg: var(--ink); }
-  :global(.motion) .hero__chapter .btn--ghost-light { --btn-fg: var(--on-night); border-color: rgb(241 235 226 / 0.45); }
+  :global(.hero-pin) .hero__chapter.is-on { pointer-events: auto; }
+  :global(.hero-pin) .hero__chapter .label { color: #fff; }
+  :global(.hero-pin) .hero__chapter .label::before {
+    content: '';
+    width: 18px;
+    height: 2px;
+    background: var(--red);
+    box-shadow: none;
+  }
+  :global(.hero-pin) .hero__chapter .h1 { font-size: var(--fs-h1); color: #fff; }
+  :global(.hero-pin) .hero__chapter p:not(.label) { color: rgb(246 241 234 / 0.96); font-size: var(--fs-lead); line-height: 1.5; }
+  :global(.hero-pin) .hero__chapter .btn { text-shadow: none; }
+  :global(.hero-pin) .hero__chapter .btn--light { --btn-bg: var(--paper); --btn-fg: var(--ink); }
+  :global(.hero-pin) .hero__chapter .btn--ghost-light { --btn-fg: var(--on-night); border-color: rgb(241 235 226 / 0.55); }
+  :global(.hero-pin) .hero__chapter :focus-visible { outline-color: var(--on-night); }
 
-  :global(.motion) .hero__progress {
+  :global(.hero-pin) .hero__progress {
     display: block;
     position: absolute;
     right: 10px;
@@ -418,7 +435,7 @@ import { student } from '../data/media';
     opacity: var(--bar-o, 0);
   }
 
-  :global(.motion) .hero__progress span {
+  :global(.hero-pin) .hero__progress span {
     position: absolute;
     inset: 0;
     background: #fff;
@@ -426,54 +443,90 @@ import { student } from '../data/media';
     transform: scaleY(var(--p, 0));
   }
 
-  :global(.motion) .hero__scroll {
-    display: none;
-  }
-
   @media (min-width: 900px) {
-    :global(.motion) .hero { height: 340svh; }
+    :global(.hero-pin) .hero { height: 340svh; }
 
-    :global(.motion) .hero__intro {
+    :global(.hero-pin) .hero__intro {
       top: var(--s-top);
       bottom: var(--s-bottom);
       right: auto;
       width: var(--s-left);
-      padding: 0 clamp(24px, 3vw, 56px) 0 var(--gutter);
-      align-content: center;
+      padding: 0 clamp(24px, 3vw, 56px) 0 var(--hero-x);
+      /* Overflow, if any, goes downward and never under the header. */
+      align-content: safe center;
       gap: 22px;
     }
 
-    :global(.motion) .hero__credit {
+    :global(.hero-pin) .hero__credit {
       left: calc(var(--s-left) + 22px);
       bottom: calc(var(--s-bottom) + 20px);
       max-width: 26rem;
     }
 
-    :global(.motion) .hero__chapter { left: var(--gutter); bottom: clamp(72px, 12svh, 140px); }
+    :global(.hero-pin) .hero__chapter { left: var(--hero-x); bottom: clamp(72px, 12svh, 140px); }
 
-    :global(.motion) .hero__progress { right: clamp(18px, 2vw, 32px); }
-
-    :global(.motion) .hero__scroll {
-      position: absolute;
-      left: var(--gutter);
-      bottom: 22px;
-      display: none;
-    }
+    :global(.hero-pin) .hero__progress { right: calc(var(--hero-extra) + clamp(18px, 2vw, 32px)); }
   }
 
   @media (max-width: 899px) {
-    :global(.motion) .hero { --s-bottom: 49svh; }
-    :global(.motion) .hero__title { font-size: clamp(2rem, 1.2rem + 4.6vw, 3rem); max-width: 13ch; }
-    :global(.motion) .hero__lead { font-size: 1rem; line-height: 1.5; }
-    :global(.motion) .hero__stats { display: none; }
-    :global(.motion) .hero__ctas .btn--ghost { display: none; }
+    :global(.hero-pin) .hero { --s-bottom: 49svh; }
+    :global(.hero-pin) .hero__title { font-size: clamp(2rem, 1.2rem + 4.6vw, 3rem); max-width: 13ch; }
+    :global(.hero-pin) .hero__lead { font-size: 1rem; line-height: 1.5; }
+    :global(.hero-pin) .hero__ctas .btn--ghost { display: none; }
+
+    /* Over the film the text spans the full width, so the scrim darkens from below as well. */
+    :global(.hero-pin) .hero__shade {
+      background:
+        linear-gradient(180deg, rgb(17 15 13 / 0.05) 15%, rgb(17 15 13 / 0.62) 46%, rgb(17 15 13 / 0.9) 100%),
+        linear-gradient(90deg, rgb(17 15 13 / 0.35) 0%, rgb(17 15 13 / 0) 80%);
+    }
+  }
+
+  /* Short screens keep the facts for assistive technology but give the space to the essentials
+     (the same figures appear in the About section). */
+  @media (max-width: 899px) {
+    :global(.hero-pin) .hero__facts {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      margin: -1px;
+      padding: 0;
+      overflow: hidden;
+      clip: rect(0 0 0 0);
+      white-space: nowrap;
+      border: 0;
+    }
   }
 
   @media (max-width: 899px) and (max-height: 720px) {
-    :global(.motion) .hero__lead { display: none; }
+    :global(.hero-pin) .hero__lead {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0 0 0 0);
+      white-space: nowrap;
+    }
   }
 
-  @media (min-width: 900px) and (max-height: 760px) {
-    :global(.motion) .hero__stats { display: none; }
+  @media (min-width: 900px) and (max-height: 860px) {
+    :global(.hero-pin) .hero__facts {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      margin: -1px;
+      padding: 0;
+      overflow: hidden;
+      clip: rect(0 0 0 0);
+      white-space: nowrap;
+      border: 0;
+    }
+  }
+
+  /* Small phones: the AI disclosure stays, in a compact credit. */
+  @media (max-width: 379px) {
+    :global(.hero-pin) .hero__credit { padding: 6px 9px; font-size: 0.7rem; }
+    :global(.hero-pin) .hero__credit .label { display: none; }
   }
 </style>

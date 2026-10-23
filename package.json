@@ -5,7 +5,7 @@
   "type": "module",
   "description": "MOD Academy (Yerevan) public website — courses, student work, inquiries.",
   "engines": {
-    "node": ">=22.12.0"
+    "node": ">=22.19.0"
   },
   "scripts": {
     "dev": "astro dev",
@@ -23,6 +23,7 @@
     "sharp": "0.35.5"
   },
   "devDependencies": {
+    "@astrojs/check": "0.9.12",
     "@playwright/test": "1.64.1",
     "typescript": "5.9.3"
   }

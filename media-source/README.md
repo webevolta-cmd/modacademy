@@ -20,19 +20,25 @@ Inspection before use: frame-by-frame review at full resolution (geometry, mater
 and moulding stable); mean luminance 140.4–145.9 across all 362 frames (drift 0.7) — no flicker; motion
 difference eases in and out smoothly with no jumps; one near-duplicate frame at the final hold.
 
-Web encodes (in `public/media/hero/`, made with ffmpeg 6, audio removed, `+faststart`):
+Web encodes (in `public/media/hero/`, made with ffmpeg 6, audio removed, `+faststart`). Short GOPs and no
+B-frames keep scroll seeking fast; the size/quality trade-off was measured (SSIM ≈ 0.96 against the master
+scaled to the same size):
 
 ```bash
-# desktop: 1440×1440, H.264 high, CRF 27, GOP 10 (short GOP keeps scroll seeking fast)
-ffmpeg -i higgsfield-minimax-h3-2k-master.mp4 -an -c:v libx264 -preset slower -crf 27 -pix_fmt yuv420p \
-  -profile:v high -g 10 -keyint_min 10 -sc_threshold 0 -movflags +faststart hero-1440.mp4
-# mobile: 3:4 crop (x=260) scaled to 900×1200, CRF 28, GOP 8
+# desktop: 1280×1280, H.264 high, CRF 28, GOP 12, no B-frames (5.2 MB)
+ffmpeg -i higgsfield-minimax-h3-2k-master.mp4 -an -vf scale=1280:1280:flags=lanczos -c:v libx264 -preset slower \
+  -crf 28 -pix_fmt yuv420p -profile:v high -bf 0 -g 12 -keyint_min 12 -sc_threshold 0 -movflags +faststart \
+  hero-desktop-v2.mp4
+# mobile: 3:4 crop (x=260) scaled to 900×1200, CRF 29, GOP 8, no B-frames (3.5 MB)
 ffmpeg -i higgsfield-minimax-h3-2k-master.mp4 -an -vf "crop=1080:1440:260:0,scale=900:1200:flags=lanczos" \
-  -c:v libx264 -preset slower -crf 28 -pix_fmt yuv420p -profile:v high -g 8 -keyint_min 8 -sc_threshold 0 \
-  -movflags +faststart hero-900x1200.mp4
-# posters = exact first frame of each encode (WebP q80/q78)
-ffmpeg -i hero-1440.mp4 -frames:v 1 poster.png
+  -c:v libx264 -preset slower -crf 29 -pix_fmt yuv420p -profile:v high -bf 0 -g 8 -keyint_min 8 -sc_threshold 0 \
+  -movflags +faststart hero-mobile-v2.mp4
+# posters = exact first frame of each encode (WebP q80 desktop / q78 mobile)
+ffmpeg -i hero-desktop-v2.mp4 -frames:v 1 poster.png
 ```
+
+The first version (1440×1440 CRF 27 with B-frames, 8.4 MB) was replaced after a performance review: the
+new desktop file is 38% smaller and seeks about a quarter faster.
 
 ## work-originals/
 

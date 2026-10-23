@@ -9,15 +9,19 @@ interface Props {
   heading?: string;
 }
 const { preselect = '', heading = 'Ուղարկել հայտ' } = Astro.props;
+
+// Without JavaScript the form posts natively, so its target depends on the receiver.
+const netlify = formMode === 'netlify';
+const action = netlify ? '/inquiry-sent/' : formMode === 'endpoint' ? formEndpoint : undefined;
 ---
 <div class="inq" data-inquiry>
   <form
     class="inq__form"
     name="inquiry"
     method="POST"
-    action="/inquiry-sent/"
-    data-netlify="true"
-    netlify-honeypot="bot-field"
+    action={action}
+    data-netlify={netlify ? 'true' : undefined}
+    netlify-honeypot={netlify ? 'bot-field' : undefined}
     data-form-mode={formMode}
     data-endpoint={formEndpoint}
     novalidate
@@ -31,7 +35,7 @@ const { preselect = '', heading = 'Ուղարկել հայտ' } = Astro.props;
 
     <div class="inq__top">
       <h3 class="h2" id="inq-heading">{heading}</h3>
-      <p class="muted inq__intro">Լրացրեք ձևը՝ ակադեմիան կկապվի ձեզ հետ դասընթացի, գրաֆիկի և արժեքի մանրամասներով։</p>
+      <p class="muted inq__intro">Լրացրեք ձևը՝ ակադեմիան կկապվի Ձեզ հետ դասընթացի, ժամանակացույցի և արժեքի մանրամասներով։</p>
     </div>
 
     <div class="inq__summary" role="alert" tabindex="-1" hidden data-inq-summary></div>
@@ -60,7 +64,7 @@ const { preselect = '', heading = 'Ուղարկել հայտ' } = Astro.props;
       <label for="inq-course">Դասընթաց</label>
       <div class="field__select">
         <select id="inq-course" name="course" data-inq-course>
-          <option value="Դեռ չեմ որոշել" selected={!preselect}>Դեռ չեմ որոշել / խորհրդատվություն</option>
+          <option value="Դեռ չեմ որոշել" selected={!preselect}>Դեռ չեմ որոշել</option>
           {courses.map((c) => (
             <option value={c.title} data-slug={c.slug} selected={c.slug === preselect}>{c.title}</option>
           ))}
@@ -75,13 +79,21 @@ const { preselect = '', heading = 'Ուղարկել հայտ' } = Astro.props;
     </div>
 
     <div class="inq__submit">
-      <button class="btn btn--red inq__btn" type="submit" data-inq-submit>
+      {formMode === 'offline' && (
+        <noscript>
+          <p class="inq__noscript">
+            Առանց JavaScript-ի այս ձևն ուղարկել հնարավոր չէ։ Զանգահարեք <a href={site.phone.href}>{site.phone.local}</a>
+            {' '}հեռախոսահամարով կամ գրեք <a href={`mailto:${site.email}`}>{site.email}</a> հասցեին։
+          </p>
+        </noscript>
+      )}
+      <button class="btn btn--red inq__btn" type="submit" data-inq-submit data-needs-js={formMode === 'offline' ? '' : undefined}>
         <span data-inq-label>Ուղարկել հայտը</span>
         <Icon name="arrow" class="btn__icon" />
       </button>
       <p class="inq__legal muted">
         Հայտը դեռ գրանցում չէ․ տեղը խմբում հաստատվում է ակադեմիայի հետ պայմանավորվելուց հետո։ Ձեր տվյալներն
-        օգտագործվում են միայն ձեզ հետ կապվելու համար։
+        օգտագործվում են միայն Ձեզ հետ կապվելու համար։
       </p>
     </div>
   </form>
@@ -89,13 +101,13 @@ const { preselect = '', heading = 'Ուղարկել հայտ' } = Astro.props;
   <div class="inq__done" role="status" tabindex="-1" hidden data-inq-success>
     <span class="inq__done-mark" aria-hidden="true"><Icon name="check" /></span>
     <h3 class="h2">Հայտը ստացված է</h3>
-    <p>Շնորհակալություն։ Ակադեմիան կկապվի ձեզ հետ՝ դասընթացի մանրամասներով։ Սա դեռ գրանցման հաստատում չէ։</p>
+    <p>Շնորհակալություն։ Ակադեմիան կկապվի Ձեզ հետ՝ դասընթացի մանրամասներով։ Սա դեռ գրանցման հաստատում չէ։</p>
     <p class="muted">Շտապ հարցերի համար՝ <a href={site.phone.href}>{site.phone.display}</a></p>
   </div>
 
   <div class="inq__fallback" role="alert" tabindex="-1" hidden data-inq-fallback>
     <h3 class="h3" data-inq-fallback-title>Հայտը չհաջողվեց ուղարկել</h3>
-    <p data-inq-fallback-text>Խնդրում ենք կապվել ակադեմիայի հետ ստորև նշված եղանակներից մեկով․ ձեր լրացրած տվյալները պահպանված են։</p>
+    <p data-inq-fallback-text>Խնդրում ենք կապվել ակադեմիայի հետ ստորև նշված եղանակներից մեկով․ Ձեր լրացրած տվյալները պահպանված են։</p>
     <div class="inq__alts">
       <a class="btn btn--sm" href={`mailto:${site.email}`} data-inq-mailto><Icon name="mail" class="btn__icon" />Ուղարկել էլ. փոստով</a>
       <a class="btn btn--ghost btn--sm" href={site.phone.href}><Icon name="phone" class="btn__icon" />{site.phone.local}</a>
@@ -133,7 +145,7 @@ const { preselect = '', heading = 'Ուղարկել հայտ' } = Astro.props;
     width: 100%;
     min-height: 52px;
     padding: 12px 14px;
-    border: 1px solid var(--line-strong);
+    border: 1px solid var(--line-control);
     border-radius: var(--radius);
     background: var(--paper);
     font-size: 1rem;
@@ -145,7 +157,7 @@ const { preselect = '', heading = 'Ուղարկել հայտ' } = Astro.props;
 
   .field textarea { resize: vertical; min-height: 120px; }
   .field input::placeholder,
-  .field textarea::placeholder { color: #8b7f73; }
+  .field textarea::placeholder { color: var(--muted); opacity: 1; }
 
   .field input:hover,
   .field select:hover,
@@ -154,20 +166,20 @@ const { preselect = '', heading = 'Ուղարկել հայտ' } = Astro.props;
   .field input:focus-visible,
   .field select:focus-visible,
   .field textarea:focus-visible {
-    outline: none;
+    outline: 2px solid var(--red);
+    outline-offset: 2px;
     border-color: var(--ink);
-    box-shadow: 0 0 0 3px rgb(179 18 27 / 0.22);
     background: #fff;
   }
 
   .field [aria-invalid='true'] { border-color: var(--red); background: #fff7f6; }
 
   .field__select { position: relative; }
-  .field__select select { padding-right: 44px; cursor: pointer; }
+  .field__select select { padding-right: 44px; cursor: pointer; text-overflow: ellipsis; }
   .field__select :global(.field__chev) { position: absolute; right: 14px; top: 50%; width: 18px; height: 18px; transform: translateY(-50%) rotate(90deg); pointer-events: none; }
 
   .field__error { color: var(--red-deep); font-size: 0.85rem; display: flex; gap: 6px; }
-  .field__error::before { content: '!'; display: inline-grid; place-items: center; flex: none; width: 18px; height: 18px; border-radius: 50%; background: var(--red); color: #fff; font-size: 0.7rem; font-weight: 700; margin-top: 2px; }
+  .field__error::before { content: '!'; content: '!' / ''; display: inline-grid; place-items: center; flex: none; width: 18px; height: 18px; border-radius: 50%; background: var(--red); color: #fff; font-size: 0.7rem; font-weight: 700; margin-top: 2px; }
   .field__hint { font-size: 0.82rem; color: var(--muted); }
 
   .inq__submit { display: grid; gap: 14px; margin-top: 6px; }
@@ -175,6 +187,9 @@ const { preselect = '', heading = 'Ուղարկել հայտ' } = Astro.props;
   .inq__btn[aria-busy='true'] { pointer-events: none; opacity: 0.8; }
   .inq__btn[aria-busy='true'] .btn__icon { animation: inq-pulse 0.9s ease-in-out infinite; }
   .inq__legal { font-size: 0.8rem; line-height: 1.5; }
+  /* Offline builds have no receiver for a native post; without JS the direct contacts replace the button. */
+  :global(html:not(.js)) .inq__btn[data-needs-js] { display: none; }
+  .inq__noscript { font-size: 0.92rem; padding: 12px 14px; border-left: 3px solid var(--red); background: var(--paper); }
 
   .inq__done,
   .inq__fallback { display: grid; gap: 14px; }

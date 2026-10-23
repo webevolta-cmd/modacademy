@@ -12,7 +12,7 @@ const year = new Date(site.dataAsOf).getFullYear();
       <a href="/" class="footer__logo" aria-label="MOD Academy — գլխավոր էջ"><Logo /></a>
       <p class="footer__tagline">{site.tagline}։</p>
       <p class="muted footer__note">
-        Ակադեմիան ունի նաև գործող ստուդիա՝
+        Ակադեմիայի հետ կապված ստուդիա՝
         <a href={site.studio.instagram} target="_blank" rel="noopener">{site.studio.name}</a>։
       </p>
     </div>
@@ -35,7 +35,7 @@ const year = new Date(site.dataAsOf).getFullYear();
       </ul>
     </nav>
 
-    <div class="footer__col">
+    <div class="footer__col footer__col--contact">
       <p class="label footer__h">Կապ</p>
       <ul role="list" class="footer__contact">
         <li><a href={site.phone.href}><Icon name="phone" />{site.phone.display}</a></li>
@@ -57,8 +57,8 @@ const year = new Date(site.dataAsOf).getFullYear();
   <div class="wrap footer__legal">
     <p>© {year} {site.name}</p>
     <p class="muted">
-      Լուսանկարները և ուսանողական աշխատանքները՝ ակադեմիայի պաշտոնական հրապարակումներից։ Գլխավոր էջի տեսահոլովակը
-      AI-ով ստեղծված կինեմատոգրաֆիկ ներկայացում է՝ հիմնված ուսանողական ռենդերի վրա, և ակադեմիայի տարածքի լուսանկար չէ։
+      Լուսանկարները և ուսանողական աշխատանքները՝ ակադեմիայի պաշտոնական հրապարակումներից։ Գլխավոր էջի տեսանյութը
+      ստեղծված է արհեստական բանականությամբ (AI)՝ ուսանողական ռենդերի հիման վրա․ այն ակադեմիայի տարածքի տեսագրություն չէ։
     </p>
   </div>
 </footer>
@@ -78,10 +78,12 @@ const year = new Date(site.dataAsOf).getFullYear();
   .footer__tagline { font-family: var(--font-display); font-size: var(--fs-h3); font-stretch: 87.5%; line-height: 1.25; }
   .footer__note a { color: var(--on-night); }
 
-  .footer__col ul { display: grid; gap: 10px; }
+  .footer__col ul { display: grid; gap: 0; }
   .footer__h { color: var(--on-night-muted); margin-bottom: 18px; }
 
   .footer__col a {
+    display: inline-block;
+    padding-block: 7px;
     color: var(--on-night);
     text-decoration: none;
     font-size: 0.95rem;
@@ -90,15 +92,16 @@ const year = new Date(site.dataAsOf).getFullYear();
 
   .footer__col a:hover { color: #ff8a82; }
 
-  .footer__contact { grid-column: 1 / -1; }
+  .footer__col--contact { grid-column: 1 / -1; }
 
-  .footer__contact a { display: inline-flex; align-items: flex-start; gap: 10px; overflow-wrap: anywhere; }
+  .footer__contact a { display: inline-flex; align-items: flex-start; gap: 10px; overflow-wrap: break-word; }
   .footer__contact :global(svg) { width: 18px; height: 18px; flex: none; margin-top: 3px; }
 
-  .footer__social { display: flex !important; gap: 10px; margin-top: 18px; }
+  .footer__social { display: flex !important; gap: 10px; margin-top: 12px; }
 
   .footer__social a {
     display: inline-grid;
+    padding: 0;
     place-items: center;
     width: 44px;
     height: 44px;
@@ -123,7 +126,7 @@ const year = new Date(site.dataAsOf).getFullYear();
   @media (min-width: 900px) {
     .footer__grid { grid-template-columns: 1.4fr 1fr 1fr 1.2fr; }
     .footer__brand { grid-column: auto; }
-    .footer__contact { grid-column: auto; }
+    .footer__col--contact { grid-column: auto; }
     .footer__legal { grid-template-columns: auto 1fr; gap: 40px; }
   }
 </style>

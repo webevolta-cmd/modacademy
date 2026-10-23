@@ -28,6 +28,7 @@ export interface WorkItem {
 
 export const student = {
   name: 'Շուշան Թևոսյան',
+  nameGenitive: 'Շուշան Թևոսյանի',
   handle: '@tevosyan.design',
   instagram: 'https://www.instagram.com/tevosyan.design/',
   course: '3Ds Max',
@@ -97,14 +98,15 @@ export interface PracticeMoment {
 }
 
 // Practical lessons and classes documented by the academy (Instagram reels, October 2026).
+// `date` is the publication date of the post; `course` names a course only where the post does.
 export const practice: PracticeMoment[] = [
   {
     id: 'electrica-group',
     image: electricaGroup,
     partner: 'Electrica Group',
     partnerUrl: 'https://www.instagram.com/electrica.group/',
-    course: 'Ինտերիեր դիզայն',
-    caption: 'Լուսավորության տեսակները և դրանց ճիշտ կիրառումը ինտերիերում',
+    course: 'Գործնական դաս',
+    caption: 'Լուսավորության տեսակները և դրանց ճիշտ կիրառումն ինտերիերում',
     alt: 'Ուսանողների խումբը լուսավորության սրահում՝ գործնական դասի ընթացքում',
     date: '2026-10-02',
     source: 'https://www.instagram.com/p/Dd_pdaHoLjR/',
@@ -125,7 +127,7 @@ export const practice: PracticeMoment[] = [
     image: capitalTour,
     partner: 'Capital Interiors',
     partnerUrl: 'https://www.instagram.com/capital_interiors/',
-    course: 'Ինտերիեր դիզայն',
+    course: 'Գործնական դաս',
     caption: 'Իտալական կահույքի, ջահերի և խոհանոցների տեսականի',
     alt: 'Ուսանողների խումբը կահույքի և ջահերի սրահում',
     date: '2026-10-10',
@@ -136,7 +138,7 @@ export const practice: PracticeMoment[] = [
     image: electricaWall,
     partner: 'Electrica Group',
     partnerUrl: 'https://www.instagram.com/electrica.group/',
-    course: 'Ինտերիեր դիզայն',
+    course: 'Գործնական դաս',
     caption: 'Լուսատուների և լուսային լուծումների ներկայացում ցուցապատին',
     alt: 'Գործնական դասի ժամանակ ցուցապատին ներկայացվում են լուսատուների նմուշները',
     date: '2026-10-02',
@@ -149,7 +151,7 @@ export const practice: PracticeMoment[] = [
     partnerUrl: 'https://www.instagram.com/classis_decor_curtains/',
     course: 'Ինտերիեր դիզայն',
     caption: 'Գործվածքների և պաստառների նմուշների գրքեր',
-    alt: 'Ուսանողները ուսումնասիրում են գործվածքների նմուշների գրքերը',
+    alt: 'Ուսանողներն ուսումնասիրում են գործվածքների նմուշների գրքերը',
     date: '2026-10-08',
     source: 'https://www.instagram.com/p/DePkN9foA7V/',
   },
@@ -159,7 +161,7 @@ export const practice: PracticeMoment[] = [
     partner: 'MOD Academy',
     course: 'Վաճառքի կառավարում',
     caption: 'Ինտերակտիվ հարցուպատասխան և առարկությունների հետ աշխատանք',
-    alt: 'Վաճառքի կառավարման դասը ակադեմիայի լսարանում․ մասնակիցները նշումներ են անում, դասախոսը կանգնած է գրատախտակի մոտ',
+    alt: 'Վաճառքի կառավարման դասն ակադեմիայի լսարանում․ մասնակիցները նշումներ են անում, դասը վարողը կանգնած է գրատախտակի մոտ',
     date: '2026-10-09',
     source: 'https://www.instagram.com/p/DeRoJTRoQ-A/',
   },

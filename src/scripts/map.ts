@@ -15,5 +15,7 @@ export function initMap(root: HTMLElement): void {
     frame.allowFullscreen = true;
     canvas.replaceChildren(frame);
     button.remove();
+    // The button is gone, so focus moves to the map it loaded instead of falling back to <body>.
+    frame.focus();
   });
 }

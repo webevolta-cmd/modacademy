@@ -9,22 +9,31 @@ const CHAPTERS: [number, number, number, number][] = [
   [0.58, 0.64, 0.76, 0.82],
   [0.8, 0.87, 9, 9],
 ];
+// Must match the pre-paint check in BaseLayout.astro: shorter screens (landscape phones,
+// zoomed-in browsers) get the static layout, where nothing is clipped.
+const PIN_QUERY = '(min-height: 540px)';
 
 type Insets = { t: number; r: number; b: number; l: number };
 
 export function initHero(root: HTMLElement): void {
   if (!motionAllowed()) return;
 
+  const html = document.documentElement;
   const stage = root.querySelector<HTMLElement>('[data-hero-stage]');
   const win = root.querySelector<HTMLElement>('[data-hero-window]');
   const media = root.querySelector<HTMLElement>('[data-hero-media]');
   const slot = root.querySelector<HTMLElement>('[data-hero-slot]');
   const video = root.querySelector<HTMLVideoElement>('[data-hero-video]');
   const intro = root.querySelector<HTMLElement>('[data-hero-intro]');
+  const introCtas = root.querySelector<HTMLElement>('[data-hero-ctas]');
   const credit = root.querySelector<HTMLElement>('[data-hero-credit]');
   const shade = root.querySelector<HTMLElement>('[data-hero-shade]');
   const bar = root.querySelector<HTMLElement>('[data-hero-bar]');
-  const chapters = [...root.querySelectorAll<HTMLElement>('[data-chapter]')];
+  const chapters = [...root.querySelectorAll<HTMLElement>('[data-chapter]')].map((el) => ({
+    el,
+    ctas: el.querySelector<HTMLElement>('[data-chapter-ctas]'),
+    on: null as boolean | null, // unknown until the first apply()
+  }));
   if (!stage || !win || !media || !slot || !video || !intro) return;
 
   let top = 0;
@@ -32,6 +41,7 @@ export function initHero(root: HTMLElement): void {
   let insets: Insets = { t: 0, r: 0, b: 0, l: 0 };
   let target = 0;
   let p = -1;
+  let applied = Number.NaN;
 
   const measure = () => {
     const sr = stage.getBoundingClientRect();
@@ -39,6 +49,7 @@ export function initHero(root: HTMLElement): void {
     insets = { t: r.top - sr.top, r: sr.right - r.right, b: sr.bottom - r.bottom, l: r.left - sr.left };
     top = root.getBoundingClientRect().top + window.scrollY;
     range = Math.max(1, root.offsetHeight - sr.height);
+    applied = Number.NaN;
   };
 
   const readTarget = () => {
@@ -47,6 +58,7 @@ export function initHero(root: HTMLElement): void {
 
   // ── Visual state for progress p ────────────────────────────────────────────
   let introGone = false;
+  let creditGone = false;
   const apply = (v: number) => {
     const e = easeInOutCubic(smooth(0.02, 0.4, v));
     const k = 1 - e;
@@ -57,32 +69,67 @@ export function initHero(root: HTMLElement): void {
     const h = smooth(0.015, 0.24, v);
     intro.style.setProperty('--intro-o', (1 - h).toFixed(3));
     intro.style.setProperty('--intro-y', `${(-64 * h).toFixed(1)}px`);
-    intro.style.setProperty('--intro-b', `${(8 * h).toFixed(2)}px`);
     const gone = h > 0.98;
     if (gone !== introGone) {
       introGone = gone;
       intro.classList.toggle('is-gone', gone);
-      intro.inert = gone;
+      // The heading and copy stay readable by assistive technology; only the links leave the tab order.
+      if (introCtas) introCtas.inert = gone;
     }
-    credit?.style.setProperty('--credit-o', (1 - smooth(0, 0.1, v)).toFixed(3));
+
+    const c = 1 - smooth(0, 0.1, v);
+    credit?.style.setProperty('--credit-o', c.toFixed(3));
+    const hideCredit = c === 0; // also drops its backdrop blur from compositing
+    if (credit && hideCredit !== creditGone) {
+      creditGone = hideCredit;
+      credit.classList.toggle('is-gone', hideCredit);
+    }
 
     let strongest = 0;
-    chapters.forEach((el, i) => {
+    chapters.forEach((ch, i) => {
       const [a0, a1, b0, b1] = CHAPTERS[i] ?? CHAPTERS[CHAPTERS.length - 1];
       const a = smooth(a0, a1, v) * (1 - smooth(b0, b1, v));
       strongest = Math.max(strongest, a);
       const leaving = v > a1;
-      el.style.opacity = a.toFixed(3);
-      el.style.transform = `translate3d(0, ${((1 - a) * (leaving ? -20 : 24)).toFixed(1)}px, 0)`;
-      el.style.filter = a > 0.995 ? 'none' : `blur(${((1 - a) * 6).toFixed(2)}px)`;
-      el.classList.toggle('is-on', a > 0.02);
+      ch.el.style.opacity = a.toFixed(3);
+      ch.el.style.transform = `translate3d(0, ${((1 - a) * (leaving ? -20 : 24)).toFixed(1)}px, 0)`;
+      const on = a > 0.5;
+      if (on !== ch.on) {
+        ch.on = on;
+        ch.el.classList.toggle('is-on', on);
+        if (ch.ctas) ch.ctas.inert = !on;
+      }
     });
 
-    shade?.style.setProperty('--shade', Math.min(1, strongest * 0.9 + e * 0.18).toFixed(3));
+    shade?.style.setProperty('--shade', Math.min(1, strongest * 1.1 + e * 0.18).toFixed(3));
     if (bar) {
       bar.parentElement?.style.setProperty('--bar-o', (smooth(0.04, 0.12, v) * (1 - smooth(0.96, 1, v))).toFixed(3));
       bar.style.setProperty('--p', v.toFixed(4));
     }
+  };
+
+  const clearStyles = () => {
+    win.style.clipPath = '';
+    media.style.removeProperty('--z');
+    slot.style.removeProperty('--ticks');
+    intro.style.removeProperty('--intro-o');
+    intro.style.removeProperty('--intro-y');
+    intro.classList.remove('is-gone');
+    if (introCtas) introCtas.inert = false;
+    introGone = false;
+    credit?.style.removeProperty('--credit-o');
+    credit?.classList.remove('is-gone');
+    creditGone = false;
+    chapters.forEach((ch) => {
+      ch.el.style.opacity = '';
+      ch.el.style.transform = '';
+      ch.el.classList.remove('is-on');
+      if (ch.ctas) ch.ctas.inert = false;
+      ch.on = null;
+    });
+    shade?.style.removeProperty('--shade');
+    bar?.parentElement?.style.removeProperty('--bar-o');
+    bar?.style.removeProperty('--p');
   };
 
   // ── Film ───────────────────────────────────────────────────────────────────
@@ -91,8 +138,6 @@ export function initHero(root: HTMLElement): void {
   let seeking = false;
   let wantTime = 0;
   const frameTime = 1 / 24;
-
-  const seekPending = () => ready && (seeking || Math.abs(video.currentTime - wantTime) > frameTime / 2);
 
   const seek = (v: number) => {
     if (!ready) return;
@@ -129,10 +174,11 @@ export function initHero(root: HTMLElement): void {
 
   let loading = false;
   const loadFilm = () => {
-    if (loading) return;
+    if (loading || !active) return;
     loading = true;
-    const nav = navigator as Navigator & { connection?: { saveData?: boolean } };
-    if (nav.connection?.saveData) return; // keep the poster for data-saver users
+    const nav = navigator as Navigator & { connection?: { saveData?: boolean; effectiveType?: string } };
+    // Data-saver and slow connections keep the poster (the film's exact first frame).
+    if (nav.connection?.saveData || /(^|-)2g|3g/.test(nav.connection?.effectiveType ?? '')) return;
     const portrait = window.matchMedia('(max-aspect-ratio: 4/5)').matches;
     const src = (portrait ? video.dataset.srcMobile : video.dataset.srcDesktop) ?? '';
     if (!src) return;
@@ -152,33 +198,85 @@ export function initHero(root: HTMLElement): void {
 
   // ── Frame loop ─────────────────────────────────────────────────────────────
   const tick = (_now: number, dt: number): boolean => {
+    if (!active) return false;
     readTarget();
     if (p < 0) p = target;
     const k = 1 - Math.exp(-dt / 75);
     p += (target - p) * k;
     if (Math.abs(target - p) < 0.0002) p = target;
-    apply(p);
+    if (p !== applied) {
+      apply(p);
+      applied = p;
+    }
+    // The video joins the page on the first scroll, after the poster has been painted.
+    if (video.hidden && ready && target > 0.002) video.hidden = false;
     seek(p);
     if (!loading && target > 0.002) loadFilm();
-    return p !== target || seekPending();
+    // A pending seek re-queues the tick from its 'seeked' handler.
+    return p !== target;
   };
 
-  measure();
-  readTarget();
-  p = target;
-  apply(p);
-  onScroll(tick);
+  // ── Lifecycle: pinned layout on tall screens, static layout otherwise ─────
+  let active = false;
+  let unsubscribe: (() => void) | null = null;
+  let inView = true;
+
+  const subscribe = () => {
+    if (active && inView && !unsubscribe) unsubscribe = onScroll(tick);
+  };
+  const unsubscribeScroll = () => {
+    unsubscribe?.();
+    unsubscribe = null;
+  };
+
+  const start = () => {
+    if (active) return;
+    active = true;
+    measure();
+    readTarget();
+    p = target;
+    applied = Number.NaN;
+    request(tick);
+    subscribe();
+  };
+
+  const stop = () => {
+    if (!active) return;
+    active = false;
+    unsubscribeScroll();
+    clearStyles();
+    video.hidden = true;
+  };
+
+  // Scroll work runs only while the hero is on screen.
+  new IntersectionObserver(([entry]) => {
+    inView = entry.isIntersecting;
+    if (inView) subscribe();
+    else unsubscribeScroll();
+    request(tick); // settle on the final state after a fast exit
+  }).observe(root);
 
   new ResizeObserver(() => {
+    if (!active) return;
     measure();
     request(tick);
   }).observe(stage);
 
+  const pinQuery = window.matchMedia(PIN_QUERY);
+  const sync = () => {
+    html.classList.toggle('hero-pin', pinQuery.matches);
+    if (pinQuery.matches) start();
+    else stop();
+  };
+  pinQuery.addEventListener('change', sync);
+  sync();
+
   // Keyboard users who tab back into the hero intro get it brought back into view.
   intro.addEventListener('focusin', () => {
-    if (target > 0.05) window.scrollTo({ top, behavior: 'smooth' });
+    if (active && target > 0.05) window.scrollTo({ top, behavior: 'smooth' });
   });
 
-  if (document.readyState === 'complete') setTimeout(loadFilm, 250);
-  else window.addEventListener('load', () => setTimeout(loadFilm, 250), { once: true });
+  const scheduleFilm = () => setTimeout(loadFilm, 250);
+  if (document.readyState === 'complete') scheduleFilm();
+  else window.addEventListener('load', scheduleFilm, { once: true });
 }

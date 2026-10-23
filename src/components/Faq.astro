@@ -3,6 +3,7 @@ import SectionIndex from './SectionIndex.astro';
 import SplitText from './SplitText.astro';
 import Icon from './Icon.astro';
 import { faq, type FaqItem } from '../data/faq';
+import { keep } from '../lib/text';
 
 interface Props {
   items?: FaqItem[];
@@ -16,7 +17,7 @@ const { items = faq, n = '08', title = 'Հաճախ տրվող հարցեր' } = 
     <div class="faq__head">
       <SectionIndex n={n} label="Հարցեր" />
       <SplitText id="faq-title" class="h1" text={title} />
-      <p class="muted faq__hint" data-reveal>Չգտա՞ք ձեր հարցի պատասխանը։ Գրեք այն հայտում՝ ակադեմիան կպատասխանի։</p>
+      <p class="muted faq__hint" data-reveal>Չգտա՞ք Ձեր հարցի պատասխանը։ Գրեք այն հայտում՝ ակադեմիան կպատասխանի։</p>
     </div>
     <div class="faq__list">
       {items.map((item, i) => (
@@ -26,10 +27,10 @@ const { items = faq, n = '08', title = 'Հաճախ տրվող հարցեր' } = 
             <span class="faq__icon" aria-hidden="true"><Icon name="plus" /></span>
           </summary>
           <div class="faq__a">
-            {item.a.map((p) => <p>{p}</p>)}
+            {item.a.map((p) => <p>{keep(p)}</p>)}
             {item.list && (
               <ul>
-                {item.list.map((li) => <li>{li}</li>)}
+                {item.list.map((li) => <li>{keep(li)}</li>)}
               </ul>
             )}
           </div>
@@ -94,6 +95,6 @@ const { items = faq, n = '08', title = 'Հաճախ տրվող հարցեր' } = 
 
   @media (min-width: 1000px) {
     .faq__grid { grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr); }
-    .faq__head { position: sticky; top: calc(var(--header-h) + 40px); }
+    .faq__head { position: sticky; top: calc(var(--header-h) + 40px); align-self: start; }
   }
 </style>

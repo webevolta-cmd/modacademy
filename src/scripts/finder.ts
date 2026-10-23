@@ -15,6 +15,7 @@ export function initFinder(root: HTMLElement): void {
   const form = root.querySelector<HTMLFormElement>('[data-finder-form]');
   const list = root.querySelector<HTMLOListElement>('[data-finder-list]');
   const empty = root.querySelector<HTMLElement>('[data-finder-empty]');
+  const status = root.querySelector<HTMLElement>('[data-finder-status]');
   const dataEl = root.querySelector('[data-finder-courses]');
   if (!form || !list || !empty || !dataEl) return;
 
@@ -27,7 +28,12 @@ export function initFinder(root: HTMLElement): void {
     return node;
   };
 
-  const render = () => {
+  // Screen readers hear a short count, not the whole result list, after each change.
+  const announce = (text: string) => {
+    if (status) status.textContent = text;
+  };
+
+  const render = (changed = true) => {
     const data = new FormData(form);
     const interests = data.getAll('interest').map(String);
     const level = (data.get('level') as LevelId) || 'new';
@@ -35,6 +41,7 @@ export function initFinder(root: HTMLElement): void {
     list.replaceChildren();
     if (!interests.length) {
       empty.hidden = false;
+      if (changed) announce(empty.textContent ?? '');
       return;
     }
     empty.hidden = true;
@@ -70,16 +77,23 @@ export function initFinder(root: HTMLElement): void {
       const links = el('div', 'match__links');
       const more = el('a', 'link-arrow', 'Մանրամասն');
       more.href = `/courses/${c.slug}/`;
+      more.append(el('span', 'visually-hidden', ` «${c.title}» դասընթացի մասին`));
       const ask = el('a', 'link-arrow', 'Ուղարկել հայտ');
+      ask.append(el('span', 'visually-hidden', ` «${c.title}» դասընթացի համար`));
       ask.href = `/?course=${c.slug}#inquiry`;
       ask.dataset.inquiryCourse = c.slug;
       links.append(more, ask);
       li.append(links);
       list.append(li);
     });
+
+    if (changed) {
+      const first = scored[0]?.c.title;
+      announce(`Գտնվեց ${scored.length} առաջարկ${first ? `․ առաջինը՝ «${first}»` : ''}։`);
+    }
   };
 
-  form.addEventListener('change', render);
+  form.addEventListener('change', () => render());
   form.addEventListener('submit', (e) => e.preventDefault());
-  render();
+  render(false);
 }

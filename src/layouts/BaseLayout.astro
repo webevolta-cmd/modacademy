@@ -4,11 +4,15 @@ import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import { site } from '../data/site';
 import { isIndexable } from '../../site.config.mjs';
+// The display face's Armenian subset is preloaded so headlines do not reflow when it arrives.
+import serifArmenian from '@fontsource-variable/noto-serif-armenian/files/noto-serif-armenian-armenian-wdth-normal.woff2?url';
 
 interface Props {
   title: string;
   description: string;
   image?: string;
+  imageWidth?: number;
+  imageHeight?: number;
   imageAlt?: string;
   noindex?: boolean;
   jsonLd?: Record<string, unknown>[];
@@ -19,6 +23,8 @@ const {
   title,
   description,
   image = '/media/og/mod-academy-og.jpg',
+  imageWidth = 1200,
+  imageHeight = 630,
   imageAlt = 'MOD Academy — ինտերիեր դիզայնի և 3D վիզուալիզացիայի դասընթացներ Երևանում',
   noindex = false,
   jsonLd = [],
@@ -28,7 +34,7 @@ const {
 const siteUrl = Astro.site!;
 const canonical = new URL(Astro.url.pathname, siteUrl).href;
 const ogImage = new URL(image, siteUrl).href;
-const robots = isIndexable && !noindex ? 'index, follow, max-image-preview:large' : 'noindex, nofollow';
+const robots = isIndexable && !noindex ? 'index, follow, max-image-preview:large' : 'noindex, follow';
 
 const organization = {
   '@context': 'https://schema.org',
@@ -38,7 +44,7 @@ const organization = {
   alternateName: site.formerName,
   url: new URL('/', siteUrl).href,
   logo: new URL('/brand/mod-academy-logo.png', siteUrl).href,
-  image: ogImage,
+  image: new URL('/media/og/mod-academy-og.jpg', siteUrl).href,
   description: site.description,
   telephone: site.phone.e164,
   email: site.email,
@@ -61,7 +67,7 @@ const organization = {
     <title>{title}</title>
     <meta name="description" content={description} />
     <meta name="robots" content={robots} />
-    <link rel="canonical" href={canonical} />
+    {!noindex && <link rel="canonical" href={canonical} />}
     <meta name="theme-color" content="#f4efe8" />
     <meta name="format-detection" content="telephone=no" />
 
@@ -69,31 +75,36 @@ const organization = {
     <link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <link rel="manifest" href="/site.webmanifest" />
+    <link rel="preload" as="font" type="font/woff2" href={serifArmenian} crossorigin />
 
     <meta property="og:type" content="website" />
     <meta property="og:locale" content="hy_AM" />
     <meta property="og:site_name" content={site.name} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
-    <meta property="og:url" content={canonical} />
+    {!noindex && <meta property="og:url" content={canonical} />}
     <meta property="og:image" content={ogImage} />
-    <meta property="og:image:width" content="1200" />
-    <meta property="og:image:height" content="630" />
+    <meta property="og:image:width" content={String(imageWidth)} />
+    <meta property="og:image:height" content={String(imageHeight)} />
     <meta property="og:image:alt" content={imageAlt} />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={ogImage} />
+    <meta name="twitter:image:alt" content={imageAlt} />
 
     <slot name="head" />
 
     <script is:inline>
       // Decide before first paint whether motion is allowed, so the scroll-driven layout
-      // never flashes in after the static one.
+      // never flashes in after the static one. The pinned hero also needs a tall enough
+      // screen (see PIN_QUERY in src/scripts/hero.ts).
       (function () {
         var d = document.documentElement;
         d.classList.add('js');
-        if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) d.classList.add('motion');
+        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+        d.classList.add('motion');
+        if (window.matchMedia('(min-height: 540px)').matches) d.classList.add('hero-pin');
       })();
     </script>
 

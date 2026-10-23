@@ -24,7 +24,9 @@ let rafId = 0;
 let last = 0;
 
 function loop(now: number) {
-  const dt = Math.min(64, now - last || 16.7);
+  // The first frame of a burst has no previous timestamp; a frame's rAF time can also be
+  // slightly earlier than the event that scheduled it, so dt is clamped to a sane range.
+  const dt = last ? Math.min(64, Math.max(1, now - last)) : 16.7;
   last = now;
   rafId = 0;
   const current = [...queue];
@@ -39,7 +41,7 @@ function loop(now: number) {
 export function request(tick: Tick): void {
   queue.add(tick);
   if (!rafId) {
-    last = performance.now();
+    last = 0;
     rafId = requestAnimationFrame(loop);
   }
 }

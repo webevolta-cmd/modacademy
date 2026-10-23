@@ -1,0 +1,131 @@
+---
+// Course index: the target of the "Դասընթացներ" breadcrumb and of trimmed course URLs.
+import { Picture } from 'astro:assets';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import SplitText from '../../components/SplitText.astro';
+import CourseFacts from '../../components/CourseFacts.astro';
+import CourseArt from '../../components/CourseArt.astro';
+import Icon from '../../components/Icon.astro';
+import { courses, priceNote } from '../../data/courses';
+import { site } from '../../data/site';
+
+const siteUrl = Astro.site!;
+
+const jsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'ItemList',
+    name: 'MOD Academy դասընթացներ',
+    itemListElement: courses.map((c, i) => ({
+      '@type': 'ListItem',
+      position: i + 1,
+      url: new URL(`/courses/${c.slug}/`, siteUrl).href,
+    })),
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Գլխավոր', item: new URL('/', siteUrl).href },
+      { '@type': 'ListItem', position: 2, name: 'Դասընթացներ', item: new URL('/courses/', siteUrl).href },
+    ],
+  },
+];
+---
+<BaseLayout
+  title="Դասընթացներ — MOD Academy, Երևան"
+  description="MOD Academy-ի դասընթացները՝ ինտերիեր դիզայն, 3Ds Max, Corona Renderer, գրաֆիկ դիզայն և վաճառքի կառավարում՝ տևողությամբ, ժամանակացույցով և արժեքով։"
+  jsonLd={jsonLd}
+>
+  <section class="ci section" aria-labelledby="ci-title">
+    <div class="wrap">
+      <nav aria-label="Ճանապարհ" class="ci__crumbs">
+        <ol role="list">
+          <li><a href="/">Գլխավոր</a></li>
+          <li aria-current="page">Դասընթացներ</li>
+        </ol>
+      </nav>
+      <div class="ci__head">
+        <SplitText as="h1" id="ci-title" class="display ci__title" text="Դասընթացներ" />
+        <p class="lead" data-reveal>
+          Դիզայն, 3D վիզուալիզացիա և բիզնես։ Ընտրեք դասընթացը՝ մանրամասները տեսնելու կամ հայտ ուղարկելու համար։
+        </p>
+      </div>
+
+      <ol class="ci__list" role="list">
+        {courses.map((c, i) => (
+          <li class="ci__item" data-reveal style={`--i:${i % 3}`}>
+            <article class="ci__card" aria-labelledby={`ci-${c.slug}`}>
+              <div class="ci__visual frame" aria-hidden="true">
+                {c.image ? (
+                  <Picture
+                    src={c.image}
+                    alt=""
+                    widths={[360, 540, 720]}
+                    sizes="(min-width: 1000px) 30vw, (min-width: 640px) 46vw, 92vw"
+                    formats={['avif', 'webp']}
+                    fallbackFormat="webp"
+                    loading={i < 2 ? 'eager' : 'lazy'}
+                  />
+                ) : (
+                  <CourseArt letter={c.title.charAt(0)} />
+                )}
+              </div>
+              <p class="label ci__kicker">{c.kicker}</p>
+              <h2 class="h2" id={`ci-${c.slug}`}>
+                <a class="ci__link" href={`/courses/${c.slug}/`}>{c.title}</a>
+              </h2>
+              <p class="ci__summary">{c.summary}</p>
+              <CourseFacts course={c} compact />
+              <span class="link-arrow ci__more" aria-hidden="true">Մանրամասն<Icon name="arrow" /></span>
+            </article>
+          </li>
+        ))}
+      </ol>
+
+      <p class="ci__note muted">{priceNote}</p>
+      <div class="ci__cta">
+        <a class="btn btn--red" href="/#inquiry">Ուղարկել հայտ<Icon name="arrow" class="btn__icon" /></a>
+        <a class="btn btn--ghost" href={site.phone.href}><Icon name="phone" class="btn__icon" />{site.phone.local}</a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .ci { padding-top: calc(var(--header-h) + clamp(24px, 4vw, 56px)); background: var(--paper); }
+
+  .ci__crumbs ol { display: flex; flex-wrap: wrap; gap: 6px; font-size: 0.82rem; color: var(--muted); }
+  .ci__crumbs li + li::before { content: '/'; margin-right: 6px; opacity: 0.6; }
+  .ci__crumbs a { display: inline-block; padding-block: 10px; text-decoration: none; }
+  .ci__crumbs a:hover { color: var(--red); }
+
+  .ci__head { display: grid; gap: 20px; margin: 12px 0 clamp(36px, 5vw, 64px); }
+  .ci__title { font-size: clamp(2.6rem, 1.2rem + 5vw, 6.2rem); }
+
+  .ci__list { display: grid; gap: clamp(32px, 4vw, 56px) clamp(16px, 2vw, 32px); }
+
+  /* The whole card opens the course page; the title link carries the name and the focus ring. */
+  .ci__card { position: relative; display: grid; gap: 12px; align-content: start; }
+  .ci__visual { aspect-ratio: 4 / 3; }
+  .ci__visual :global(img) { transition: transform 1.2s var(--ease-out); }
+  .ci__card:hover .ci__visual :global(img) { transform: scale(1.05); }
+  .ci__kicker { color: var(--red); margin-top: 6px; }
+  .ci__link { text-decoration: none; }
+  .ci__link::after { content: ''; position: absolute; inset: 0; }
+  .ci__card:hover .ci__link { color: var(--red); }
+  .ci__summary { color: var(--ink-soft); }
+  .ci__more { justify-self: start; }
+
+  .ci__note { margin-top: clamp(32px, 4vw, 48px); font-size: 0.85rem; max-width: 52rem; }
+  .ci__cta { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 20px; }
+
+  @media (min-width: 640px) {
+    .ci__list { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  }
+
+  @media (min-width: 1000px) {
+    .ci__head { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); align-items: end; }
+    .ci__list { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  }
+</style>

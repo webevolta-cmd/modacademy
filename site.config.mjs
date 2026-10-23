@@ -7,13 +7,29 @@
 // FORM_ENDPOINT  Optional HTTPS endpoint (e.g. Formspree) that accepts the inquiry form as
 //                application/x-www-form-urlencoded. When empty, Netlify Forms is used on Netlify.
 
+// A local .env file (see .env.example) is read here so astro.config.mjs and the pages see the
+// same values. Variables already set in the environment take precedence.
+try {
+  process.loadEnvFile('.env');
+} catch {
+  /* no .env file */
+}
+
 const env = process.env;
+const publicUrl = env.SITE_URL || env.URL || '';
 
-export const siteUrl = (env.SITE_URL || env.URL || 'https://modacademy.netlify.app').replace(/\/$/, '');
+export const siteUrl = (publicUrl || 'http://localhost:4321').replace(/\/$/, '');
 
-export const isIndexable = env.SITE_INDEXABLE
+const wantsIndexing = env.SITE_INDEXABLE
   ? env.SITE_INDEXABLE === 'true'
   : env.NETLIFY === 'true' && env.CONTEXT === 'production';
+
+// Without a known public URL, canonical links and the sitemap would point to the wrong host,
+// so such a build is never offered to search engines.
+export const isIndexable = wantsIndexing && Boolean(publicUrl);
+if (wantsIndexing && !publicUrl) {
+  console.warn('[site.config] SITE_INDEXABLE is true but neither SITE_URL nor URL is set; building as noindex.');
+}
 
 export const isNetlifyBuild = env.NETLIFY === 'true';
 

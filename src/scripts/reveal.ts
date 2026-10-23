@@ -1,4 +1,5 @@
 // Entrance reveals, headline word reveals and verified-figure counters.
+// Counters animate an aria-hidden copy; the real figure is always in the accessible text.
 import { easeOutCubic, motionAllowed } from './motion';
 
 export function initReveal(): void {
@@ -7,6 +8,11 @@ export function initReveal(): void {
     targets.forEach((el) => el.classList.add('is-in'));
     return;
   }
+
+  // Keyboard focus reveals its container at once rather than waiting for the observer.
+  document.addEventListener('focusin', (e) => {
+    (e.target as Element).closest?.('[data-reveal], [data-split], .sec-index')?.classList.add('is-in');
+  });
 
   const io = new IntersectionObserver(
     (entries) => {

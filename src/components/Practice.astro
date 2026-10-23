@@ -4,6 +4,7 @@ import SectionIndex from './SectionIndex.astro';
 import SplitText from './SplitText.astro';
 import Icon from './Icon.astro';
 import { practice } from '../data/media';
+import { keep } from '../lib/text';
 
 const items = await Promise.all(
   practice.map(async (p) => {
@@ -26,8 +27,8 @@ function formatDate(iso: string) {
       <SplitText id="practice-title" class="h1" text="Ուսուցում լսարանից դուրս" accent="դուրս" />
       <div class="practice__intro" data-reveal>
         <p class="lead">
-          Նյութը պետք է տեսնել և շոշափել։ «Ինտերիեր դիզայն» դասընթացի ուսանողները գործնական դասեր են ունենում Երևանի
-          դիզայնի սրահներում, իսկ վաճառքի դասերն անցնում են ինտերակտիվ ձևաչափով։
+          Նյութը պետք է տեսնել և շոշափել։ Ակադեմիայի ուսանողները, այդ թվում՝ «Ինտերիեր դիզայն» դասընթացի, գործնական
+          դասեր են ունենում Երևանի դիզայնի սրահներում, իսկ վաճառքի դասերն անցնում են ինտերակտիվ ձևաչափով։
         </p>
         <ul class="practice__partners" role="list" aria-label="Գործնական դասերի վայրեր">
           {partners.map((p) => (
@@ -52,7 +53,7 @@ function formatDate(iso: string) {
               data-lb-src={p.large}
               data-lb-alt={p.alt}
               data-lb-title={p.caption}
-              data-lb-credit={`${p.partner} · ${p.course} · ${formatDate(p.date)}`}
+              data-lb-credit={`${p.partner} · ${p.course} · Հրապարակում՝ ${formatDate(p.date)}`}
               aria-label={`Բացել մեծ չափով՝ ${p.caption}`}
             >
               <Picture
@@ -68,16 +69,17 @@ function formatDate(iso: string) {
               />
             </button>
             <figcaption class="practice__cap">
-              <span class="label">{p.partner}</span>
+              <span class="label">{keep(p.partner)}</span>
               <span class="practice__t">{p.caption}</span>
-              <span class="practice__meta">{p.course} · <time datetime={p.date}>{formatDate(p.date)}</time></span>
+              <span class="practice__meta">{p.course} · Հրապարակում՝ <time datetime={p.date}>{formatDate(p.date)}</time></span>
             </figcaption>
           </figure>
         </li>
       ))}
     </ul>
     <p class="practice__note muted" data-reveal>
-      Լուսանկարները՝ ակադեմիայի Instagram էջում հրապարակված տեսանյութերից (2026 թ. հոկտեմբեր)։
+      Լուսանկարները՝ ակադեմիայի Instagram էջում հրապարակված տեսանյութերից (2026 թ. հոկտեմբեր)․ նշված են հրապարակման
+      ամսաթվերը։
     </p>
   </div>
 </section>

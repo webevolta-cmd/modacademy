@@ -5,6 +5,8 @@ import SplitText from './SplitText.astro';
 import CourseFacts from './CourseFacts.astro';
 import CourseArt from './CourseArt.astro';
 import Icon from './Icon.astro';
+import Upper from './Upper.astro';
+import { keep } from '../lib/text';
 import { courses, categories, priceNote, formatFee } from '../data/courses';
 
 const counts = Object.fromEntries(
@@ -15,9 +17,9 @@ const counts = Object.fromEntries(
   <div class="wrap">
     <SectionIndex n="02" label="Դասընթացներ" />
     <div class="courses__head">
-      <SplitText id="courses-title" class="h1" text="Ընտրիր քո ուղղությունը" accent="ուղղությունը" />
+      <SplitText id="courses-title" class="h1" text="Ընտրեք Ձեր ուղղությունը" accent="ուղղությունը" />
       <p class="lead" data-reveal>
-        Դիզայն, 3D վիզուալիզացիա և բիզնես․ յուրաքանչյուր դասընթաց ունի իր ձևաչափը, գրաֆիկը և մանրամասն էջը։
+        Դիզայն, 3D վիզուալիզացիա և բիզնես․ յուրաքանչյուր դասընթաց ունի իր ձևաչափը, ժամանակացույցը և առանձին էջը։
       </p>
     </div>
 
@@ -50,7 +52,7 @@ const counts = Object.fromEntries(
               {c.image ? (
                 <Picture
                   src={c.image}
-                  alt=""
+                  alt={c.title}
                   widths={[320, 480, 720]}
                   sizes="(min-width: 1100px) 260px, (min-width: 700px) 40vw, 92vw"
                   formats={['avif', 'webp']}
@@ -58,7 +60,10 @@ const counts = Object.fromEntries(
                   loading="lazy"
                 />
               ) : (
-                <CourseArt letter={c.title.charAt(0)} />
+                <>
+                  <CourseArt letter={c.title.charAt(0)} />
+                  <span class="visually-hidden">{c.title}</span>
+                </>
               )}
             </a>
             <div class="course__main">
@@ -91,15 +96,15 @@ const counts = Object.fromEntries(
         <span>Համեմատել դասընթացները</span>
         <Icon name="plus" class="compare__icon" />
       </summary>
-      <div class="compare__scroll" tabindex="0" role="region" aria-label="Դասընթացների համեմատական աղյուսակ">
+      <div class="compare__scroll" tabindex="0" role="region" aria-label="Դասընթացների համեմատական աղյուսակ" data-compare-scroll>
         <table class="compare__table">
           <caption class="visually-hidden">Դասընթացների համեմատություն</caption>
           <thead>
             <tr>
               <th scope="col">Դասընթաց</th>
-              <th scope="col">Ձևաչափ</th>
-              <th scope="col">Տևողություն</th>
-              <th scope="col">Գրաֆիկ</th>
+              <th scope="col"><Upper text="Ձևաչափ" /></th>
+              <th scope="col"><Upper text="Տևողություն" /></th>
+              <th scope="col">Ժամանակացույց</th>
               <th scope="col">Արժեք</th>
               <th scope="col">Ում համար</th>
             </tr>
@@ -111,9 +116,24 @@ const counts = Object.fromEntries(
                 <td>{c.format}</td>
                 <td>{c.duration ?? '—'}</td>
                 <td>
-                  {c.schedule ? c.schedule.map((g) => <span class="compare__line">{g.daysShort} · {g.time}</span>) : '—'}
+                  {c.schedule
+                    ? c.schedule.map((g) => (
+                        <span class="compare__line">
+                          {g.daysShort.replaceAll(' · ', ', ')}՝ <span class="compare__time">{keep(g.time)}</span>
+                        </span>
+                      ))
+                    : '—'}
                 </td>
-                <td>{c.fee ? `${formatFee(c.fee.amount)} · ${c.fee.unit}` : '—'}</td>
+                <td>
+                  {c.fee ? (
+                    <>
+                      <span class="compare__line compare__time">{formatFee(c.fee.amount)}</span>
+                      <span class="compare__line muted">{c.fee.unit}</span>
+                    </>
+                  ) : (
+                    '—'
+                  )}
+                </td>
                 <td>{c.level ?? 'Ճշտեք ակադեմիայում'}</td>
               </tr>
             ))}
@@ -173,6 +193,10 @@ const counts = Object.fromEntries(
   }
 
   .chip[aria-pressed='true'] .chip__count { background: var(--red); color: #fff; }
+
+  @media (forced-colors: active) {
+    .chip[aria-pressed='true'] { border: 3px solid Highlight; }
+  }
 
   .courses__status { font-size: 0.85rem; }
 
@@ -273,11 +297,24 @@ const counts = Object.fromEntries(
   .compare[open] :global(.compare__icon) { transform: rotate(45deg); }
 
   .compare__scroll { overflow-x: auto; padding-bottom: 8px; }
+  /* While more columns sit off to the right, the edge fades to hint that the table scrolls. */
+  .compare__scroll.can-scroll { -webkit-mask-image: linear-gradient(90deg, #000 calc(100% - 56px), transparent); mask-image: linear-gradient(90deg, #000 calc(100% - 56px), transparent); }
 
-  .compare__table { width: 100%; min-width: 860px; border-collapse: collapse; font-size: 0.92rem; }
+  .compare__table { width: 100%; min-width: 760px; border-collapse: collapse; font-size: 0.92rem; }
 
   .compare__table th,
   .compare__table td { text-align: left; vertical-align: top; padding: 14px 16px 14px 0; border-top: 1px solid var(--line); }
+
+  /* Course names stay in view while the table scrolls sideways. */
+  .compare__table tbody th,
+  .compare__table thead th:first-child {
+    position: sticky;
+    left: 0;
+    z-index: 1;
+    background: var(--paper-2);
+    box-shadow: 1px 0 0 var(--line);
+    padding-left: 2px;
+  }
 
   .compare__table thead th {
     font-size: 0.7rem;
@@ -291,6 +328,8 @@ const counts = Object.fromEntries(
   .compare__table tbody th { font-weight: 600; }
   .compare__table a { text-decoration: none; }
   .compare__table a:hover { color: var(--red); }
-  .compare__line { display: block; white-space: nowrap; }
+  .compare__line { display: block; }
+  .compare__line + .compare__line { margin-top: 4px; }
+  .compare__time { font-variant-numeric: tabular-nums; }
   .compare__foot { font-size: 0.8rem; padding-block: 8px 20px; }
 </style>

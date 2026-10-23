@@ -12,6 +12,7 @@
   --muted: #5d5247;
   --line: rgb(21 18 15 / 0.13);
   --line-strong: rgb(21 18 15 / 0.3);
+  --line-control: rgb(21 18 15 / 0.52); /* form control edges: ≥3:1 on paper and card */
   --red: #b3121b;
   --red-deep: #8f0d15;
   --red-soft: #f3dcd9;
@@ -89,6 +90,9 @@ img,
 video { height: auto; }
 
 h1, h2, h3, h4, p, figure, blockquote, dl, dd, ul, ol { margin: 0; }
+
+/* Author display rules must never override the hidden attribute. */
+[hidden] { display: none !important; }
 ul[role='list'], ol[role='list'] { list-style: none; padding: 0; }
 
 a { color: inherit; text-decoration-thickness: 1px; text-underline-offset: 0.22em; }
@@ -108,7 +112,9 @@ button { cursor: pointer; }
   border-radius: 1px;
 }
 
-.on-night :focus-visible { outline-color: var(--on-night); }
+/* Dark surfaces get a light focus ring (red on near-black is under 3:1). */
+.on-night :focus-visible,
+.on-dark :focus-visible { outline-color: var(--on-night); }
 
 /* ───────────────────────────── Type ───────────────────────────── */
 .display,
@@ -196,6 +202,7 @@ em.accent {
 
 .visually-hidden {
   position: absolute !important;
+  text-transform: none;
   width: 1px;
   height: 1px;
   padding: 0;
@@ -221,6 +228,10 @@ em.accent {
 }
 
 .skip-link:focus { transform: translateY(0); }
+
+/* Targets that receive focus programmatically (skip link, menu links) need no ring. */
+main:focus,
+section[tabindex='-1']:focus { outline: none; }
 
 /* Section heading pattern: index · label · hairline */
 .sec-index {
@@ -447,11 +458,15 @@ em.accent {
 .motion [data-reveal='left'] { transform: translate3d(-32px, 0, 0); }
 .motion [data-reveal='scale'] { transform: scale(0.96); }
 
-.motion [data-reveal].is-in {
+.motion [data-reveal].is-in,
+.motion [data-reveal]:focus-within {
   opacity: 1;
   transform: none;
   filter: none;
 }
+
+/* A keyboard user never lands on something that is still fading in. */
+.motion [data-reveal]:focus-within { transition: none; }
 
 /* Word-by-word headline reveal */
 .split .w {

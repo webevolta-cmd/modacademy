@@ -2,6 +2,15 @@
 import { motionAllowed } from './motion';
 
 export function initCourseFilter(root: HTMLElement): void {
+  // The comparison table fades its right edge while more columns are off-screen.
+  const scroller = root.querySelector<HTMLElement>('[data-compare-scroll]');
+  if (scroller) {
+    const hint = () =>
+      scroller.classList.toggle('can-scroll', scroller.scrollLeft + scroller.clientWidth < scroller.scrollWidth - 4);
+    scroller.addEventListener('scroll', hint, { passive: true });
+    new ResizeObserver(hint).observe(scroller);
+  }
+
   const buttons = [...root.querySelectorAll<HTMLButtonElement>('[data-filter]')];
   const rows = [...root.querySelectorAll<HTMLElement>('[data-course-row]')];
   const status = root.querySelector<HTMLElement>('[data-filter-status]');

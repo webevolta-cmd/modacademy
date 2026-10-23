@@ -23,16 +23,11 @@ const jsonLd = [
     '@context': 'https://schema.org',
     '@type': 'ItemList',
     name: 'MOD Academy դասընթացներ',
+    // Summary list: full Course markup lives on each course page.
     itemListElement: courses.map((c, i) => ({
       '@type': 'ListItem',
       position: i + 1,
-      item: {
-        '@type': 'Course',
-        name: c.title,
-        description: c.summary,
-        url: new URL(`/courses/${c.slug}/`, siteUrl).href,
-        provider: { '@id': new URL('/#organization', siteUrl).href },
-      },
+      url: new URL(`/courses/${c.slug}/`, siteUrl).href,
     })),
   },
   {
@@ -41,19 +36,22 @@ const jsonLd = [
     mainEntity: faq.map((f) => ({
       '@type': 'Question',
       name: f.q,
-      acceptedAnswer: { '@type': 'Answer', text: [...f.a, ...(f.list ?? [])].join(' ') },
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: [...f.a, ...(f.list ? [`${f.list.join('; ')}։`] : [])].join(' '),
+      },
     })),
   },
 ];
 ---
 <BaseLayout
-  title="MOD Academy — ինտերիեր դիզայնի, 3Ds Max-ի և գրաֆիկ դիզայնի դասընթացներ Երևանում"
+  title="MOD Academy — ինտերիեր դիզայնի և 3D դասընթացներ Երևանում"
   description={site.description}
   jsonLd={jsonLd}
 >
   <Fragment slot="head">
-    <link rel="preload" as="image" href="/media/hero/hero-1440-poster.webp" media="(min-aspect-ratio: 4/5)" fetchpriority="high" />
-    <link rel="preload" as="image" href="/media/hero/hero-900x1200-poster.webp" media="(max-aspect-ratio: 4/5)" fetchpriority="high" />
+    <link rel="preload" as="image" href="/media/hero/hero-desktop-v2-poster.webp" media="(min-aspect-ratio: 4/5)" fetchpriority="high" />
+    <link rel="preload" as="image" href="/media/hero/hero-mobile-v2-poster.webp" media="(max-aspect-ratio: 4/5)" fetchpriority="high" />
   </Fragment>
   <Hero />
   <About />

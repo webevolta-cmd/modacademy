@@ -5,7 +5,7 @@ export const site = {
   formerName: 'MOD School',
   tagline: 'Ստեղծի՛ր ապագայիդ պրոֆեսիոնալ ուղին',
   description:
-    'MOD Academy-ն Երևանում՝ ինտերիեր դիզայնի, 3Ds Max-ի, Corona Renderer-ի, գրաֆիկ դիզայնի և վաճառքի կառավարման դասընթացներ՝ գործնական դասերով և ուսանողական պորտֆոլիոյով։',
+    'Ինտերիեր դիզայնի, 3Ds Max-ի, Corona Renderer-ի, գրաֆիկ դիզայնի և վաճառքի կառավարման դասընթացներ Երևանում՝ գործնական դասերով։',
   phone: {
     display: '+374 93 950 960',
     local: '093 950 960',
@@ -43,10 +43,10 @@ export const site = {
   },
   // Figures published by the academy itself in its Instagram bio.
   stats: [
-    { value: 7, suffix: '+', label: 'տարի ուսուցման ոլորտում' },
+    { value: 7, suffix: '+', label: 'տարի' },
     { value: 1000, suffix: '+', label: 'ուսանող' },
   ],
-  statsSource: 'Ըստ ակադեմիայի պաշտոնական Instagram էջի',
+  statsSource: 'Ըստ ակադեմիայի Instagram էջի',
   dataAsOf: '2026-10-23',
 } as const;
 
