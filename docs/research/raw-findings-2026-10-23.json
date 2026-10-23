@@ -1,0 +1,1235 @@
+{
+ "findings": [
+  {
+   "key": "maps",
+   "result": {
+    "summary": "Location and listing check for MOD Academy (Yerevan), accessed 2026-10-23. GOOGLE: I found no Google Maps or Google Business Profile listing for MOD Academy, and none for the related MOD Interior & Architecture Studio. I ran about 25 Google Maps searches through the tbm=map and preview/place endpoints and opened about 95 candidate place records. The searches covered English and Armenian names, the phone number, the address, and narrow map areas around Tigran Mets 4. So there is no Google rating, review count, opening hours or Google review text to report. Searching Google Maps for \"MOD Academy Tigran Mets 4\" instead returns other businesses in the same building: MekStep Academy (7th floor, 5.0 from 31 reviews) and CC ACADEMY (4.9 from 28). A name-based Google Maps link would therefore be misleading. YANDEX MAPS has the academy as \"Mod\" (org id 233735196629): Tigran Mets Avenue 4, 7th floor, coordinates 40.175927, 44.513697. Its categories are \"Courses and master classes\" and \"interior design\". Phones are +374 55 204721 and +374 93 950960; the second matches the academy's Instagram phone. Hours are Mon–Fri 10:00–18:00, closed Sat–Sun. It has 0 ratings or reviews and 24 photos, including a corridor door with the MOD logo. 2GIS describes the building as \"Tigran Mets avenue 4 / Mher Mkrtchyan street 4\": a 7-storey administrative building, postcode 0010, Kentron, corner of Tigran Mets Ave and Mher Mkrtchyan St. Other tenants are the State Commission for the Protection of Economic Competition, Ekeng and a notary office. It is about 226 m in a straight line from Republic Square. The nearest bus stop, \"Tigran Mets / Mher Mkrtchyan\", is 68 m away. Republic Square metro is 440 m and Zoravar Andranik metro is 510–550 m. 2GIS has no MOD Academy listing. The STUDIO is at a different address, Nalbandyan St 5, about 415 m from the academy building, according to 2GIS, Yandex and a Spyur search snippet. Its 2GIS phone is +374 55 214721. Its Yandex phones are +374 55 204721 and +374 55 214721. Its Facebook page plugin shows +374 93 950960, the same number as the academy. The studio's Yandex listing (4.3 from 6 ratings) has one real review, from \"Ara\", 5 stars, 2025-08-22, praising the education. Spyur is blocked by Cloudflare (403) for both curl and WebFetch, so its details come only from search snippets. One of those snippets mentions a \"MOD SCHOOL\" (computer training) at Tigran Mets Ave 4; it is not confirmed to be the academy. The best Google link is address-based, using the Google place_id for the address itself (ChIJneoEZPe8akARERqq1EGUhMI).",
+    "facts": [
+     {
+      "topic": "Google Maps / Google Business Profile",
+      "fact": "I found no Google Maps or Google Business Profile listing for 'MOD Academy' in Yerevan. Queries tried included: MOD Academy; MOD Academy Yerevan; MOD Academy Armenia; MOD Academy Tigran Mets 4; Մոդ ակադեմիա; ՄՕԴ ակադեմիա; MOD ակադեմիա; Mod Academy Kentron; MOD academy 3ds max; Mod courses; +37493950960; 093 950960; and 'MOD Academy, 4 Tigran Mets Ave, Yerevan 0010'. I also searched with a narrow map area (600–1500 m) around Tigran Mets 4 and opened about 95 candidate place records. None was MOD Academy. A plain 'MOD Academy' search returns an unrelated Italian school, 'MOD Academy Mua Online Department' (modacademy.it). As a result there is no Google rating, review count, hours, category or Google review text to report.",
+      "source_url": "https://www.google.com/search?tbm=map&hl=en&gl=am&q=MOD+Academy+Yerevan",
+      "source_date": "2026-10-23 (live query)",
+      "status": "verified_current",
+      "notes": "Accessed 2026-10-23. This is a negative result: a listing could still exist under an unexpected name or be hidden from these queries, but nothing was returned. Raw responses are in (working dir)/research/agents/maps/dl/ (gq_*.txt, q2_*.txt, q3_*.txt, near_*.txt, linktest_*.txt, places/)."
+     },
+     {
+      "topic": "Google Maps - other businesses at the same address (do not confuse)",
+      "fact": "Searching Google Maps for 'MOD Academy Tigran Mets 4' returns other businesses at the address, not MOD Academy. MekStep Academy: 'Տիգրան Մեծ 4, 7-րդ հարկ', 5.0 from 31 reviews, phone 098 992698, sales/AI training. CC ACADEMY: '4 Tigran Mets Ave', 4.9 from 28 reviews, phone 044 233005. Other Google listings at 4 Tigran Mets Ave include Ekeng, English House, Notary Public, OMNI (7th floor), Margasoft (5th floor), Gharsi Khorovats, ArmMed Group and MoneyGram.",
+      "source_url": "https://www.google.com/maps/preview/place?hl=en&gl=am&pb=!1m14!1s0x0:0xd758dac5490cc060 (MekStep); ...!1s0x0:0x57283154dfcc176e (CC ACADEMY)",
+      "source_date": "2026-10-23 (live)",
+      "status": "verified_current",
+      "notes": "Accessed 2026-10-23. So a Google Maps URL that searches by the name 'MOD Academy' would show competitors. Use the address or place_id link instead."
+     },
+     {
+      "topic": "Google geocode of the address",
+      "fact": "Google resolves '4 Tigran Mets Ave, Yerevan 0010' (district Kentron) to coordinates 40.1757019, 44.5134996. The Google place_id for the address is ChIJneoEZPe8akARERqq1EGUhMI and its feature id is 0x406abcf76404ea9d:0xc2849441d4aa1a11. The query 'MOD Academy, 4 Tigran Mets Ave, Yerevan 0010' resolves to this same address.",
+      "source_url": "https://www.google.com/search?tbm=map&hl=en&gl=am&q=4+Tigran+Mets+Ave,+Yerevan+0010",
+      "source_date": "2026-10-23 (live)",
+      "status": "verified_current",
+      "notes": "Accessed 2026-10-23."
+     },
+     {
+      "topic": "Best Google Maps links (recommended)",
+      "fact": "Search link: https://www.google.com/maps/search/?api=1&query=4%20Tigran%20Mets%20Ave%2C%20Yerevan%200010&query_place_id=ChIJneoEZPe8akARERqq1EGUhMI . Directions link: https://www.google.com/maps/dir/?api=1&destination=4%20Tigran%20Mets%20Ave%2C%20Yerevan%200010&destination_place_id=ChIJneoEZPe8akARERqq1EGUhMI . Coordinate link: https://www.google.com/maps/search/?api=1&query=40.175927%2C44.513697 . Alternatives: Yandex https://yandex.com/maps/org/mod/233735196629/ and 2GIS building https://2gis.am/yerevan/geo/70030076747002691 .",
+      "source_url": "https://www.google.com/search?tbm=map&hl=en&gl=am&q=4+Tigran+Mets+Ave,+Yerevan+0010",
+      "source_date": "2026-10-23",
+      "status": "verified_current",
+      "notes": "Built from the verified address place_id and the Yandex coordinates. Avoid https://www.google.com/maps/search/?api=1&query=MOD+Academy+Tigran+Mets+4+Yerevan, because it lands on MekStep Academy, CC ACADEMY and others."
+     },
+     {
+      "topic": "Yandex Maps - academy listing (name, address, floor)",
+      "fact": "Yandex Maps lists the academy as 'Mod' (org id 233735196629, seoname 'mod'). Address: 'Yerevan, Tigran Mets Avenue, 4'. Extra address field: 'этаж 7' (7th floor). Status: open. Owner not verified (has_verified_owner=false). No website or social links are listed.",
+      "source_url": "https://yandex.com/maps/org/mod/233735196629/",
+      "source_date": "unknown (live listing; no update date exposed)",
+      "status": "verified_current",
+      "notes": "Accessed 2026-10-23. Matched to MOD Academy by its phone (+374 93 950960, same as the academy's Instagram bio), its address (Tigran Mets 4) and its categories (courses plus interior design). Also returned by https://yandex.com/maps/10262/yerevan/search/MOD%20Academy/ (3 results in total; the other two are unrelated)."
+     },
+     {
+      "topic": "Yandex Maps - academy coordinates",
+      "fact": "Coordinates of the 'Mod' listing and its entrance: 40.175927 N, 44.513697 E. Yandex's house record for 'tigran_metsi_poghota_4' is at 40.17583, 44.513588. The derived Plus Code is 8HG65GG7+9F, or '5GG7+9F Yerevan'.",
+      "source_url": "https://yandex.com/maps/org/mod/233735196629/",
+      "source_date": "unknown (live)",
+      "status": "verified_current",
+      "notes": "Accessed 2026-10-23. I computed the Plus Code myself from the Yandex coordinates; Google did not provide it. 2GIS puts the building centre at 40.175786, 44.513581, Google's address geocode is 40.1757019, 44.5134996, and OSM Nominatim gives 40.1759016, 44.5135701. All agree within about 30 m."
+     },
+     {
+      "topic": "Yandex Maps - academy phones",
+      "fact": "Phones on the Yandex 'Mod' listing: +374 55 204721 and +374 93 950960.",
+      "source_url": "https://yandex.com/maps/org/mod/233735196629/",
+      "source_date": "unknown (live)",
+      "status": "verified_current",
+      "notes": "Accessed 2026-10-23. +374 93 950960 matches the academy Instagram bio. +374 55 204721 also appears on the studio's Yandex listing."
+     },
+     {
+      "topic": "Yandex Maps - academy hours",
+      "fact": "Yandex lists hours for 'Mod' as Mon–Fri 10:00–18:00, closed Saturday and Sunday ('Mon-Fri 10:00 AM–6:00 PM').",
+      "source_url": "https://yandex.com/maps/org/mod/233735196629/",
+      "source_date": "unknown (live; listing is not owner-verified)",
+      "status": "verified_possibly_outdated",
+      "notes": "Accessed 2026-10-23. These may be office hours and may not reflect class times, including any weekend or evening classes. Confirm with the academy. No other source gives academy hours."
+     },
+     {
+      "topic": "Yandex Maps - academy categories, rating, photos",
+      "fact": "Categories: 'Courses and master classes' and 'interior design'. Rating data: 0 ratings, 0 reviews. 24 user photos, including the grey stone building entrance on Tigran Mets Ave and an interior corridor door with a 'MOD' logo plate. Features: street entrance; wheelchair access 'unavailable'.",
+      "source_url": "https://yandex.com/maps/org/mod/233735196629/",
+      "source_date": "unknown (live)",
+      "status": "verified_current",
+      "notes": "Accessed 2026-10-23. Ten 300px previews are saved in (working dir)/research/agents/maps/dl/yphotos/ (contact sheet: sheet.jpg). These are user-contributed Yandex photos, so check rights before reusing them."
+     },
+     {
+      "topic": "Transit near the academy (Yandex)",
+      "fact": "From the 'Mod' listing: bus/trolley stop 'Tigran Mets / Mher Mkrtchyan' 68 m; 'Russia Cinema' stop 440 m; 'Pedagogical University' stop 520 m; metro Republic Square 440 m; metro Zoravar Andranik 510 m; metro Yeritasardakan 1.77 km.",
+      "source_url": "https://yandex.com/maps/10262/yerevan/search/MOD%20Academy/",
+      "source_date": "2026-10-23 (live)",
+      "status": "verified_current",
+      "notes": "Accessed 2026-10-23. 2GIS gives similar figures for the building: Republic Square metro 440 m, Zoravar Andranik 550 m."
+     },
+     {
+      "topic": "Building description and landmarks (2GIS)",
+      "fact": "2GIS names the building 'Tigran Mets avenue, 4 / Mher Mkrtchyan street, 4' (Yerevan, Kentron district, postcode 0010). It is an administrative building with 7 storeys above ground, on the corner of Tigran Mets Ave and Mher Mkrtchyan St, centre 40.175786, 44.513581, with 29 organisations inside. Tenants include: Competition Protection Committee (2nd floor), E-Governance Infrastructure Implementation Office / Ekeng (5th floor), Board of Managers for Bankruptcy Cases (3rd floor), Notary office (1st floor), English House (4th floor), Mekstep (7th floor), Lilit beauty salon (1st floor) and Garsi khorovats (basement).",
+      "source_url": "https://2gis.am/yerevan/geo/70030076747002691/tab/inside",
+      "source_date": "unknown (live)",
+      "status": "verified_current",
+      "notes": "Accessed 2026-10-23. Yandex's building page lists similar tenants, including the State Commission for the Protection of Economic Competition, Ekeng, the notary, CC Academy, Mek Step and English House: https://yandex.com/maps/10262/yerevan/house/tigran_metsi_poghota_4/YE0YcwZjTE0PQFpqfX12dHRgZA==/ . Suggested wording for the site: 'Tigran Mets Ave 4 (corner of Mher Mkrtchyan St), 7th floor, the building of the Competition Protection Commission / notary office, about 230 m south of Republic Square'. The floor comes from Yandex only."
+     },
+     {
+      "topic": "Distance to landmarks",
+      "fact": "Straight-line distances from the building centre (40.175786, 44.513581): Republic Square (Google 40.1776945, 44.5126511) about 226 m to the north-northwest; Vernissage Market (1, 3 Buzand St; Google 40.1758116, 44.5183504) about 405 m to the east.",
+      "source_url": "https://www.google.com/search?tbm=map&hl=en&gl=am&q=Republic+Square+Yerevan",
+      "source_date": "2026-10-23",
+      "status": "verified_current",
+      "notes": "I computed these from the coordinates (haversine). They are straight-line distances, not walking routes."
+     },
+     {
+      "topic": "OpenStreetMap address check",
+      "fact": "Nominatim geocodes '4 Tigran Mets Avenue, Yerevan' to '4, Տիգրան Մեծի պողոտա, Կենտրոն, Երևան, 0010' (type: office) at 40.1759016, 44.5135701.",
+      "source_url": "https://nominatim.openstreetmap.org/search?q=4+Tigran+Mets+Avenue,+Yerevan&format=jsonv2&addressdetails=1&limit=3",
+      "source_date": "2026-10-23 (live)",
+      "status": "verified_current",
+      "notes": "Accessed 2026-10-23. Confirms postcode 0010 and district Kentron. The Armenian street form is 'Տիգրան Մեծի պողոտա 4'."
+     },
+     {
+      "topic": "Address pitfall",
+      "fact": "There is a different '4 Tigran Mets alley' in Erebuni district: Google lists 'Жилой дом', Plus Code 5G56+Q2R. Gyumri also has a Tigran Mets Avenue. The correct academy address is Tigran Mets AVENUE 4, Kentron, Yerevan 0010.",
+      "source_url": "https://www.google.com/maps/preview/place?hl=en&gl=am&pb=!1m14!1s0x0:0x99dc479551619701",
+      "source_date": "2026-10-23",
+      "status": "verified_current",
+      "notes": "Use 'Avenue', the postcode 0010 and the place_id in links to avoid mis-geocoding."
+     },
+     {
+      "topic": "2GIS - academy",
+      "fact": "2GIS has no listing for MOD Academy. The search page 'Mod academy in Yerevan' returns 6 results: the Mod interior design studio (Nalbandyan 5), 'The academy' cafe, V.mod hotel and three 'Atelier Mod' sewing shops. 'Mod school' returns no academy either.",
+      "source_url": "https://2gis.am/yerevan/search/MOD%20Academy",
+      "source_date": "2026-10-23 (live)",
+      "status": "verified_current",
+      "notes": "Accessed 2026-10-23. 2GIS needed the cookie dg5_museum_accept=true to skip its browser-update page. I could only load the first page (12 organisations) of the building's 29 tenants: page 2 reset the connection and the 2GIS catalog API key is blocked. So MOD could still appear among the unseen tenants."
+     },
+     {
+      "topic": "2GIS - studio listing",
+      "fact": "2GIS lists 'Mod, interior design and architecture company' ('Mod, ինտերիեր դիզայնի և ճարտարապետական ընկերություն'), firm id 70000001084444345. Address: Nalbandyan street 5, '208 գրասենյակ; 1 հարկ' (office 208; 1st floor), postcode 0001, Kentron, coordinates 40.179201, 44.515562. Phone: +374 55 214721. Links: instagram.com/mod_interior_architecture, facebook.com/MODInteriorArchitectureStudio, pinterest.com/modinteriorstudio, threads.com/@mod_interior_architecture. Hours: Mon–Fri 10:00–19:00. Category: Interior design. Nearest metro: Republic Square, 120 m. No reviews.",
+      "source_url": "https://2gis.am/yerevan/firm/70000001084444345",
+      "source_date": "2026-06-19 (2GIS updated_at)",
+      "status": "verified_possibly_outdated",
+      "notes": "Accessed 2026-10-23. Identified by the Instagram handle @mod_interior_architecture. Floor and postcode conflict with Yandex and Spyur (see conflicts)."
+     },
+     {
+      "topic": "Yandex Maps - studio listing",
+      "fact": "Yandex lists 'Mod Interior & Architecture Studio' (org id 35751987377). Address: Yerevan, Nalbandyan Street 5, 'этаж 2' (2nd floor), coordinates 40.179021, 44.515595. Phones: +374 55 204721 and +374 55 214721. Hours: Mon–Fri 10:00–18:00. Categories: Architectural firm, interior design. Facebook: www.facebook.com/1803479656594201. Rating: 4.3 from 6 ratings, 1 text review. 33 photos. Republic Square metro is 78 m away.",
+      "source_url": "https://yandex.com/maps/org/35751987377/",
+      "source_date": "unknown (live)",
+      "status": "verified_current",
+      "notes": "Accessed 2026-10-23. Found via https://yandex.com/maps/10262/yerevan/search/MOD%20Interior%20Architecture%20Studio/ . The Facebook id matches the studio Facebook page plugin."
+     },
+     {
+      "topic": "Real review (Yandex, on the studio listing)",
+      "fact": "Reviewer 'Ara', rating 5/5, dated 2025-08-22. Text in Armenian: 'Հիանալի. Հաճելի սպասարկում հիանալի կրթություն և որակով մասնագետներ։ 3 ամսում սովորել եմ այն ինչը ուզում էի։' My translation: 'Excellent. Pleasant service, excellent education and quality specialists. In 3 months I learned what I wanted.'",
+      "source_url": "https://yandex.com/maps/org/35751987377/reviews/",
+      "source_date": "2025-08-22",
+      "status": "verified_possibly_outdated",
+      "notes": "Accessed 2026-10-23. This is the only review text found on any map platform for the MOD brands. It is posted on the studio listing but describes education, so it appears to be about the academy courses. The translation is mine."
+     },
+     {
+      "topic": "Spyur - studio listing",
+      "fact": "According to WebSearch snippets of the Spyur page, 'MOD Interior & Architecture Studio' (Spyur id 58494) has the activity address 'Armenia, 0010, Yerevan Nalbandyan St., 5 Building (Kentron adm. district)', keyword 'INTERIOR DESIGN AND ARCHITECTURE STUDIO', information updated 16.10.2025.",
+      "source_url": "https://www.spyur.am/en/companies/mod-interior--architecture-studio/58494",
+      "source_date": "2025-10-16",
+      "status": "verified_possibly_outdated",
+      "notes": "Accessed 2026-10-23. curl and WebFetch both got HTTP 403 (Cloudflare challenge), so I could not read the page directly. Phones and hours on Spyur are unknown."
+     },
+     {
+      "topic": "Spyur - 'MOD SCHOOL' at Tigran Mets 4",
+      "fact": "A WebSearch summary of a Spyur listing describes 'MOD SCHOOL', keywords computer training centers / computer classes, activity address 'Armenia, 0010, Yerevan Tigran Metsi Ave., 4 Building', Kentron, information updated 08.10.2025. The likely URL is spyur.am/en/companies/52947, but the search results labelled it only 'Call center 113'.",
+      "source_url": "https://www.spyur.am/en/companies/52947",
+      "source_date": "2025-10-08",
+      "status": "unverified",
+      "notes": "Accessed 2026-10-23. The page returns 403 (Cloudflare). This rests only on search-engine summaries, and later searches did not reproduce it. It is plausibly an earlier or alternate registry name of the academy at the same address, but that is not confirmed."
+     },
+     {
+      "topic": "Facebook - academy page",
+      "fact": "The Facebook page plugin for facebook.com/www.mod.academy shows the name 'MOD Academy' and 5,438 followers (pageID 111200628088522). It exposes no address, phone, category or hours, and the timeline did not render server-side. The About page redirects to the login wall ('You're Temporarily Blocked'); /about returned HTTP 400.",
+      "source_url": "https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2Fwww.mod.academy%2F&tabs=&width=500&height=300&locale=en_US",
+      "source_date": "2026-10-23 (live)",
+      "status": "verified_current",
+      "notes": "Accessed 2026-10-23."
+     },
+     {
+      "topic": "Facebook - studio page",
+      "fact": "The Facebook page plugin for facebook.com/MODInteriorArchitectureStudio shows: pageName 'MOD Interior & Architecture Studio'; pageCategory 'Interior Design Studio'; pagePhone '+374 93 950960'; followers '8.4K'; not verified; description 'Comfort & beauty in one place • interior • exterior • landscape' (in small-caps Unicode); page URL facebook.com/1803479656594201 (pageID 100063562298790).",
+      "source_url": "https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2FMODInteriorArchitectureStudio&tabs=&width=500&height=300&locale=en_US",
+      "source_date": "2026-10-23 (live)",
+      "status": "verified_current",
+      "notes": "Accessed 2026-10-23. The studio's Facebook phone is the same as the academy's phone, which supports the academy–studio link."
+     },
+     {
+      "topic": "Phone cross-check",
+      "fact": "+374 93 950960 (093 950 960) appears on the academy Instagram bio (per the brief), the Yandex 'Mod' academy listing at Tigran Mets 4, and the studio Facebook page. +374 55 204721 appears on both Yandex listings (academy and studio). +374 55 214721 appears only on the studio listings (2GIS and Yandex).",
+      "source_url": "https://yandex.com/maps/org/mod/233735196629/",
+      "source_date": "2026-10-23",
+      "status": "verified_current",
+      "notes": "Accessed 2026-10-23. 055 204721 and 055 214721 are both listed together on Yandex for the studio, so neither looks like a typo of the other. For the academy, 093 950 960 is the best-supported number."
+     },
+     {
+      "topic": "Conflicts and inconsistencies",
+      "fact": "(1) Academy and studio are at different addresses: the academy at Tigran Mets Ave 4, 7th floor (Instagram, Yandex) and the studio at Nalbandyan St 5 (2GIS, Yandex, Spyur), about 415 m apart. (2) Studio floor: 2GIS says office 208, 1st floor; Yandex says 2nd floor. (3) Studio postcode: 2GIS says 0001; Spyur says 0010. (4) Hours: Yandex gives Mon–Fri 10:00–18:00 for both listings; 2GIS gives the studio Mon–Fri 10:00–19:00. (5) The Yandex academy listing is named just 'Mod', not 'MOD Academy'. (6) The Spyur 'MOD SCHOOL' at Tigran Mets 4 is categorised as computer training, not design.",
+      "source_url": "https://2gis.am/yerevan/firm/70000001084444345",
+      "source_date": "2026-06-19 / live",
+      "status": "conflicting",
+      "notes": "Accessed 2026-10-23. Ask the academy to confirm the floor and office number and its class hours before publishing."
+     },
+     {
+      "topic": "Bing Maps / Bing search",
+      "fact": "The Bing Maps overlay for 'MOD Academy Yerevan' returned only a generic Yerevan point (40.177711, 44.512623) with no business entity. Bing web search returned 'There are no results' for every quoted query ('MOD Academy' Yerevan, 'mod_academy_', '093 950960', 'mod.modacademy@gmail.com', 'MOD SCHOOL' Tigran Mets).",
+      "source_url": "https://www.bing.com/maps/overlaybfpr?q=MOD%20Academy%20Yerevan&count=10&setlang=en",
+      "source_date": "2026-10-23",
+      "status": "unverified",
+      "notes": "Inconclusive: Bing appears to filter or neutralise automated queries, since unquoted queries returned unrelated gaming 'mod' sites."
+     },
+     {
+      "topic": "Partner showroom location (peripheral)",
+      "fact": "Google Maps lists 'Capital Interiors furniture shop, Կապիտալ Ինտերիորս Կահույքի սրահ' at 12 Kievyan St, Yerevan 0028 (Arabkir), coordinates 40.1944628, 44.4877274. Rating 4.8 from 23 reviews; phone 055 771702; website http://www.classisdecor.com/; hours Mon–Sat 11:00–19:30, Sun 12:00–18:00.",
+      "source_url": "https://www.google.com/maps/preview/place?hl=en&gl=am&pb=!1m14!1s0x0:0x34718e271243f4",
+      "source_date": "2026-10-23 (live)",
+      "status": "verified_current",
+      "notes": "Accessed 2026-10-23. Useful only if the site mentions partner showrooms. The website field links Capital Interiors with Classis Decor."
+     }
+    ],
+    "inaccessible_sources": [
+     "https://www.spyur.am/en/companies/52947 : HTTP 403 Cloudflare challenge for both curl and WebFetch; WebSearch snippets only",
+     "https://www.spyur.am/am/companies/52947 : HTTP 403 Cloudflare",
+     "https://www.spyur.am/en/companies/mod-interior--architecture-studio/58494 : HTTP 403 Cloudflare; WebSearch snippets only",
+     "https://www.list.am/en/category?q=MOD+Academy : HTTP 403 Cloudflare 'Just a moment...'",
+     "https://www.facebook.com/www.mod.academy/about : HTTP 400 error page; m.facebook.com/www.mod.academy/about/ redirects to the login wall ('You're Temporarily Blocked')",
+     "https://www.google.com/search?q=MOD+Academy+Yerevan+Tigran+Mets+4 : JavaScript-only page, no knowledge panel in the HTML",
+     "https://www.google.com/maps?cid=... : the shell page has no server-rendered place data (I used the preview/place endpoint instead)",
+     "https://www.waze.com/live-map/api/autocomplete/ : HTTP 403",
+     "https://overpass-api.de/api/interpreter : connection reset through the proxy",
+     "https://catalog.api.2gis.ru/3.0/items (building tenant pages 2+) : the embedded web key is blocked (apiKeyIsBlocked); https://2gis.am/yerevan/inside/... and /tab/inside/page/2 : connection reset",
+     "https://www.armeniayp.com/search?... : 404, no working search URL found",
+     "https://www.instagram.com/mod_interior_architecture/embed/ : the profile embed returns no bio or post data without JavaScript",
+     "Bing web search : returned 'no results' for every quoted query (likely bot filtering), so it is inconclusive"
+    ],
+    "open_questions": [
+     "Does MOD Academy have a Google Business Profile under another name, for example via the owner's account? None was found. If there is none, the academy may want to create one at Tigran Mets Ave 4, 7th floor, so Google reviews, hours and a directions pin exist.",
+     "Exact floor and office number of the academy: Yandex says 7th floor ('этаж 7'). The Instagram bio says only 'Տիգրան Մեծ 4'. Ask the academy to confirm, along with any office or room number.",
+     "Academy opening hours: the only source is Yandex (Mon–Fri 10:00–18:00, not owner-verified). Do classes also run evenings or weekends?",
+     "Is the Spyur listing 'MOD SCHOOL' (Tigran Metsi Ave 4, computer training, updated 08.10.2025) the same legal entity as MOD Academy? Spyur is Cloudflare-blocked, so I could not check.",
+     "Studio floor (2GIS: office 208, 1st floor; Yandex: 2nd floor) and postcode (2GIS 0001 vs Spyur 0010) conflict and need confirmation if the studio address is shown on the site.",
+     "Which secondary phone should be public for the academy: 055 204721 (on the Yandex academy listing) or only 093 950 960? 055 214721 appears to belong to the studio.",
+     "I could not inspect the remaining 2GIS tenants of the Tigran Mets 4 building (I saw 12 of 29), so 2GIS might list MOD under another name."
+    ],
+    "downloaded_files": [
+     "(working dir)/research/agents/maps/dl/yandex1.html",
+     "(working dir)/research/agents/maps/dl/yandex_org.html",
+     "(working dir)/research/agents/maps/dl/yandex_house.html",
+     "(working dir)/research/agents/maps/dl/yandex_studio_reviews.html",
+     "(working dir)/research/agents/maps/dl/yphotos/sheet.jpg",
+     "(working dir)/research/agents/maps/dl/yphotos/list.txt",
+     "(working dir)/research/agents/maps/dl/2gis2.html",
+     "(working dir)/research/agents/maps/dl/2gis_firm_mod.html",
+     "(working dir)/research/agents/maps/dl/2gis_geo_tm4.html",
+     "(working dir)/research/agents/maps/dl/2gis_inside_p3.html",
+     "(working dir)/research/agents/maps/dl/fb_5dc77.html",
+     "(working dir)/research/agents/maps/dl/fbplugin_acad2.html",
+     "(working dir)/research/agents/maps/dl/addr_tm4.txt",
+     "(working dir)/research/agents/maps/dl/places/",
+     "(working dir)/research/agents/maps/dl/osm_nom.json",
+     "(working dir)/research/agents/maps/scripts/parse_place.py",
+     "(working dir)/research/agents/maps/scripts/list_res.py",
+     "(working dir)/research/agents/maps/scripts/parse_2gis.py"
+    ]
+   }
+  },
+  {
+   "key": "web",
+   "result": {
+    "summary": "Web sweep for MOD Academy (Yerevan), accessed 2026-10-23. Search engines were the weakest source. WebSearch gave thin, often hallucination-prone summaries. Bing returned degraded results, DuckDuckGo and Brave blocked us, and Google needs JS. The useful finds came from platforms directly:\n(1) Five 2022 IGTV posts sitting in the existing profile JSON (edge_felix_video_timeline). They document the academy's earlier identity, \"MOD School\" (#modschool, mod.modschool@gmail.com, +374 93 384 498, Nalbandyan 5). They also give a 2022 \"MASTER OF 3D\" course: 90,000 AMD, 10 weeks, 3x/week for 2 h, max 4 students per group. A 27.5-min 2022 screen-recording video (CkThjDJoG-z) shows the Facebook page then named \"MOD School\", a \"3DS MAX group course: total 97,000 AMD, 10 weeks\" post, a \"MASTER OF ARCHITECTURE\" course (appears to list ArchiCAD / Twinmotion / Adobe Photoshop, Nalbandyan 5), and the IG URL instagram.com/mod_school__/. Together these strongly indicate a rename from MOD School (@mod_school__) to MOD Academy (@mod_academy_). The date of the rename is unknown.\n(2) A TikTok account @mod_academy, created 2025-12-06. Its bio has the same phone and \"Տիգրան Մեծ 4\". Ten videos from Apr-May 2026 are visible. One graphic (2026-05-31) states \"Վկայական ավարտին\" (certificate at completion) and \"Փորձառու դասախոսներ\" (experienced lecturers). Two May 2026 captions use the hashtags #revit and #revitarmenia.\n(3) A YouTube webinar, 37:05, published 2026-05-25 by the \"Professional orientation center\" channel, titled \"Professional development opportunities at MOD Academy\". Its frames show MOD Academy slides: \"3Ds MAX + V-Ray/Corona\" and \"your first step ... in the world of design, architecture and business\". Auto-caption snippets mention \"online courses too\". The transcript itself was blocked.\nNo founder, director or instructor names were found in any reliable public source. No website, LinkedIn, staff.am or news coverage was found. IG embeds work with an iPhone User-Agent; the desktop UA got a login wall. 7 embeds were fetched, all succeeded. Downloads are under (working dir)/research/agents/web/.\nIG shortcodes I found and their embed status:\n- CkThjDJoG-z (2022-10-29): OK, image + video, no caption\n- Cflj123vMxx (2022-07-04): OK, caption + image\n- Cd1O8Ybg5KL (2022-05-21): OK, image; caption taken from the profile JSON\n- CdoQ6WZsgRK (2022-05-16): OK, image\n- CcdBngeva3a (2022-04-17): OK, image\n- Da79RS1DTPm: desktop UA got a login-wall shell, mobile UA retry OK, and WebFetch also OK\n- DezOW2GCMyH: OK\nThe other 10 recent shortcodes were already in the orchestrator data and I did not re-fetch them. No further older shortcodes could be discovered, because IG search indexing and the mirror sites failed.",
+    "facts": [
+     {
+      "topic": "History / former name",
+      "fact": "In 2022 the academy operated as 'MOD School'. 2022 posts on the current @mod_academy_ account use #modschool and #modyerevan, the email mod.modschool@gmail.com, phone +374 93 384 498 (Viber, WhatsApp) and address Nalbandyan 5. Example caption (Cd1O8Ybg5KL): '📲 +374 93 384 498 (Viber, WhatsApp) ✉️ mod.modschool@gmail.com 📌Դասընթացը կանցկացվի Նալբանդյան 5 հասցեում'.",
+      "source_url": "https://www.instagram.com/p/Cd1O8Ybg5KL/",
+      "source_date": "2022-05-21",
+      "status": "verified_possibly_outdated",
+      "notes": "Accessed 2026-10-23. Caption comes from the profile JSON (edge_felix_video_timeline) already in research/raw/ig_profile.json; the embed fetch also worked. The 2022 phone and email differ from the current ones (093 950 960, mod.modacademy@gmail.com). Do not publish the old contacts as current."
+     },
+     {
+      "topic": "History / rename MOD School -> MOD Academy",
+      "fact": "A 27.5-minute video (dated 2022-10-29, now on @mod_academy_) is a phone recording of a laptop screen. It shows the Facebook page named 'MOD School' (URL bar appears to read facebook.com/www.modschool) and the Instagram profile at a URL that appears to read instagram.com/mod_school__/. Today the IG embed of mod_school__ says 'the profile may have been removed'. The Facebook plugin for www.modschool shows nothing, while www.mod.academy shows 'MOD Academy, 5,438 followers'. Conclusion: the account and page were renamed from MOD School to MOD Academy; the date of the rename is unknown (after Oct 2022).",
+      "source_url": "https://www.instagram.com/p/CkThjDJoG-z/",
+      "source_date": "2022-10-29",
+      "status": "verified_possibly_outdated",
+      "notes": "Accessed 2026-10-23. Video downloaded; the URL-bar text is read from a low-resolution frame, so the exact handles are 'likely'. The video's second half is a giveaway draw (wheel of names) showing private individuals' names. Do NOT publish those frames or names."
+     },
+     {
+      "topic": "Course history: Master of 3D (2022)",
+      "fact": "'MASTER OF 3D ԴԱՍԸՆԹԱՑ: Արժեքը՝ 90,000 դրամ; Տևողությունը՝ 10 շաբաթ; Շաբաթական՝ 3 անգամ, 2 ժամ; Խմբում՝ առավելագույնը 4 ուսանող; ⊙ Նալբանդյան 5; ✆ +374 93 384 498'. In English: price 90,000 AMD, 10 weeks, 3 times a week for 2 hours, at most 4 students per group, address Nalbandyan 5. Hashtags include #masterof3d #3dsmax #coronarenderer #photoshop #AutoCAD.",
+      "source_url": "https://www.instagram.com/p/Cflj123vMxx/",
+      "source_date": "2022-07-04",
+      "status": "verified_possibly_outdated",
+      "notes": "Accessed 2026-10-23 via the embed (caption extracted; 25 likes) and the profile JSON. The 2022 price, duration and group size may not apply today. The hashtags also include generic tags (Maya, Unity, Arnold), which are not proof those were taught."
+     },
+     {
+      "topic": "Course history: 3DS MAX group course and Master of Architecture (2022)",
+      "fact": "The 2022 screen recording shows MOD School Facebook post graphics: (a) '3DS MAX-ի ԽՄԲԱՅԻՆ ԴԱՍԸՆԹԱՑ — Ընդհանուր արժեքը՝ 97,000 դր, Տևողությունը՝ 10 շաբաթ, Շտապի՛ր գրանցվել' (3ds Max group course, total 97,000 AMD, 10 weeks); (b) 'MASTER OF ARCHITECTURE'. The text next to (b) appears to list ArchiCAD, Twinmotion and Adobe Photoshop, and the address Nalbandyan st. 5. Flyers carry 'ՆԱԼԲԱՆԴՅԱՆ 5'.",
+      "source_url": "https://www.instagram.com/p/CkThjDJoG-z/",
+      "source_date": "2022-10-29 (Facebook posts shown are older)",
+      "status": "verified_possibly_outdated",
+      "notes": "Read from frames at about 720 s and 990-1015 s. The graphic text is legible; the software list next to Master of Architecture is low-resolution (Twinmotion is the least certain). Frames are saved in media/ig_video/frames/."
+     },
+     {
+      "topic": "2022 content series",
+      "fact": "2022 IGTV clips 'Լայֆխակներ #MODից 3Ds MAX' (lifehacks part 2; RIBBON) and 'Մի փոքր պրակտիկա (մաս 3)... #Polymodeling' were 3ds Max tutorial snippets posted under #modschool.",
+      "source_url": "https://www.instagram.com/p/CcdBngeva3a/",
+      "source_date": "2022-04-17 / 2022-05-16 (https://www.instagram.com/p/CdoQ6WZsgRK/) / 2022-05-21",
+      "status": "verified_possibly_outdated",
+      "notes": "Accessed 2026-10-23; embeds fetched and cover images downloaded."
+     },
+     {
+      "topic": "TikTok account",
+      "fact": "TikTok @mod_academy (nickname 'MOD_Academy'), bio '📱+37493950960 📍Տիգրան Մեծ 4'. Account created 2025-12-06. As of 2026-10-23: 16 followers, 25 videos, 488 likes.",
+      "source_url": "https://www.tiktok.com/@mod_academy",
+      "source_date": "2026-10-23",
+      "status": "verified_current",
+      "notes": "Matched by the same phone and address. Other handles (@mod_academy_, @mod.academy, @modacademy_) do not exist on TikTok; @modacademy is an unrelated Spanish model academy."
+     },
+     {
+      "topic": "Certificate",
+      "fact": "A TikTok graphic '3Ds Max-ի HOTKEY-ներ' carries the footer badges 'Փորձառու դասախոսներ' (experienced lecturers), 'Իրական նախագծեր' (real projects), 'Վկայական ավարտին' (certificate at completion) and 'Աջակցություն յուրաքանչյուր ուսանողին' (support for every student), plus 'Սովորիր 3D մոդելավորում և ինտերիերի դիզայն պրակտիկ նախագծերով'. Caption: '3Ds Max-ի ամենակարևոր HOTKEY-ները մեկ գրառման մեջ։ 🔥 Պահպանիր, որ հետո չփնտրես։ 💾'.",
+      "source_url": "https://www.tiktok.com/@mod_academy/video/7645996107356474632",
+      "source_date": "2026-05-31",
+      "status": "verified_current",
+      "notes": "The certificate is called 'վկայական'. The issuing body and its formal status are not stated. Cover saved as media/tiktok_7645996107356474632_cover.jpg."
+     },
+     {
+      "topic": "Revit",
+      "fact": "Two TikTok captions use Revit hashtags. 2026-05-18: 'Ուսանողների առաջին չափագրական փորձը 📐 #ճարտարապետություն #ուսանող #չափագրություն #revitarmenia' (students' first measured-survey practice; the cover shows a building under construction). 2026-05-20: 'Այստեղ ուսանողները սովորում են այնպես, ինչպես աշխատում են պրոֆեսիոնալ ստուդիաներում ✨ #interiordesign #3dsmax #revit #designstudent'.",
+      "source_url": "https://www.tiktok.com/@mod_academy/video/7641287867700120839",
+      "source_date": "2026-05-18 (and https://www.tiktok.com/@mod_academy/video/7641971003035356434, 2026-05-20)",
+      "status": "verified_possibly_outdated",
+      "notes": "Hashtags suggest, but do not prove, that a Revit course runs. The 2026-10-14 pinned course list (Interior Design, Sales Management, Graphic Design) does not mention Revit, and the current IG full name says 'Sales' where older snapshots said 'Revit'."
+     },
+     {
+      "topic": "Revit (older bio)",
+      "fact": "Search-engine snapshots of the IG profile @mod_academy_ show an older state: about 3,208 followers, 6 following, 468 posts, with courses listed as 'Interior design | 3Ds MAX | Revit'. The Facebook page snippet reads '📌Մասնագիտացված դասընթացներ • Ինտերիեր դիզայն • 3Ds MAX • Revit'.",
+      "source_url": "https://www.instagram.com/mod_academy_/",
+      "source_date": "unknown (earlier than the current 578 posts / 3,571 followers)",
+      "status": "unverified",
+      "notes": "Seen only through WebSearch result summaries. Live IG returned 429 and Facebook needs login, so the text could not be checked directly. Also seen for https://www.facebook.com/www.mod.academy/."
+     },
+     {
+      "topic": "TikTok video list (student work / course promos)",
+      "fact": "Visible @mod_academy TikTok videos (dates decoded from IDs, UTC):\n- 7634156274724113682 (2026-04-29) '3ds Max մոդելավորում + Render 🔥'\n- 7634853873118694674 (2026-05-01) 'Սենց 3D աշխարհներ ստեղծում ենք 3ds Max-ում... Գրի՛ր «ԴԱՍ»'\n- 7635568609019890962 (2026-05-03) 'Չգիտես 3Ds Max? Սովորիր 🔴-ից Mod Academy-ում 🚀 Գրանցումը բաց է' (6,564 plays)\n- 7635957978654395655 (2026-05-04) no caption; cover shows a tile/stone showroom display\n- 7636316850896276754 (2026-05-05) Sales Management promo 'ՎԱՃԱՌՔԻ ԿԱՌԱՎԱՐՈՒՄ', 'Սովորեք ճիշտ քայլերը և սկսեք հաղթել յուրաքանչյուր վաճառքում 📈 +374 93 950960'\n- 7641287867700120839 (2026-05-18)\n- 7641971003035356434 (2026-05-20)\n- 7642287907033697554 (2026-05-21) no caption\n- 7642813772956011784 (2026-05-22) no caption; 3ds Max screen recordings of chair modelling\n- 7645996107356474632 (2026-05-31)",
+      "source_url": "https://www.tiktok.com/embed/@mod_academy",
+      "source_date": "2026-04-29 to 2026-05-31",
+      "status": "verified_current",
+      "notes": "Only 10 of 25 videos appear in the profile embed. Index: research/agents/web/tiktok/tiktok_index.json; covers saved as media/tiktok_*_cover.jpg."
+     },
+     {
+      "topic": "Events / webinar",
+      "fact": "YouTube video 'Մասնագիտական կողմնորոշման կենտրոն / Մասնագիտական զարգացման հնարավորությունները MOD Academy-ում' (Professional development opportunities at MOD Academy). Posted by the channel 'Professional orientation center' (@Professionalorientationcenter, UCYjXxuEhKr_5C-d8JdUWT4Q). Published 2026-05-25, 37:05 long, about 15 views, 1 like, no description. It is part of that channel's career-orientation webinar series.",
+      "source_url": "https://www.youtube.com/watch?v=no6VBxqSiUU",
+      "source_date": "2026-05-25",
+      "status": "verified_current",
+      "notes": "Confirmed via YouTube oEmbed, the channel videos page and the youtubei 'next' endpoint. The watch page and transcript were blocked (bot check / LOGIN_REQUIRED)."
+     },
+     {
+      "topic": "Webinar slides (program positioning)",
+      "fact": "YouTube auto-thumbnails of the webinar show MOD Academy presentation slides. Slide 1: MOD ACADEMY logo, 'ԴԱԴԱՐԻ՛Ր ՍՊԱՍԵԼ: ՍԿՍԻ՛Ր ՍՏԵՂԾԵԼ:' and 'Քո առաջին քայլը դեպի պրոֆեսիոնալ ապագա՝ դիզայնի, ճարտարապետության և բիզնեսի աշխարհում:'. Slide 2: '3Ds MAX + V-Ray/Corona — Սահմանը միայն քո երևակայությունն է: Դարձրու քո մտքերը շոշափելի: Սովորի՛ր ստեղծել ֆոտոռեալիստիկ պատկերներ և 3D անիմացիաներ, որոնք անհնար է տարբերել իրականությունից: Հոլիվուդյան էֆեկտներից մինչև ինտերիերի պրեմիում վիզուալիզացիա:'. Three presenters appear on Zoom in a room.",
+      "source_url": "https://i.ytimg.com/vi/no6VBxqSiUU/maxresdefault.jpg",
+      "source_date": "2026-05-25",
+      "status": "verified_current",
+      "notes": "Saved as media/yt_no6VBxqSiUU_maxres.jpg and yt_no6_maxres1/2/3.jpg. The presenters are not named in any metadata (see open questions)."
+     },
+     {
+      "topic": "Online format",
+      "fact": "Auto-generated Armenian captions of the webinar, as surfaced in YouTube search snippets: at 0:38 '...փորձելու ենք այսօր ներկայացնել Մոդ ակադեմի հետ այն դասընթացները...'; at 14:07 'Ըհը օնլայն դասընթացներ էլ ունենք ստեղ...' ('we also have online courses'); at 1:58 '...գրաֆիկ դիզայն ճարտարապետություն ... վաճառքի...'.",
+      "source_url": "https://www.youtube.com/watch?v=no6VBxqSiUU&t=847s",
+      "source_date": "2026-05-25",
+      "status": "unverified",
+      "notes": "Machine speech recognition. It suggests online courses exist alongside in-person ones, but this needs confirmation from the academy. In-person teaching is evidenced by showroom practical lessons and, in 2022, by 'the course will be held at Nalbandyan 5'."
+     },
+     {
+      "topic": "Pricing model (current)",
+      "fact": "No current course prices are published. A summer 2026 offer: the first month free (0 AMD) for Interior Design and Sales Management, with tuition then paid monthly ('ուսման վճարումը կատարվում է ամսական կտրվածքով').",
+      "source_url": "https://www.instagram.com/p/Da79RS1DTPm/",
+      "source_date": "2026-07-18",
+      "status": "verified_possibly_outdated",
+      "notes": "The embed fetch worked with a mobile UA and returned the full caption. The offer was for summer 2026 and has probably expired."
+     },
+     {
+      "topic": "Instructors",
+      "fact": "Current posts mention 'դասընթացավարներ' (course instructors) generically, e.g. 'Շնորհակալ ենք բոլոր ուսանողներին և դասընթացավարներին՝ MOD ընտանիքի մասը կազմելու համար'. The May 2026 TikTok graphic claims 'Փորձառու դասախոսներ' (experienced lecturers). No instructor names or bios were found in any public source.",
+      "source_url": "https://www.instagram.com/p/DerMpzHoPJ8/",
+      "source_date": "2026-10-19",
+      "status": "verified_current",
+      "notes": "No names found on LinkedIn, news sites, staff.am or YouTube metadata."
+     },
+     {
+      "topic": "Teaching language",
+      "fact": "All captions, slides and webinar audio (from auto-captions) are in Armenian. No post explicitly states the teaching language.",
+      "source_url": "https://www.instagram.com/mod_academy_/",
+      "source_date": "2022-2026",
+      "status": "unverified",
+      "notes": "Armenian is a strong inference, not a stated fact. The TikTok profile 'language' field is 'ru', but that is an app setting, not the teaching language."
+     },
+     {
+      "topic": "Studio: MOD Interior & Architecture",
+      "fact": "Search-index snapshot of IG @mod_interior_architecture: 6,407 followers, 5 following, 294 posts; bio '• Interior • Exterior • Landscape • Full project: concept → realization 📱 +374 93 950960 📍 Nalbandyan 5, Yerevan'. This is the same phone as MOD Academy.",
+      "source_url": "https://www.instagram.com/mod_interior_architecture/",
+      "source_date": "unknown (search-index snapshot)",
+      "status": "unverified",
+      "notes": "Live IG returned 429, so it could not be checked directly. Nalbandyan 5 is also the 2022 MOD School address, which suggests the school started at the studio's address before moving to Tigran Mets 4."
+     },
+     {
+      "topic": "Studio Facebook page",
+      "fact": "The Facebook page 'MOD Interior & Architecture Studio' exists (page plugin shows the name). Search-engine summaries report the address Nalbandyan 5, Yerevan, the email mod.modstudio@gmail.com, the category interior design studio, about 8,400 followers, and the tagline 'interior • exterior • landscape'.",
+      "source_url": "https://www.facebook.com/MODInteriorArchitectureStudio/",
+      "source_date": "unknown",
+      "status": "unverified",
+      "notes": "The page name is verified via the plugin; the other details come only from WebSearch summaries because Facebook needs login. A Pinterest profile 'MOD Interior & Architecture Studio (modinteriorstudio)' also exists (https://in.pinterest.com/modinteriorstudio/), apparently inactive."
+     },
+     {
+      "topic": "Spyur directory listing",
+      "fact": "WebSearch summaries describe a Spyur entry, company ID 52947, as 'MOD SCHOOL' (keyword 'MOD SQUL') at Tigran Metsi Ave. 4, Kentron, Yerevan. It is categorised as a computer / IT / vocational training centre and was last updated 8 October 2025.",
+      "source_url": "https://www.spyur.am/en/companies/52947",
+      "source_date": "2025-10-08 (per summary)",
+      "status": "unverified",
+      "notes": "Spyur returned 403 / Cloudflare challenge to curl and WebFetch. If accurate, it shows the MOD School name still used in the directory at the Tigran Mets 4 address."
+     },
+     {
+      "topic": "Founders / management",
+      "fact": "No reliable public source (news, LinkedIn, interviews, official posts, Spyur, job sites) found here names the founder, director or owner of MOD Academy or of MOD Interior & Architecture Studio.",
+      "source_url": "https://www.linkedin.com/",
+      "source_date": "2026-10-23",
+      "status": "unverified",
+      "notes": "Negative result. LinkedIn, news.am, armenpress and other Armenian news sites, staff.am, Behance and ArtStation searches returned nothing relevant."
+     },
+     {
+      "topic": "Job sites",
+      "fact": "staff.am has no MOD Academy, MOD School or MOD Studio company profile. The key_word=MOD search returns only 10 unrelated companies (e.g. ModelManagement, MoDante Furniture, Modd Events, Modi Armenia), and 'MOD Academy' / 'MOD Interior' / 'MOD School' return 0.",
+      "source_url": "https://staff.am/en/companies?key_word=MOD",
+      "source_date": "2026-10-23",
+      "status": "verified_current",
+      "notes": "job.am returned 403 (inaccessible)."
+     },
+     {
+      "topic": "Website / domains",
+      "fact": "No official website was found. modacademy.am, mod-academy.am, modschool.am, mod-school.am, modstudio.am, mod.am, modinterior.am and modarchitecture.am do not resolve. modacademy.org returns 404. mod.academy is an unrelated Japanese school (per the orchestrator).",
+      "source_url": "https://modacademy.am/",
+      "source_date": "2026-10-23",
+      "status": "verified_current",
+      "notes": "Wayback availability API has no snapshots for instagram.com/mod_academy_, instagram.com/mod_school__, facebook.com/www.mod.academy or instagram.com/mod_interior_architecture."
+     },
+     {
+      "topic": "Unrelated look-alikes to avoid",
+      "fact": "Unrelated accounts:\n- YouTube channel 'MOD Academy' @modacademy4355 (UCxwTxJH9jRRDX7fB61TPh_w): Arabic tutorials on digital design and embedded systems\n- Instagram @mod.academy: Italian makeup 'MUA Online Department'\n- 'MOD education' (@mod__education, mod-education.de): German\n- MOD Academy Poland (akademiamod.pl): Lean Six Sigma\n- TikTok @modacademy: Spanish model academy",
+      "source_url": "https://www.youtube.com/@modacademy4355",
+      "source_date": "2026-10-23",
+      "status": "verified_current",
+      "notes": "Do not use any of these."
+     }
+    ],
+    "inaccessible_sources": [
+     "https://www.spyur.am/en/companies/52947 and https://spyur.am/am/companies/52947: HTTP 403 / Cloudflare 'Just a moment' to both curl and WebFetch",
+     "https://www.facebook.com/www.mod.academy/ and https://www.facebook.com/MODInteriorArchitectureStudio/: login wall (www, m., mbasic.). The page plugin with tabs=timeline shows only name and followers, no posts",
+     "https://www.facebook.com/www.modschool/: the page plugin returns nothing, so the old vanity URL no longer resolves",
+     "https://www.instagram.com/mod_school__/: profile page 429 (login redirect); its embed says 'profile may have been removed'",
+     "https://www.instagram.com/mod_academy_/ profile page and the GraphQL pagination API: 429 / 401 'Please wait a few minutes' (a single attempt only)",
+     "https://www.instagram.com/mod_academy_/embed/: profile embed is JS-only, no post shortcodes in the HTML",
+     "Instagram mirrors: picuki.com, imginn.com, pixwox.com, picnob.com, piokok.com return 403; dumpor.io, greatfon.io, inflact.com and storiesig.info are JS/LiveView-only with no data; instanavigation.com proxy 502",
+     "https://www.youtube.com/watch?v=no6VBxqSiUU: redirected to the google.com/sorry bot check (429). youtubei player returned LOGIN_REQUIRED, get_transcript FAILED_PRECONDITION, timedtext 429, youtubetranscript.com blocked",
+     "https://www.tiktok.com/api/post/item_list/: empty response. Only 10 of 25 videos are visible via https://www.tiktok.com/embed/@mod_academy, and TikTok oEmbed returned empty titles",
+     "https://www.list.am/ search: 403 Cloudflare",
+     "https://job.am/: 403",
+     "https://2gis.am/en/yerevan/search/MOD%20Academy: 403",
+     "https://flagma.am/: reCAPTCHA",
+     "https://www.course.am/en/search/?search=MOD+Academy: results render client-side, nothing in the HTML",
+     "https://www.threads.com/@mod_academy_: empty shell",
+     "Bing (https://www.bing.com/search): returns generic 'mod' results whatever the query; DuckDuckGo html/lite: anomaly challenge; Brave Search: 429; Mojeek: 403; Google: JS required",
+     "archive.org/wayback/available: no snapshots for the IG and FB URLs (web.archive.org itself is unreachable)",
+     "whois.amnic.net: connection reset"
+    ],
+    "open_questions": [
+     "When exactly was MOD School renamed to MOD Academy, and when did it move from Nalbandyan 5 to Tigran Mets 4? Evidence brackets the rename between Oct 2022 and the TikTok account's creation on 2025-12-06; Spyur may still list 'MOD SCHOOL' at Tigran Mets 4. Confirm with the academy.",
+     "Is Revit currently taught? Older bio and FB snippets plus May 2026 TikTok hashtags (#revit, #revitarmenia) suggest so, but the current IG name and the 2026-10-14 pinned course list do not mention it.",
+     "Are online courses offered? Only an auto-caption snippet from the 2026-05-25 webinar says 'we also have online courses'. Confirm before stating it on the site.",
+     "Current prices and durations for 3Ds Max and Corona: only 2022 figures are public (Master of 3D 90,000 AMD, 10 weeks, 3x2h/week, max 4 per group; 3DS MAX group course 97,000 AMD, 10 weeks). Ask the academy for current figures and group sizes.",
+     "Who are the instructors and founders? None are named in public sources. The webinar's Zoom name label shows 'Armen Pambuxchyan', which matches the name of a public official (Yerevan First Deputy Mayor). That person's role in MOD Academy, if any, is NOT established. Do not attribute it, and do not publish the name.",
+     "The certificate ('վկայական ավարտին') is advertised, but its exact title, issuer and accreditation are unknown.",
+     "The 2022 video CkThjDJoG-z (research/agents/web/media/ig_video/CkThjDJoG-z.mp4 and frames sheet_02.jpg) contains giveaway-winner names of private individuals. Do not use those frames on the website.",
+     "The mod_school__ search-summary claim that MOD School offered 'interior design, 3Ds MAX and ArchiCAD' with phone +374 93 950 960 came from a WebSearch summary only and could not be verified live.",
+     "Older @mod_academy_ posts (between 2022 and 2026, about 560 posts) could not be listed. Shortcodes are only obtainable via a logged-in session or the rate-limited IG API."
+    ],
+    "downloaded_files": [
+     "(working dir)/research/agents/web/ig/embeds/embed_index.json",
+     "(working dir)/research/agents/web/ig/embeds/CkThjDJoG-z.jpg",
+     "(working dir)/research/agents/web/ig/embeds/Cflj123vMxx.jpg",
+     "(working dir)/research/agents/web/ig/embeds/Cd1O8Ybg5KL.jpg",
+     "(working dir)/research/agents/web/ig/embeds/CdoQ6WZsgRK.jpg",
+     "(working dir)/research/agents/web/ig/embeds/CcdBngeva3a.jpg",
+     "(working dir)/research/agents/web/ig/embeds/Da79RS1DTPm.jpg",
+     "(working dir)/research/agents/web/ig/embeds/DezOW2GCMyH.jpg",
+     "(working dir)/research/agents/web/media/ig_video/CkThjDJoG-z.mp4",
+     "(working dir)/research/agents/web/media/ig_video/frames/f_720.jpg",
+     "(working dir)/research/agents/web/media/ig_video/frames/f_990.jpg",
+     "(working dir)/research/agents/web/media/ig_video/frames/igfull_1032.jpg",
+     "(working dir)/research/agents/web/media/ig_video/frames/sheet_01.jpg",
+     "(working dir)/research/agents/web/media/ig_video/frames/sheet_02.jpg",
+     "(working dir)/research/agents/web/media/yt_no6VBxqSiUU_maxres.jpg",
+     "(working dir)/research/agents/web/media/yt_no6_maxres1.jpg",
+     "(working dir)/research/agents/web/media/yt_no6_maxres2.jpg",
+     "(working dir)/research/agents/web/media/yt_no6_maxres3.jpg",
+     "(working dir)/research/agents/web/media/tiktok_7645996107356474632_cover.jpg",
+     "(working dir)/research/agents/web/media/tiktok_7641287867700120839_cover.jpg",
+     "(working dir)/research/agents/web/media/tiktok_7635568609019890962_cover.jpg",
+     "(working dir)/research/agents/web/media/tiktok_7636316850896276754_cover.jpg",
+     "(working dir)/research/agents/web/media/tiktok_7642813772956011784_cover.jpg",
+     "(working dir)/research/agents/web/media/tiktok_7635957978654395655_cover.jpg",
+     "(working dir)/research/agents/web/media/tiktok_7634156274724113682_cover.jpg",
+     "(working dir)/research/agents/web/media/tiktok_7634853873118694674_cover.jpg",
+     "(working dir)/research/agents/web/media/tiktok_7641971003035356434_cover.jpg",
+     "(working dir)/research/agents/web/media/tiktok_7642287907033697554_cover.jpg",
+     "(working dir)/research/agents/web/tiktok/tiktok_index.json",
+     "(working dir)/research/agents/web/tiktok/embed_profile.html",
+     "(working dir)/research/agents/web/tiktok/tt_mod_academy.html",
+     "(working dir)/research/agents/web/yt/next_no6.json",
+     "(working dir)/research/agents/web/yt/poc_videos.html"
+    ]
+   }
+  },
+  {
+   "key": "design",
+   "result": {
+    "summary": "DESIGN RESEARCH (label \"design\"). All sources were accessed 2026-10-23. I looked at about 30 sites through WebFetch, curl, and headless Chromium screenshots with computed-style capture. I could not open these: KLC/West Dean, Interior Design Institute, Inchbald, CSM/UAL, the Bartlett, the AA School (its page is rendered by JavaScript), Parsons, Autodesk, the Chaos /academy page, and Awwwards via curl. Awwwards and Godly showed no relevant education winners.\n\nRECOMMENDED DIRECTION FOR MOD ACADEMY: \"Studio monograph\". The site should read like an editorial architecture magazine and put the work first.\n\n1) Palette: warm paper off-white (about #F3F1EE) and ink black (about #111). MOD red #C4161C is used sparingly, only for actions, active states and the red \"D\" motif, which can work as a crop or mask for images. Dark sections work best for render galleries. Red #C4161C passes AA for text on white (6.04:1) and on paper (5.35:1). It fails for small text on black (3.48:1), so on dark sections use red only for large type or non-text accents. White text on red is 6.04:1.\n\n2) Type: Armenian-first. Most popular Google Fonts have no Armenian subset. Use Noto Sans Armenian variable: its width axis (62.5–100) gives condensed display headings with SVA/KABK-style width contrast. Optionally add Noto Serif Armenian for pull quotes. Alternatively, license a dedicated Armenian face as local leaders do: TUMO uses Fedra Sans Armenian and Picsart Academy uses Mardoto. Set display sizes up to about 110–130px with 0.9–1.0 leading, on an asymmetric grid with indented body text (Shillington). Use small uppercase kickers (ECAL) and text-wrap: balance on headings. Use at most two families.\n\n3) Home page flow:\n- Hero: one full-bleed student render (a still, or a muted loop with a visible pause control) plus a single claim.\n- Course index: 4–5 large rows, each labelled by audience, with key facts inline (duration, format, next start). No filter UI is needed at this size.\n- A 3-question \"Which course fits you?\" helper (like CG Spectrum's quiz).\n- A learning-journey timeline.\n- A student work wall.\n- A \"learning in real showrooms\" strip for the partner visits (Capital Interiors, Classis Decor, Electrica Group), as Domus does with its company workshops.\n- Instructors, FAQ, and contact with a map for Tigran Mets 4.\n\n4) Course page template:\n- H1, then a row of four key-fact tiles: Duration / Schedule / Format & group size / Next start (SPD pattern).\n- Promise and \"who it's for\" bullets, with the price and CTA above the fold if MOD publishes prices (Shillington).\n- Outcomes: \"what you will make\".\n- Modules with hours per tool (SPD lists AutoCAD 21h, Rhino 36h and so on).\n- Tools and hardware notes.\n- Student work from that course, the instructor, a group vs individual format comparison (CG Spectrum's \"Two Ways to Learn\"), then FAQ and the form.\n- Add a 4–5-column comparison table across courses.\n\n5) Separate inquiry from enrollment. Offer two clearly different actions:\n- \"Get a consultation\": name, phone, preferred channel, course preselected.\n- \"Reserve a place in the next group\": adds preferred schedule.\n- Optionally a low-commitment free trial or open lesson (Shillington's \"Free Taster Session\"), only if MOD offers one.\n- Use tap-to-call for 093 950 960 and an Instagram link, and put contact help in the same place on every page.\n\n6) Portfolio: grid filtered by course. Every image is credited with student name, @handle (with consent), course and year, and tutor if known (ECAL/Gnomon style). Lightbox with keyboard navigation and real alt text. The Shillington, IED and Elisava pages I checked leave out course, year or tutor credits, and Shillington's case-study images have empty alt text; do better than that.\n\n7) Trust: only verifiable facts. Attribute \"7+ years / 1000+ students\" as the academy's own figures, use real partner names and real student names, and source any statistic in a footnote (Gnomon/Shillington). No invented ratings or testimonials. No fake countdowns or discount pressure (Domestika and Learn Squared do this). Learn Squared also shows conflicting student counts (40,000 and 20,000) on one page; avoid that.\n\n8) Motion: restrained.\n- CSS scroll-driven reveals only behind @supports, because Firefox stable gets animation-timeline in 159 on 2026-10-27 and MDN still marks it \"Limited availability\".\n- Respect prefers-reduced-motion, and consider a motion toggle (ASP Warsaw has one in its accessibility menu).\n- Use cross-document view transitions between course pages as an enhancement only (Chrome 126+, Safari 18.2+, not Firefox).\n- No scroll-jacking, no auto-advancing carousels, and a pause control for any loop over 5 seconds (WCAG 2.2.2).\n- Any before/after render slider must also work with a click (WCAG 2.5.7).\n\n9) Avoid:\n- Cookie walls covering half the viewport (Domus mobile). Use no third-party trackers so no banner is needed.\n- Stacked sticky bars (CG Spectrum) and anything that covers the focused element (WCAG 2.4.11).\n- Title-only course cards.\n- Text over busy imagery (ECAL hero).\n- Empty hero placeholders before images load (SPD).\n- Mixed-language UI chrome, such as cookie notices in another language.\n- Stock photos.",
+    "facts": [
+     {
+      "topic": "Course discovery - catalog tabs + filters",
+      "fact": "CG Spectrum's All Courses page splits courses into three tabs by credential: 'Bachelor's Degrees & Diplomas', 'Career Tracks' and 'Short Courses'. Each tab has a discipline filter with an 'All' option, such as 3D Modeling or 3D Visualization. Cards show the credential type, a level range ('Beginner to Advanced'), a duration ('14 Weeks', '3 Months') and a one-line description, with a 'View Course' button. There is no price or start date on the cards.",
+      "source_url": "https://www.cgspectrum.com/courses",
+      "status": "verified_current",
+      "source_date": "accessed 2026-10-23; content date unknown",
+      "notes": "Reusable pattern: duration and level shown on every card. MOD's catalog is small (4-5 courses), so filters are not needed."
+     },
+     {
+      "topic": "Course discovery - comparison table",
+      "fact": "CG Spectrum's 'Our Courses at a Glance' table compares formats in columns (Diploma, Degree, Career Track Group, Career Track Private 1:1). Rows are Class Option, Duration, Skill Level Outcome, No. Subjects, Study Load (hrs/week), Credential Issued, Accredited, Financial Aid, Private Loan and Course Structure.",
+      "source_url": "https://www.cgspectrum.com/compare-courses",
+      "status": "verified_current",
+      "source_date": "accessed 2026-10-23",
+      "notes": "Template for a MOD comparison of Interior Design (6 mo), Sales Management (4 mo), Graphic Design (4 mo), Corona Level UP (1 mo, individual) and 3ds Max. Rows: duration, format, schedule, entry level, tools, portfolio outcome, price. Fill only with facts MOD confirms."
+     },
+     {
+      "topic": "Course discovery - guided finder",
+      "fact": "CG Spectrum's homepage hero CTA is 'FIND YOUR PROGRAM'. A banner reads 'Career path quiz – Which job is actually you? Find your pathway' with the button 'Take the quiz'. The persistent header pairs 'TALK TO US' (outlined) with 'APPLY NOW' (filled).",
+      "source_url": "https://www.cgspectrum.com/",
+      "status": "verified_current",
+      "source_date": "accessed 2026-10-23",
+      "notes": "A 3-question 'which course fits me' helper suits beginners choosing between interior design, 3D visualization, graphic design and sales."
+     },
+     {
+      "topic": "Course discovery - stepwise selection",
+      "fact": "NABA's homepage finder runs in three steps: 'SELECT YOUR LEVEL', then 'CHOOSE YOUR INTERESTED AREA', then 'CHOOSE YOUR FUTURE' (specialisations such as Interior Design). The header has phone and WhatsApp icons and the CTAs 'Book an interview', 'Contact us' and 'Apply now'.",
+      "source_url": "https://www.naba.it/en",
+      "status": "verified_current",
+      "source_date": "accessed 2026-10-23",
+      "notes": ""
+     },
+     {
+      "topic": "Course discovery - small catalog presentation",
+      "fact": "Shillington has only two courses. They appear as two large cards framed by audience: 'For Beginners: Graphic Design' (full or part time, next starts January & February 2027) and 'For Designers: Motion'. Each has 'View Course'. Entry requirements are on the courses page, for example 'Access to a Mac or PC'.",
+      "source_url": "https://www.shillingtoneducation.com/",
+      "status": "verified_current",
+      "source_date": "accessed 2026-10-23",
+      "notes": "Closest match to MOD's catalog size: label each course by audience and show the next start date on the card."
+     },
+     {
+      "topic": "Course discovery - browse by software",
+      "fact": "Learn Squared filters its catalog by software icons (Blender, Maya, Photoshop, Unreal…), by skillset, and by skill level (Beginner / Intermediate / Advanced / Supports All Skill Levels). Domestika's header has 'Areas' and 'Software' sub-navigation, and its cards show level, total duration, instructor, student count and a % rating.",
+      "source_url": "https://www.learnsquared.com/courses",
+      "status": "verified_current",
+      "source_date": "accessed 2026-10-23",
+      "notes": "I also checked Domestika at https://www.domestika.org/en/courses/category/8-interior-architecture-design, but that URL served a Photography & Video category. A 'by tool' entry point (3ds Max, Corona, Photoshop/Illustrator) helps MOD's software courses."
+     },
+     {
+      "topic": "Course detail - key facts layout",
+      "fact": "SPD's '3D Design Tools' course page puts four key-fact tiles directly under the H1: Course length '16 weeks', Start 'September / March', Language 'English', Where 'Online'. The text then gives the exact schedule ('every Monday and Wednesday from 6:30 PM to 9:30 PM'), total hours (96), and a study plan with hours per tool: AutoCAD 21h, Rhinoceros 8 36h, Twinmotion 27h, Revit 12h. Collapsible sections cover Assessment, Studyplan and Costs (850 euros, 50% discount for those who enrol in SPD). It also states plainly 'Software licenses will not be provided by the school'.",
+      "source_url": "https://www.scuoladesign.com/courses/3d-design-tools-preparatory-course/",
+      "status": "verified_current",
+      "source_date": "accessed 2026-10-23",
+      "notes": "The best template for MOD's 3ds Max and Corona course pages. The H1 uses ABC Diatype at 57.6px with line-height 1.0 on an off-white #F6F7F8 background."
+     },
+     {
+      "topic": "Course detail - above-the-fold hierarchy",
+      "fact": "Shillington's course page puts a small H1 ('Live Online Graphic Design Course') over a 130px display line ('Design Futures.', line-height 117px) and a promise paragraph. The right column holds differentiator bullets ('No experience needed, all perspectives welcome', 'Small classes capped at 9 students per teacher', 'Multiple time zones available'). Below them is a price pill ('Super Early Bird GBP £6,450', with £7,450 struck through) and 'Enrol Now', all above the fold.",
+      "source_url": "https://www.shillingtoneducation.com/graphic-design-course",
+      "status": "verified_current",
+      "source_date": "accessed 2026-10-23",
+      "notes": "Typeface is 'Universal Sans Display'. The layout is asymmetric: heading at the left margin, body indented."
+     },
+     {
+      "topic": "Course detail - schedule options",
+      "fact": "Shillington's 'Choose Your Pace' section offers Full-time (3 months, Monday–Friday, next 11 January 2027) and Part-time (9 months, Tuesday & Wednesday, next 2 February 2027). Each option has 'ENROL NOW' and 'Enquire'.",
+      "source_url": "https://www.shillingtoneducation.com/graphic-design-course",
+      "status": "verified_current",
+      "source_date": "accessed 2026-10-23",
+      "notes": "Useful if MOD runs weekday and weekend groups. Use only real schedules."
+     },
+     {
+      "topic": "Learning-journey storytelling",
+      "fact": "Shillington's 'Course Structure' section is a horizontal sequence of four stages: Pre-Course ('Before you start, you set up your workspace, meet your cohort… You never arrive cold'), Design Foundations, Design Applied, and Design for Employment. A 'What To Expect' accordion lists outcome statements: 'Feedback from real designers', 'Projects that reflect the real industry', 'Master the tools you'll actually use', 'Graduate with a portfolio that opens doors'.",
+      "source_url": "https://www.shillingtoneducation.com/graphic-design-course",
+      "status": "verified_current",
+      "source_date": "accessed 2026-10-23",
+      "notes": "For MOD: a 4-step journey such as fundamentals, software, a real showroom project, then the portfolio render. Wording must match MOD's actual curriculum."
+     },
+     {
+      "topic": "Course detail - format comparison + weekly curriculum",
+      "fact": "CG Spectrum's 3D Visualization Essentials page shows 'Same Course. Same Mentors. Two Ways to Learn.' as two cards. 1:1 Career Mentorship: start any month, 3 months, weekly 1-hour sessions. Group Class: next intake Sept 14th 2026, 4 months, weekly 3-hour live classes. Each card has 'GET MORE INFO' and 'BOOK A CONSULTATION'. A 12-week 'Weekly Breakdown' follows, plus an FAQ on prerequisites, software and hardware, educational licences and 'no architecture background'. No price is shown.",
+      "source_url": "https://www.cgspectrum.com/courses/3d-visualization-essentials",
+      "status": "verified_current",
+      "source_date": "accessed 2026-10-23",
+      "notes": "Fits MOD, which has group courses plus an individual 1-month Corona Level UP course."
+     },
+     {
+      "topic": "Course detail - in-page section nav",
+      "fact": "CG Spectrum adds a sticky section nav under the header (OVERVIEW / OUR DIFFERENCE / COURSE INFORMATION / MENTORS / TESTIMONIALS / REQUEST INFORMATION / FAQ'S) with an active underline. Learn Squared's sticky nav (What You'll Learn, Instructor, Pricing, Lesson Plan, Student Work) carries a 'Buy Now $55' button.",
+      "source_url": "https://www.learnsquared.com/courses/architectural-storytelling",
+      "status": "verified_current",
+      "source_date": "accessed 2026-10-23",
+      "notes": "I verified the CG Spectrum nav with a screenshot of https://www.cgspectrum.com/courses/3d-visualization-essentials. Use one compact sticky element, not several."
+     },
+     {
+      "topic": "Course detail - tiers / try before you buy",
+      "fact": "Learn Squared's pricing block has three tiers: 'Try it' (free, limited access, 'no credit card required', 'Watch Free Preview'), 'Buy it' ($69 struck through, $55, lifetime access, project files, Discord) and 'For teams' ('Contact us'). The lesson plan is an accordion with a duration on every video and free-preview markers. The instructor block lists film and TV credits and a 'View Yury's Portfolio' button.",
+      "source_url": "https://www.learnsquared.com/courses/architectural-storytelling",
+      "status": "verified_current",
+      "source_date": "accessed 2026-10-23",
+      "notes": ""
+     },
+     {
+      "topic": "Course detail - industry partners as curriculum",
+      "fact": "Domus Academy's Master in Interior & Living Design page states 'Language: English | Start: February, September, November' in the hero. It compares two tracks in fact blocks (Duration 11 vs 14 months, Accreditation, ECTS 60 vs 90) and has section tabs 'Course & career / Fees / Faculty / Projects & Companies'. Further sections: a 'WORKSHOP WITH COMPANIES' logo grid linking to filtered projects, 'CAREER PROFILES', 'WHO SHOULD APPLY', a 'TUITION FEES' table and 4 FAQs. The H1 contains a typo ('Master inInterior').",
+      "source_url": "https://www.domusacademy.com/courses/design/master-in-interior-living-design/",
+      "status": "verified_current",
+      "source_date": "accessed 2026-10-23",
+      "notes": "Analogue for MOD's partner showroom lessons (Capital Interiors, Classis Decor, Electrica Group): logos or photos linked to the student work produced there."
+     },
+     {
+      "topic": "Enrollment vs inquiry - commitment ladder",
+      "fact": "Domus Academy repeats three actions of increasing commitment in the header, hero and footer bar: 'GET YOUR INFO KIT', 'BOOK AN ORIENTATION' and 'APPLY ONLINE', plus 'Call us' and 'WHATSAPP'. The info-kit form asks for First Name*, Last Name*, Email*, country code*, Phone* and Program of interest*, has an optional message, and two separate consent checkboxes (marketing, profiling). On mobile a fixed bottom bar reads 'GET YOUR INFO KIT'.",
+      "source_url": "https://www.domusacademy.com/courses/design/master-in-interior-living-design/",
+      "status": "verified_current",
+      "source_date": "accessed 2026-10-23",
+      "notes": "I read the form fields from the page HTML and found the sticky bar with a mobile Playwright check."
+     },
+     {
+      "topic": "Enrollment vs inquiry - low-commitment steps",
+      "fact": "Shillington's course page offers a ladder of actions: 'Download The Guide', then 'Book Your Place' in a 'Free Taster Session' ('Join a free 1-hour live lesson and get a feel for how we teach.'), then 'Enquire Now' / 'Find A Time' ('Not sure yet? Book a call and we will talk it through honestly.'), then 'Enrol Now'. Reassurance lines include 'You do not need experience, a portfolio or a design background to join.' On mobile a floating 'Enrol' pill sits bottom-right.",
+      "source_url": "https://www.shillingtoneducation.com/graphic-design-course",
+      "status": "verified_current",
+      "source_date": "accessed 2026-10-23",
+      "notes": "For MOD: a 'free trial lesson / open studio' step only if MOD actually offers one."
+     },
+     {
+      "topic": "Inquiry form - ask the course first",
+      "fact": "IED's request-information form starts with '1. Course selection' ('First, indicate the course you want to know about'): Course typology*, Location* and Subject*, before any personal data.",
+      "source_url": "https://www.ied.edu/request-information",
+      "status": "verified_current",
+      "source_date": "accessed 2026-10-23",
+      "notes": "Preselect the course when the form opens from a course page, so no one re-enters it (WCAG 3.3.7 Redundant Entry)."
+     },
+     {
+      "topic": "Local (Yerevan) reference - Armenian microcopy and flow",
+      "fact": "Picsart Academy (Yerevan) is Armenian-first with an English switch. Its labels: 'Ընտրեք Ձեր դասընթացը' (choose your course), 'Դիմել հիմա' (apply now), 'Դասընթացի մանրամասներ' (course details), 'Ինչու միանալ մեզ' (why join us), 'Հաճախ տրվող հարցեր' (FAQ), 'Կապ մեզ հետ' (contact), 'Բաժանորդագրվել' (subscribe). To register, you pick a day and time, then attend an interview. FAQ topics: certificate, prior knowledge, age, two specialisations, computers provided, admission exam. The contact block shows phone, address, hours 'Երկ - Ուրբ 10:00-19:00' and Telegram.",
+      "source_url": "https://picsartacademy.am/",
+      "status": "verified_current",
+      "source_date": "accessed 2026-10-23",
+      "notes": "Uses the Mardoto and AtyanDsegh webfonts."
+     },
+     {
+      "topic": "Local (Yerevan) reference - TUMO",
+      "fact": "TUMO's homepage (Halabyan 16, Yerevan) has a student-portfolio strip of titled projects ('Phenakistoscope Animation', 'Poetic Documentary'…) with 'See more student work', an Armenian language toggle labelled 'Հայ', a Telegram icon in the footer, and opening hours 'Mon - Sun, 10AM - 7PM'. Its CSS uses Fedra Sans Armenian (FedraSansArm) alongside Inter.",
+      "source_url": "https://tumo.org/",
+      "status": "verified_current",
+      "source_date": "accessed 2026-10-23",
+      "notes": "Premium local sites use dedicated Armenian typefaces rather than system fallbacks."
+     },
+     {
+      "topic": "Typography - Armenian webfont availability",
+      "fact": "In Google Fonts metadata, only Google Sans, Handjet, Iosevka Charon (+ Mono), Noto Sans Armenian and Noto Serif Armenian carry the Armenian subset. Both Noto Armenian families are variable, with wdth 62.5–100 and wght 100–900. Inter, Manrope, Montserrat, Roboto, Open Sans, Playfair Display, Cormorant, Lora, Fira Sans, Unbounded, Golos, Onest and Instrument Sans return no Armenian subset (U+0530–058F).",
+      "source_url": "https://fonts.google.com/metadata/fonts",
+      "status": "verified_current",
+      "source_date": "accessed 2026-10-23",
+      "notes": "I also checked the CSS2 API (fonts.googleapis.com/css2) per family. Implication: pair any Latin display face with Noto Sans Armenian. Its width axis allows condensed display headings."
+     },
+     {
+      "topic": "Typography - premium editorial patterns",
+      "fact": "Computed styles from my 2026-10-23 screenshots:\n- ECAL: custom 'Renens' face, H1 96px uppercase, letter-spacing -3.84px (-0.04em), line-height 0.95, uppercase kicker labels.\n- SVA: Ringside Compressed / Extra Wide (width contrast), H1 in brand red rgb(230,31,0), 'GET INFO' / 'APPLY' split in the header, a light/dark theme toggle.\n- KABK: Marr Sans + Marr Sans Condensed with 20px body text.\n- Shillington: Universal Sans Display, section headings ~130px.",
+      "source_url": "https://ecal.ch/en/",
+      "status": "verified_current",
+      "source_date": "accessed 2026-10-23",
+      "notes": "Also measured: https://sva.edu/, https://www.kabk.nl/en and https://www.shillingtoneducation.com/graphic-design-course. Pattern: one grotesk family with width or size contrast, very large tight headings, small uppercase labels."
+     },
+     {
+      "topic": "Portfolio - filters and attribution",
+      "fact": "Elisava's Projects page has a 'Filter by:' panel: Study (Degree, Master), Area (Communication, Editorial, Furniture, Graphic, Product, Space…), Promotion (years 2014–2026) and toggles Featured / Awarded / Business. It has 'Apply filters' and 'Clear all' buttons and the empty state 'Oops! We have not found any projects matching this search :('. Cards show an image, theme tags, the title, and the student name(s) or 'Several students'.",
+      "source_url": "https://www.elisava.net/en/projects",
+      "status": "verified_current",
+      "source_date": "accessed 2026-10-23",
+      "notes": "For MOD, filter by course and year only."
+     },
+     {
+      "topic": "Portfolio - crediting tutors and sources",
+      "fact": "ECAL's project grid credits each piece with an uppercase discipline tag, a title and 'with [tutor]' (e.g. 'with Philippe Malouin'). Gnomon's gallery alt text follows 'Student Artwork by [student], Concept by [studio]' and labels 'Best of Term' winners.",
+      "source_url": "https://www.gnomon.edu/",
+      "status": "verified_current",
+      "source_date": "accessed 2026-10-23",
+      "notes": "ECAL source: https://ecal.ch/en/. For MOD renders: student, course, tutor, year, plus the original design source if a render reproduces an existing interior."
+     },
+     {
+      "topic": "Portfolio - anti-pattern (weak attribution)",
+      "fact": "IED's projects page (1202 projects) has rich filters: City, Project Tag (Didactic / Final-thesis / Special), Type of course, Subject. Its cards still show no student names. Shillington's case-study page shows only a name and tags, stacks images with empty alt text, and gives no course, year or teacher credit.",
+      "source_url": "https://www.ied.edu/projects",
+      "status": "verified_current",
+      "source_date": "accessed 2026-10-23",
+      "notes": "Shillington example: https://www.shillingtoneducation.com/student-work/abby-gross-student-work. Shillington's index does filter by brief type through a tag cloud (Packaging, Brand Identity, App UX/UI…)."
+     },
+     {
+      "topic": "Instructor presentation",
+      "fact": "Shillington frames its teachers as 'Every teacher is a working designer'. A profile has name, role, a bio paragraph, a pull quote, a 'Portfolio' of three professional projects, and a 'Recommends' list of personal picks. CG Spectrum mentor cards show photo, name, short bio and a 'Known for [project]' label. Domus has 'Meet your faculty' with a 'COURSE LEADER' card ('Watch the video') and 'Visiting Professors'.",
+      "source_url": "https://www.shillingtoneducation.com/teachers/dan-wilson",
+      "status": "verified_current",
+      "source_date": "accessed 2026-10-23",
+      "notes": "For MOD: a 'Known for' line could link to the instructor's studio work, such as @mod_interior_architecture, if confirmed."
+     },
+     {
+      "topic": "FAQ structure",
+      "fact": "Shillington groups its FAQ by course, then by topic: The Course / Enrolment / Fees & Payments / After Shillington. Example questions: 'Do I need drawing skills?', 'What software do I need?', 'Are live classes recorded? What if I miss class?', 'Is there a refund policy?', 'Can I speak to anybody on the phone?', 'Do you offer financing or payment plans?'.",
+      "source_url": "https://www.shillingtoneducation.com/faqs",
+      "status": "verified_current",
+      "source_date": "accessed 2026-10-23",
+      "notes": "ArchAdemia (https://archademia.com/) uses 7 accordion FAQs, including 'How much does a membership cost?' and 'How do I cancel?'."
+     },
+     {
+      "topic": "Trust - sourced statistics",
+      "fact": "Gnomon footnotes its placement stats ('employment rates follow ACCSC definitions and are externally verified'). Shillington footnotes '82%… within a year' as based on a LinkedIn sample survey of 5,000 graduates, and shows graduate 'Was / Now' career cards. Domus and NABA attribute their employment stats to Ipsos Doxa surveys.",
+      "source_url": "https://www.gnomon.edu/",
+      "status": "verified_current",
+      "source_date": "accessed 2026-10-23",
+      "notes": "Also seen on https://www.shillingtoneducation.com/ and https://www.domusacademy.com/en/. For MOD: present '7+ years / 1000+ students' as the academy's own figures, and invent nothing."
+     },
+     {
+      "topic": "Trust - honest pricing urgency vs pressure",
+      "fact": "Shillington publishes dated, tiered prices: Super Early Bird £6,450 (enrol up to 70 days before start), Early Bird £6,700 (up to 40 days), Close Call £6,950, Full Fee £7,450 (final 14 days). By contrast, Domestika shows a countdown banner ('This price won't last long...') and Learn Squared shows site-wide promo codes ('INKTOBER', -20/-30%).",
+      "source_url": "https://www.shillingtoneducation.com/courses",
+      "status": "verified_current",
+      "source_date": "accessed 2026-10-23",
+      "notes": "Avoid countdown and discount pressure for premium positioning."
+     },
+     {
+      "topic": "Anti-pattern - inconsistent social proof",
+      "fact": "Learn Squared's course page claims 'over 40,000 students' in one section and 'over 20,000 students' in another.",
+      "source_url": "https://www.learnsquared.com/courses/architectural-storytelling",
+      "status": "verified_current",
+      "source_date": "accessed 2026-10-23",
+      "notes": "Keep one source of truth for every number."
+     },
+     {
+      "topic": "Anti-pattern - cookie walls and stacked sticky UI",
+      "fact": "On an iPhone 13 viewport, Domus Academy's cookie banner covers more than half the screen on the course page, and Shillington's consent modal blocks the hero. CG Spectrum stacks a fixed header, a sticky section nav and a bottom promo bar ('REGISTER NOW') at once.",
+      "source_url": "https://www.domusacademy.com/courses/design/master-in-interior-living-design/",
+      "status": "verified_current",
+      "source_date": "accessed 2026-10-23",
+      "notes": "Seen in Playwright screenshots. MOD should avoid third-party trackers so it needs no banner, and keep one slim sticky CTA."
+     },
+     {
+      "topic": "Anti-pattern - localization inconsistency and legibility",
+      "fact": "Elisava's English page shows a Spanish cookie notice, and ECAL's English page shows a French one. ECAL's hero sets blue headline text directly over a busy multicolour image. SPD's course hero renders as an empty colour block until the image lazy-loads.",
+      "source_url": "https://ecal.ch/en/",
+      "status": "verified_current",
+      "source_date": "accessed 2026-10-23",
+      "notes": "Also https://www.elisava.net/en and https://www.scuoladesign.com/courses/3d-design-tools-preparatory-course/. MOD's Armenian/English (and any Russian) versions must localize every element."
+     },
+     {
+      "topic": "Motion - typical 'premium' stack",
+      "fact": "Barba Arts Summer School (bassbcn.com, featured on Siteinspire 2025-11-13) loads gsap.min.js, lenis.min.js (smooth scroll) and Barba (page transitions). ECAL's marquee ticker has a visible pause button.",
+      "source_url": "https://bassbcn.com",
+      "status": "verified_current",
+      "source_date": "accessed 2026-10-23; Siteinspire feature date 2025-11-13",
+      "notes": "Prefer native scroll with CSS-first reveals. If you use smooth scroll, never hijack scrolling, and offer a pause control for every moving element."
+     },
+     {
+      "topic": "Motion - CSS scroll-driven animation support",
+      "fact": "MDN browser-compat-data 8.1.7 (2026-10-22) lists animation-timeline / view() in Chrome and Edge 115, Safari 26, and Firefox 159. Firefox 159 releases 2026-10-27; current stable is 158 (2026-10-13). The MDN page shows 'Limited availability… not Baseline'. text-wrap: balance works in all engines; text-wrap: pretty works in Chrome 117 and Safari 26, not Firefox.",
+      "source_url": "https://developer.mozilla.org/en-US/docs/Web/CSS/animation-timeline",
+      "status": "verified_current",
+      "source_date": "BCD 8.1.7 dated 2026-10-22; accessed 2026-10-23",
+      "notes": "Wrap scroll-driven reveals in @supports (animation-timeline: view()) with a static fallback, and turn them off under prefers-reduced-motion."
+     },
+     {
+      "topic": "Motion - view transitions support",
+      "fact": "Same-document view transitions have 92.9% global support (Firefox 144+). Cross-document view transitions (@view-transition) have 86.8%: Chrome 126+ and Safari 18.2+, with Firefox only partial or not shipped.",
+      "source_url": "https://caniuse.com/cross-document-view-transitions",
+      "status": "verified_current",
+      "source_date": "caniuse data updated 2026-10-22; accessed 2026-10-23",
+      "notes": "Fine as a progressive enhancement for course-to-course navigation."
+     },
+     {
+      "topic": "Accessibility - WCAG 2.2 criteria that affect this design",
+      "fact": "WCAG 2.2 added 2.4.11 Focus Not Obscured (AA: sticky banners must not hide the focused item), 2.5.7 Dragging Movements (AA: sliders need a single-pointer alternative), 2.5.8 Target Size Minimum (AA: 24×24 CSS px), 3.2.6 Consistent Help (A: contact and help in the same relative order on every page) and 3.3.7 Redundant Entry (A).",
+      "source_url": "https://www.w3.org/WAI/standards-guidelines/wcag/new-in-22/",
+      "status": "verified_current",
+      "source_date": "page updated 2023-10-05; accessed 2026-10-23",
+      "notes": "Directly affects a sticky enroll bar, before/after render sliders, and the contact block."
+     },
+     {
+      "topic": "Accessibility - autoplay video and carousels",
+      "fact": "WCAG 2.2.2 Pause, Stop, Hide (Level A): content that starts automatically, lasts over 5 seconds and runs alongside other content needs a pause, stop or hide control. Auto-advancing carousels fall under the auto-updating clause. Separately, 2.3.3 Animation from Interactions (AAA) says interaction-triggered motion such as parallax should be possible to disable, for example through prefers-reduced-motion.",
+      "source_url": "https://www.w3.org/WAI/WCAG22/Understanding/pause-stop-hide.html",
+      "status": "verified_current",
+      "source_date": "accessed 2026-10-23",
+      "notes": "See also https://www.w3.org/WAI/WCAG22/Understanding/animation-from-interactions.html. ASP Warsaw (https://asp.waw.pl/) offers a site menu with font size, contrast and animation controls."
+     },
+     {
+      "topic": "UX evidence - auto-forwarding carousels",
+      "fact": "NN/g found that auto-rotating carousels reduce the chance any item is seen. They hurt users with motor impairments and slow or non-native readers, and they get mistaken for ads. Recommendation: change panels only on user request.",
+      "source_url": "https://www.nngroup.com/articles/auto-forwarding/",
+      "status": "verified_possibly_outdated",
+      "source_date": "2013-01-19",
+      "notes": "Old article, but the guidance matches current WCAG 2.2.2. Several schools still lead with rotating hero carousels (IED, NABA, Gnomon, ASP)."
+     },
+     {
+      "topic": "Brand color contrast (computed)",
+      "fact": "WCAG contrast ratios for MOD red #C4161C: on #FFFFFF 6.04:1 (AA pass), on #F3F1EE 5.35:1 (pass), on #EAE4DA 4.77:1 (pass), on #000000 3.48:1 and on #111111 3.13:1 (fail for normal text; large text or non-text only). White on #C4161C is 6.04:1. #111111 on #F3F1EE is 16.75:1. Secondary grey #6B665F on #F3F1EE is 5.05:1; #8A847B fails at 3.29:1.",
+      "source_url": "https://www.w3.org/WAI/WCAG22/Understanding/contrast-minimum.html",
+      "status": "verified_current",
+      "source_date": "computed 2026-10-23",
+      "notes": "I computed these locally with the WCAG relative-luminance formula; the W3C page above defines the thresholds."
+     },
+     {
+      "topic": "Software FAQ input - Corona host apps",
+      "fact": "Chaos's official 'Getting started with Corona' page offers two tracks, 'Corona for 3ds Max' and 'Corona for Cinema 4D', and calls them 'official learning resources, free for all users of Corona'. The page links to Chaos Academy at academy.chaos.com.",
+      "source_url": "https://www.chaos.com/corona/getting-started",
+      "status": "verified_current",
+      "source_date": "accessed 2026-10-23",
+      "notes": "corona-renderer.com/resources/learning redirects here."
+     },
+     {
+      "topic": "Software FAQ input - 3ds Max OS",
+      "fact": "Search results from autodesk.com say 3ds Max 2026 runs only on 64-bit Windows 10 (1809+) and Windows 11, and that 3ds Max 2027 lists only Windows 11. No macOS version is listed.",
+      "source_url": "https://www.autodesk.com/support/technical/article/caas/sfdcarticles/sfdcarticles/System-requirements-for-Autodesk-3ds-Max-2026.html",
+      "status": "unverified",
+      "source_date": "accessed 2026-10-23 (search snippet only)",
+      "notes": "Autodesk pages returned HTTP 403, so I could not read the page itself. Confirm before stating 'Windows PC required' in MOD's FAQ."
+     },
+     {
+      "topic": "Discovery by area x level (no filters)",
+      "fact": "Domus Academy's homepage lets visitors discover programmes through 'The Areas of Study' tiles (Design, Fashion, Business), each listing the five levels as links, plus level cards with 'Discover the courses'. There are no filters or search, and the page has a 'Get Inspired… by our students' project strip with 'See all projects'.",
+      "source_url": "https://www.domusacademy.com/en/",
+      "status": "verified_current",
+      "source_date": "accessed 2026-10-23",
+      "notes": "The site's main typeface is Lato."
+     },
+     {
+      "topic": "Program cards with key facts (positive)",
+      "fact": "Gnomon's homepage academic cards state format and length inline: 'Undergraduate BFA (4-year, full-time)', 'Individual Courses (10-week, on-campus or online)' with 'Browse Courses', and 'Foundation… (avocational, up to one year, ages 18+)' with 'Enroll Now'. The page also offers 'Upcoming Portfolio Sessions' with 'Reserve Your Spot' and 'Book a Campus Tour'.",
+      "source_url": "https://www.gnomon.edu/",
+      "status": "verified_current",
+      "source_date": "accessed 2026-10-23",
+      "notes": "Contrast with ArchAdemia, Learn Squared and the CG Spectrum homepage, whose cards are title-only and force a click to find duration or level."
+     },
+     {
+      "topic": "Strelka (requested reference)",
+      "fact": "Strelka Institute put all programmes on hold indefinitely on 2022-02-28, so it is not a usable live reference.",
+      "source_url": "https://www.designboom.com/architecture/strelka-institute-moscow-suspends-programs-indefinitely-03-09-2022/",
+      "status": "verified_possibly_outdated",
+      "source_date": "2022-03-09",
+      "notes": "I found no evidence that it has reopened."
+     }
+    ],
+    "inaccessible_sources": [
+     "https://www.klc.co.uk/ (WebFetch 503; curl TLS internal error) and https://www.westdean.ac.uk/specialisms/interior-design (403)",
+     "https://www.interiordesigninstitute.com/ (WebFetch 503; curl connection reset)",
+     "https://www.inchbald.co.uk/ (403)",
+     "https://www.arts.ac.uk/colleges/central-saint-martins (WebFetch domain check blocked; curl 403)",
+     "https://www.ucl.ac.uk/bartlett/ (curl 403)",
+     "https://www.aaschool.ac.uk/ (WebFetch 403; curl returned a JS-only shell with per-letter split logo text, no content)",
+     "https://www.newschool.edu/parsons/ (429)",
+     "https://www.nyiad.edu/interior-design-course (403)",
+     "https://www.chaos.com/academy (404); academy.chaos.com not opened",
+     "https://www.gnomon.edu/instructors (404)",
+     "https://www.cgspectrum.com/student-work (404); https://www.cgspectrum.com/courses/3d-modeling-career-track (404)",
+     "https://www.shillingtoneducation.com/courses/graphic-design/ and /contact-us (404); the correct course URL is /graphic-design-course",
+     "Autodesk 3ds Max system requirements and education pages (403)",
+     "https://www.awwwards.com/websites/education/ (curl connection reset; WebFetch worked but listed no design-school winners)",
+     "https://godly.website/ (client-rendered; no education entries extractable)",
+     "https://www.scuoladesign.com/en/ via WebFetch (empty; curl worked)",
+     "https://tumo.org/ via WebFetch (empty; curl worked)"
+    ],
+    "open_questions": [
+     "Does MOD publish course prices, payment plans, group sizes, exact schedules (weekday or weekend, hours) and next start dates? The course page template depends on these key facts.",
+     "Which contact channels does MOD actually use besides phone and Instagram (WhatsApp, Viber, Telegram, Facebook Messenger)? Show only confirmed channels.",
+     "Does MOD offer a free trial lesson, open day or consultation call? This would be the low-commitment step in the inquiry ladder.",
+     "Does MOD issue a certificate, and is it an Autodesk or Chaos authorized training center? Show no badges or credentials unless verified.",
+     "Do students consent to being credited by name and Instagram handle, and can each render be tagged with course, year and tutor?",
+     "Who are the instructors, with names, photos and studio credits? Is the course leader connected to MOD Interior & Architecture Studio?",
+     "Which languages should the site support (Armenian first; English and/or Russian)? Will MOD license a dedicated Armenian typeface (e.g. Fedra Sans Armenian, Mardoto) or use the open-source Noto Sans/Serif Armenian?",
+     "Students need a Windows PC for 3ds Max: does MOD provide workstations at Tigran Mets 4, or must students bring laptops? (The 3ds Max OS requirement is unverified; Autodesk pages returned 403.)"
+    ],
+    "downloaded_files": [
+     "(working dir)/research/agents/design/shots/shot_0.png",
+     "(working dir)/research/agents/design/shots/shot_1.png",
+     "(working dir)/research/agents/design/shots/shot_2.png",
+     "(working dir)/research/agents/design/shots/shot_3.png",
+     "(working dir)/research/agents/design/shots/shot_4.png",
+     "(working dir)/research/agents/design/shots/shill_0.png",
+     "(working dir)/research/agents/design/shots/shill_1.png",
+     "(working dir)/research/agents/design/shots/shill_2.png",
+     "(working dir)/research/agents/design/shots/cgs_0.png",
+     "(working dir)/research/agents/design/shots/cgs_1.png",
+     "(working dir)/research/agents/design/shots/cgs_2.png",
+     "(working dir)/research/agents/design/shots/domus_0.png",
+     "(working dir)/research/agents/design/shots/domus_1.png",
+     "(working dir)/research/agents/design/shots/domus_2.png",
+     "(working dir)/research/agents/design/shots/domus_3.png",
+     "(working dir)/research/agents/design/shots/m_0.png",
+     "(working dir)/research/agents/design/shots/m_1.png",
+     "(working dir)/research/agents/design/shots/m_2.png",
+     "(working dir)/research/agents/design/spd_3dtools.html",
+     "(working dir)/research/agents/design/spd_interior.html",
+     "(working dir)/research/agents/design/domus_mild.html",
+     "(working dir)/research/agents/design/picsartacademy.am_.html",
+     "(working dir)/research/agents/design/tumo.org_.html",
+     "(working dir)/research/agents/design/gf_metadata.json",
+     "(working dir)/research/agents/design/bassbcn.html",
+     "(working dir)/research/agents/design/sva.edu_.html",
+     "(working dir)/research/agents/design/www.kabk.nl_en.html"
+    ]
+   }
+  },
+  {
+   "key": "type",
+   "result": {
+    "summary": "TYPE RESEARCH (label \"type\"), accessed 2026-10-23. Everything below was verified with fontTools on the actual woff2/TTF files and rendered in headless Chromium using the Fontsource CSS.\n\n1) The Armenian font landscape is very small. In the Google Fonts metadata API (1,950 families), only 6 families list the \"armenian\" subset: Noto Sans Armenian, Noto Serif Armenian, Google Sans (OFL, newly listed), Handjet (pixel display), Iosevka Charon and Iosevka Charon Mono (both monospace). The Fontsource API (2,103 fonts) returns the same 6.\n   I also downloaded the full upstream TTFs from github.com/google/fonts and checked them. These 17 families have ZERO Armenian glyphs: Montserrat, Inter, Manrope, Golos Text, Onest, Unbounded, Raleway, Arimo, Tinos, IBM Plex Sans, Roboto, Open Sans, Noto Sans Display, Commissioner, Geologica, Wix Madefor Display and Wix Madefor Text. They must not be used for Armenian text; they would fall back to system fonts.\n\n2) RECOMMENDATION: an editorial serif for display plus a contemporary sans for text.\n - DISPLAY: @fontsource-variable/noto-serif-armenian@5.3.0\n   - CSS family: 'Noto Serif Armenian Variable'.\n   - Font v2.008 by the Monotype Design Team. OFL-1.1.\n   - Axes: wght 100–900 and wdth 62.5–100.\n   - Full coverage: U+0531–0556, U+0561–0587, U+055A–055F, U+0589, U+058A, U+058F (dram) and U+FB13–FB17 ligatures (kern/mark/liga).\n   - Rendered at weight 300 and large sizes it looks refined and editorial. Use 500–600 for subheads and emphasis.\n   - Use wght.css (index.css is identical) for weight only. Use wdth.css for weight plus width, if condensed headlines are wanted.\n - TEXT/UI: @fontsource-variable/google-sans@5.3.2\n   - CSS family: 'Google Sans Variable'.\n   - OFL-1.1 per the google/fonts METADATA.pb and the package LICENSE.\n   - Axes: wght 400–700, opsz 17–18, GRAD −50–200. True italics are included.\n   - All 77 modern Armenian letters, U+055A–055E, ։ ֊ ֏, the U+FB13–FB17 ligatures and U+0559/058D/058E are present.\n   - Missing: U+055F (abbreviation mark), and U+0560 and U+0588 (rare historic letters).\n   - Its Latin is complete for Latin-1, plus №, €, en/em dashes and quotes.\n - FALLBACK and alternative text face: @fontsource-variable/noto-sans-armenian@5.3.0\n   - CSS family: 'Noto Sans Armenian Variable'.\n   - wght 100–900, wdth 62.5–100, 100% Armenian coverage.\n   - Place it after Google Sans in the font stack so it covers U+055F/0560/0588 on demand.\n   - An all-Noto pairing (Noto Serif + Noto Sans Armenian) is the conservative alternative: 135,992 B. The downside is that Noto's Latin set lacks ¤ ¦ ¬ soft-hyphen ± ² ³ µ ¹ ¼ ½ ¾.\n - Suggested stacks:\n   - --font-display: 'Noto Serif Armenian Variable', 'Noto Serif Armenian', Georgia, serif;\n   - --font-text: 'Google Sans Variable', 'Noto Sans Armenian Variable', system-ui, sans-serif;\n   - Set lang=\"hy\" on the html element. text-transform:uppercase works on Armenian.\n   - Noto Serif Armenian has no italic, so avoid serif italics or set font-synthesis.\n\n3) FILE NAMING\n - Variable packages: files/<id>-<subset>-<axisset>-<style>.woff2, for example:\n   - noto-serif-armenian-armenian-wght-normal.woff2\n   - google-sans-armenian-wght-normal.woff2\n   - google-sans-latin-wght-italic.woff2\n   - Axis-set variants: noto-serif-armenian has wght, wdth and standard. In that package, wdth and standard are the same files and include both wght and wdth. google-sans has wght, opsz, grad, standard and full.\n - Static packages: files/<id>-<subset>-<weight>-<style>.woff2 (plus .woff), for example noto-serif-armenian-armenian-400-normal.woff2. They also have per-subset CSS such as armenian-400.css and latin-400.css. Static CSS families are 'Noto Serif Armenian', 'Google Sans' and 'Noto Sans Armenian'.\n - Armenian unicode-range in all three packages: U+0308,U+0530-058F,U+2010,U+2024,U+25CC,U+FB13-FB17.\n\n4) BYTES (armenian + latin woff2 only, i.e. what a browser downloads for this site)\n - Noto Serif Armenian Variable, wght: 34,636 + 42,964 = 77,600 B.\n - Noto Serif Armenian Variable, wght+wdth: 57,420 + 71,452 = 128,872 B.\n - Google Sans Variable normal: 15,696 + 35,968 = 51,664 B.\n - Google Sans Variable italic: 16,820 + 38,436 = 55,256 B.\n - Noto Sans Armenian Variable: 26,812 + 31,580 = 58,392 B.\n - Totals:\n   - Recommended set (serif wght + Google Sans normal): 129,264 B (126.2 KiB).\n   - Plus Google Sans italic: 184,520 B.\n   - With the serif width axis: 180,536 B.\n - Static weights, armenian+latin: Noto Serif Armenian is about 21 KB per weight (300: 21,680; 400: 20,988; 600: 21,596). Google Sans is about 32–34 KB per weight (400: 31,976; 500: 33,428; 600: 33,680).\n\n5) IMPORTANT PRACTICAL FINDINGS from the Chromium test\n - Google Sans's 'georgian' subset unicode-range includes U+0589 (the Armenian full stop ։). Importing @fontsource-variable/google-sans/wght.css as-is therefore makes every Armenian page also download google-sans-georgian-wght-normal.woff2 (18,088 B).\n - U+2116 № similarly pulls in the cyrillic file (15,964 B).\n - That CSS references 25 woff2 files totalling 965,404 B, which a bundler will copy into dist.\n - Writing our own 4 @font-face rules pointing only at the armenian and latin wght files was verified in Chromium: exactly 4 files were fetched, 129,264 B in total. The test CSS is at (working dir)/research/agents/type/web/fonts.css.\n\n6) OTHER CANDIDATES, rejected or optional\n - Handjet: display/pixel only; missing U+FB16, U+0560 and U+0588.\n - Iosevka Charon: monospace.\n - DejaVu Sans/Serif (@fontsource/dejavu-sans or dejavu-serif@5.3.0): Armenian glyphs are present but there is no dram sign, the files are unsubsetted (253,844 B / 143,920 B per style) and the design is dated.\n - Mardoto: Apache-2.0, Roboto-derived, not on npm.\n - Montserrat Armenian (2017, Vahan Hovhannisyan): its page claims OFL but I could not read a license file, and it is not on npm.\n - Arian AMU: license unclear.\n - GHEA Grapalat/Mariam: freeware/state property, not OFL, not on npm.\n\nSpecimen images:\n - (working dir)/research/agents/type/out/specimen.png\n - (working dir)/research/agents/type/out/browser_specimen.png\n - (working dir)/research/agents/type/out/browser_minimal.png\n\nCoverage checker: (working dir)/research/agents/type/scripts/cov.py\n\nNothing was written to /home/user/modacademy.",
+    "facts": [
+     {
+      "topic": "Google Fonts families with Armenian subset",
+      "fact": "Of 1,950 families in the Google Fonts metadata API, exactly 6 list subset 'armenian': Google Sans (Sans Serif; axes GRAD -50..200, opsz 17..18, wght 400..700; 400-700 + italics), Handjet (Display; ELGR 1..2, ELSH 0..16, wght 100..900), Iosevka Charon and Iosevka Charon Mono (Monospace; static 300/400/500/700 + italics), Noto Sans Armenian (Sans Serif; wdth 62.5..100, wght 100..900), Noto Serif Armenian (Serif; wdth 62.5..100, wght 100..900).",
+      "source_url": "https://fonts.google.com/metadata/fonts",
+      "source_date": "metadata lastModified: Google Sans 2026-10-01, Handjet 2026-10-08, Iosevka Charon 2026-03-11, Noto Sans Armenian 2025-09-10, Noto Serif Armenian 2025-09-04",
+      "status": "verified_current",
+      "notes": "Accessed 2026-10-23. The leading )]}' was stripped. Fontsource API https://api.fontsource.org/v1/fonts (2,103 fonts) returns the same 6 ids with an armenian subset."
+     },
+     {
+      "topic": "Popular Latin families lack Armenian",
+      "fact": "Full upstream TTFs contain 0 of 77 Armenian letters and 0 of 14 Armenian punctuation/dram/ligature code points. Checked: Montserrat v9.000, Inter v4.001, Manrope v4.505, Golos Text v2.004, Onest v2.001, Unbounded v1.701, Raleway v4.026, Arimo v1.341, Tinos v1.340, IBM Plex Sans v3.201, Roboto v3.015, Open Sans v3.003, Noto Sans Display v2.003, Commissioner v1.001, Geologica v1.010, Wix Madefor Display/Text v3.100. Their Google Fonts subsets also omit armenian.",
+      "source_url": "https://raw.githubusercontent.com/google/fonts/main/ofl/montserrat/Montserrat%5Bwght%5D.ttf (and sibling paths ofl/inter, ofl/manrope, ofl/golostext, ofl/onest, ofl/unbounded, ofl/raleway, ofl/arimo, ofl/tinos, ofl/ibmplexsans, ofl/roboto, ofl/opensans, ofl/notosansdisplay, ofl/commissioner, ofl/geologica, ofl/wixmadefordisplay, ofl/wixmadefortext)",
+      "source_date": "google/fonts main branch as of 2026-10-23",
+      "status": "verified_current",
+      "notes": "Checked with fontTools cmap. 'Golos' is not a Google Fonts family name; 'Golos Text' is."
+     },
+     {
+      "topic": "Noto Serif Armenian glyph coverage and design",
+      "fact": "Noto Serif Armenian Version 2.008 is designed by the 'Monotype Design Team' (name ID 9), manufacturer Monotype Imaging Inc., copyright 2022 The Noto Project Authors, OFL 1.1. It is variable with wght 100-900 and wdth 62.5-100. Coverage 100%: U+0531-0556 (38/38), U+0561-0587 (39/39), U+055A-055F (6/6), U+0589, U+058A, U+058F dram, U+FB13-FB17 (5/5), plus U+0559/0560/0588/058D/058E. Features: GSUB liga, GPOS kern/mark. Latin-1 is missing ¤ ¦ ¬ soft-hyphen ± ² ³ µ ¹ ¼ ½ ¾ (U+00A4,A6,AC,AD,B1,B2,B3,B5,B9,BC,BD,BE). It has no italic.",
+      "source_url": "https://raw.githubusercontent.com/google/fonts/main/ofl/notoserifarmenian/NotoSerifArmenian%5Bwdth%2Cwght%5D.ttf",
+      "source_date": "Upstream release NotoSerifArmenian-v2.008 (notofonts/armenian commit 6eda0736); GF lastModified 2025-09-04",
+      "status": "verified_current",
+      "notes": "Same results in the Fontsource woff2 files (armenian + latin subsets)."
+     },
+     {
+      "topic": "Noto Sans Armenian glyph coverage",
+      "fact": "Noto Sans Armenian Version 2.008 (Monotype Design Team, OFL 1.1) is variable with wght 100-900 and wdth 62.5-100. It has 100% Armenian coverage, identical to Noto Serif Armenian, including the dram U+058F and ligatures U+FB13-FB17. Latin-1 is missing the same 12 characters (¤ ¦ ¬ SHY ± ² ³ µ ¹ ¼ ½ ¾).",
+      "source_url": "https://raw.githubusercontent.com/google/fonts/main/ofl/notosansarmenian/NotoSansArmenian%5Bwdth%2Cwght%5D.ttf",
+      "source_date": "Release NotoSansArmenian-v2.008; GF lastModified 2025-09-10",
+      "status": "verified_current",
+      "notes": "METADATA.pb lists languages hy_Armn and hyw_Armn: https://raw.githubusercontent.com/google/fonts/main/ofl/notosansarmenian/METADATA.pb"
+     },
+     {
+      "topic": "Google Sans license and Armenian coverage",
+      "fact": "Google Sans is on Google Fonts under license OFL (METADATA.pb), copyright 'The Google Sans Project Authors (github.com/googlefonts/googlesans)'. Axes: GRAD -50..200, opsz 17..18, wght 400..700; normal and italic. Armenian: all 77 modern letters, U+055A-055E, U+0589, U+058A, U+058F dram, U+FB13-FB17 ligatures, U+0559/058D/058E. Missing: U+055F (Armenian abbreviation mark), U+0560 and U+0588 (rare historic letters). Latin-1 is complete; № and U+2011 are present.",
+      "source_url": "https://raw.githubusercontent.com/google/fonts/main/ofl/googlesans/METADATA.pb",
+      "source_date": "Upstream archive v14.000 (googlefonts/googlesans commit 5c8f512c); GF metadata lastModified 2026-10-01",
+      "status": "verified_current",
+      "notes": "Date conflict: the GF metadata API dateAdded is 2025-12-09, while METADATA.pb has date_added 2017-06-05. The GF metadata API flags isOpenSource=True and isBrandFont=False. Brand association with Google's own UI is a design consideration, not a legal one. Fontsource 5.3.2 woff2 files report 'Version 13.002' while google/fonts main ships 'Version 14.000'; the Armenian coverage is the same in both."
+     },
+     {
+      "topic": "npm packages (recommended)",
+      "fact": "@fontsource-variable/noto-serif-armenian@5.3.0, published 2026-07-19T03:51:14Z, OFL-1.1, integrity sha512-b8tvcrMJ4NiDrrKo6+mxkDYY5ZokDlcczp0m2UtjJYGIxQFRdoIWTcrotwJGNn22eASKgnOCz4mfWafdhUggnQ==. @fontsource-variable/google-sans@5.3.2, published 2026-10-11T03:39:31Z, OFL-1.1, integrity sha512-fN+fO2Ffm+n2G5K+UK4ynP5WrWT+M/dbBs9HZaYcgAT5evhefJJH2MlGj8yMz+8slQmhjWAqPJyJ1sELkUM4Uw==. @fontsource-variable/noto-sans-armenian@5.3.0, published 2026-07-19T03:50:55Z, OFL-1.1, integrity sha512-cNeeH0q7pTLEzRTxRbxTRB/N26J75hReLbxpaKq7H/7sz1wCR0Ww7deXZITFbe+yb8ZgodC4UWbQsL9knKXJQg==.",
+      "source_url": "https://registry.npmjs.org/@fontsource-variable/noto-serif-armenian",
+      "source_date": "2026-07-19 / 2026-10-11",
+      "status": "verified_current",
+      "notes": "Static equivalents: @fontsource/noto-serif-armenian@5.3.0 (weights 100-900), @fontsource/noto-sans-armenian@5.3.0, @fontsource/google-sans@5.3.2 (400/500/600/700, normal and italic). Also https://registry.npmjs.org/@fontsource-variable/google-sans and https://registry.npmjs.org/@fontsource-variable/noto-sans-armenian. Fontsource pages: https://fontsource.org/fonts/noto-serif-armenian, https://fontsource.org/fonts/google-sans, https://fontsource.org/fonts/noto-sans-armenian (HTTP 200)."
+     },
+     {
+      "topic": "Fontsource CSS family names and entry points",
+      "fact": "Variable packages register font-family 'Noto Serif Armenian Variable' (font-weight 100 900; wdth.css adds font-stretch 62.5% 100%), 'Noto Sans Armenian Variable' (100 900) and 'Google Sans Variable' (400 700, normal and italic). Static packages use 'Noto Serif Armenian', 'Noto Sans Armenian' and 'Google Sans'. Variable CSS entry points: noto-serif/noto-sans-armenian have index.css (identical to wght.css), wght.css, wdth.css and standard.css; google-sans has index.css (identical to wght.css), wght.css, wght-italic.css, opsz(.css/-italic), grad, standard and full. Static per-subset CSS exists, e.g. armenian-400.css and latin-400.css. Variable packages have no per-subset CSS.",
+      "source_url": "https://registry.npmjs.org/@fontsource-variable/noto-serif-armenian/-/noto-serif-armenian-5.3.0.tgz",
+      "source_date": "2026-07-19 (google-sans tarball 2026-10-11)",
+      "status": "verified_current",
+      "notes": "Read from the installed package CSS files and metadata.json."
+     },
+     {
+      "topic": "Fontsource file naming",
+      "fact": "Variable: files/{id}-{subset}-{axisset}-{style}.woff2. Examples: noto-serif-armenian-armenian-wght-normal.woff2, noto-serif-armenian-latin-wdth-normal.woff2, google-sans-armenian-wght-normal.woff2, google-sans-latin-wght-italic.woff2. In noto-serif/noto-sans-armenian the 'wdth' and 'standard' files are identical and contain both wght and wdth axes; 'wght' files contain wght only. In google-sans: 'wght' is wght only, 'opsz' and 'standard' are wght+opsz, 'grad' is wght+GRAD, 'full' is all three. Static: files/{id}-{subset}-{weight}-{style}.woff2 and .woff, e.g. noto-serif-armenian-armenian-400-normal.woff2. Armenian subset unicode-range: U+0308,U+0530-058F,U+2010,U+2024,U+25CC,U+FB13-FB17.",
+      "source_url": "https://api.fontsource.org/v1/fonts/noto-serif-armenian",
+      "source_date": "Fontsource API versions: noto-serif-armenian v30 (2025-09-05), noto-sans-armenian v47 (2025-09-10), google-sans v71 (2026-10-01)",
+      "status": "verified_current",
+      "notes": "Axes per file were read with fontTools fvar."
+     },
+     {
+      "topic": "Byte sizes (armenian + latin woff2)",
+      "fact": "Variable: Noto Serif Armenian wght = 34,636 + 42,964 = 77,600 B; Noto Serif Armenian wght+wdth = 57,420 + 71,452 = 128,872 B; Google Sans wght normal = 15,696 + 35,968 = 51,664 B; Google Sans wght italic = 16,820 + 38,436 = 55,256 B; Noto Sans Armenian wght = 26,812 + 31,580 = 58,392 B. Recommended total (serif wght + Google Sans normal) = 129,264 B (126.2 KiB); with Google Sans italic = 184,520 B; with serif wdth axis = 180,536 B; all-Noto alternative = 135,992 B. latin-ext files, only fetched if those characters are used: serif wght 22,112 B, Google Sans 21,548 B, Noto Sans Armenian 16,704 B. Static arm+lat per weight: Noto Serif Armenian 300 = 21,680, 400 = 20,988, 500 = 21,552, 600 = 21,596, 700 = 20,976; Noto Sans Armenian 400 = 19,308; Google Sans 400 = 31,976, 500 = 33,428, 600 = 33,680, 700 = 32,836, 400 italic = 34,024.",
+      "source_url": "https://registry.npmjs.org/@fontsource-variable/google-sans/-/google-sans-5.3.2.tgz",
+      "source_date": "2026-10-11 (noto packages 2026-07-19)",
+      "status": "verified_current",
+      "notes": "Measured with os.path.getsize on the installed files."
+     },
+     {
+      "topic": "Fontsource Google Sans subset overlap (performance pitfall)",
+      "fact": "In @fontsource-variable/google-sans@5.3.2 the 'georgian' unicode-range includes U+0589 (Armenian full stop ։), and 'cyrillic' includes U+2116 (№). In headless Chromium, importing google-sans/wght.css on an Armenian page also downloaded google-sans-georgian-wght-normal.woff2 (18,088 B), and google-sans-cyrillic-wght-normal.woff2 (15,964 B) because № was present. wght.css and index.css reference 25 woff2 files totalling 965,404 B, which a bundler would emit into dist. Custom @font-face rules declaring only the armenian + latin wght files were verified: exactly 4 files were fetched (129,264 B) and all text rendered correctly.",
+      "source_url": "https://registry.npmjs.org/@fontsource-variable/google-sans/-/google-sans-5.3.2.tgz",
+      "source_date": "2026-10-11",
+      "status": "verified_current",
+      "notes": "Test page and CSS: (working dir)/research/agents/type/web/minimal.html and (working dir)/research/agents/type/web/fonts.css. Screenshot: (working dir)/research/agents/type/out/browser_minimal.png. The Noto Serif/Sans Armenian packages have only 3 subsets (armenian, latin, latin-ext), so they have no such overlap."
+     },
+     {
+      "topic": "Handjet and Iosevka Charon",
+      "fact": "Handjet (@fontsource-variable/handjet@5.3.1, OFL, v2.003) is a modular/pixel display face. Its Armenian is missing ligature U+FB16 and letters U+0560/U+0588; it is unsuitable for a premium editorial look. Iosevka Charon / Iosevka Charon Mono are monospace (static 300/400/500/700 + italics) and suitable only for code.",
+      "source_url": "https://registry.npmjs.org/@fontsource-variable/handjet",
+      "source_date": "2026-10-11",
+      "status": "verified_current",
+      "notes": "Coverage checked with fontTools on the fontsource woff2 and on the upstream TTF https://raw.githubusercontent.com/google/fonts/main/ofl/handjet/Handjet%5BELGR%2CELSH%2Cwght%5D.ttf"
+     },
+     {
+      "topic": "DejaVu on npm",
+      "fact": "@fontsource/dejavu-sans@5.3.0 and @fontsource/dejavu-serif@5.3.0 (Fontsource type 'other', subset labelled only 'latin') ship unsubsetted files that do contain all 77 Armenian letters. Both lack the dram sign U+058F. DejaVu Serif lacks ligatures FB13-FB17; DejaVu Sans has them. Files are large: dejavu-sans-latin-400-normal.woff2 = 253,844 B and dejavu-serif-latin-400-normal.woff2 = 143,920 B, with weights 400/700 only. Not recommended.",
+      "source_url": "https://registry.npmjs.org/@fontsource/dejavu-sans",
+      "source_date": "2026-07-19 (font metadata lastModified 2023-05-15, v2.37)",
+      "status": "verified_current",
+      "notes": "Fontsource lists the license as OFL-1.1, while the upstream is the Bitstream Vera/DejaVu license (https://github.com/dejavu-fonts/dejavu-fonts/blob/master/LICENSE). Both are permissive."
+     },
+     {
+      "topic": "Mardoto",
+      "fact": "Mardoto is an Armenian sans 'in the style of Google's Roboto' by Christian Robertson and Vahan Hovhannisyan (2017), with 7 weights plus italics. The upstream repo's LICENSE is the Apache License 2.0. It is not published on npm (registry 404 for 'mardoto' and '@fontsource/mardoto').",
+      "source_url": "https://raw.githubusercontent.com/vahanhovh/mardoto/master/LICENSE",
+      "source_date": "2017 (font)",
+      "status": "verified_possibly_outdated",
+      "notes": "Designer info from https://fonter.am/en/fonts/mardoto (accessed 2026-10-23). The glyph set was not downloaded or verified. Self-hosting would mean vendoring files, not npm."
+     },
+     {
+      "topic": "Montserrat Armenian",
+      "fact": "Montserrat Armenian is an Armenian adaptation of Montserrat by Vahan Hovhannisyan (2017), Regular/Bold shown on the project page. The page states the original is under the SIL Open Font License. It is not on npm. Google Fonts' Montserrat v9.000 itself contains no Armenian.",
+      "source_url": "https://greghub.github.io/montserrat-arm/",
+      "source_date": "2017",
+      "status": "unverified",
+      "notes": "No license file was retrievable: raw.githubusercontent.com/greghub/montserrat-arm returned 404 for LICENSE, OFL.txt and README.md on master/main/gh-pages. The glyph set was not verified. fonter.am also lists it: https://fonter.am/en/fonts/montserrat-armenian. It is based on an older Montserrat version."
+     },
+     {
+      "topic": "GHEA Grapalat",
+      "fact": "GHEA Grapalat (Edik Ghabuzyan, 2008) is described by fonter.am as one of Armenia's official fonts, 'the property of Armenia', usable by individuals and legal entities in electronic information systems, and free for commercial or personal use. The fonts-armenian-extra package lists GHEA Grapalat and GHEA Mariam as 'Freeware', not open source. It is not OFL and not on npm.",
+      "source_url": "https://fonter.am/en/fonts/ghea-grapalat",
+      "source_date": "2008 (font)",
+      "status": "conflicting",
+      "notes": "Classification source: https://download.salixos.org/sbo/15.0/system/fonts-armenian-extra/README. A search result (online-fonts.com) shows a '2007 Edik Ghabuzyan, all rights reserved' copyright, which conflicts with the free-use claim. Not recommended for web self-hosting."
+     },
+     {
+      "topic": "Arian AMU",
+      "fact": "Arian AMU (Ruben Tarumian, 2011; Regular/Bold plus italics; Latin, Cyrillic, Armenian, Greek, Hebrew and Georgian) is described by fonter.am as free for commercial or personal use. The fonts-armenian-extra README groups it under 'Open Source License'. It is not on npm.",
+      "source_url": "https://fonter.am/en/fonts/arian-amu",
+      "source_date": "2011 (font)",
+      "status": "conflicting",
+      "notes": "An OFL claim appears only on third-party download sites (onlinewebfonts.com), and fontsgeek lists 'No License Available'. Not verified, not downloaded."
+     },
+     {
+      "topic": "Visual evaluation",
+      "fact": "Rendered specimens show that Noto Serif Armenian at weight 300 and 80+px gives a refined, high-contrast editorial look, and at 600 (optionally wdth 75-87.5) a strong headline. Google Sans 400 Armenian text at 18px is clean and contemporary with a polished Latin. Noto Sans Armenian is solid but more neutral. Tofu boxes confirmed: Google Sans at U+055F and Handjet at U+FB16.",
+      "source_url": "https://fonts.google.com/specimen/Noto+Serif+Armenian",
+      "source_date": "2026-10-23",
+      "status": "verified_current",
+      "notes": "Renders were made locally (Pillow with RAQM and headless Chromium 1243 via Playwright 1.63). Images: (working dir)/research/agents/type/out/specimen.png and (working dir)/research/agents/type/out/browser_specimen.png. The specimen URL is a reference only and was not fetched."
+     }
+    ],
+    "inaccessible_sources": [
+     "https://github.com/lecramyajiv/fonts-armenian-extra (HTML page and codeload tarball returned 403: GitHub access to this repo is not enabled for this session); its README was read via https://download.salixos.org/sbo/15.0/system/fonts-armenian-extra/README and https://raw.githubusercontent.com/lecramyajiv/fonts-armenian-extra/main/README.md",
+     "GitHub REST API for google/fonts (gh api returned 403, repo access not enabled); used raw.githubusercontent.com instead, which worked",
+     "https://raw.githubusercontent.com/greghub/montserrat-arm/{master,main,gh-pages}/{LICENSE,OFL.txt,README.md,LICENSE.md} returned 404, so the Montserrat Armenian license file could not be verified",
+     "https://raw.githubusercontent.com/lecramyajiv/fonts-armenian-extra/main/{LICENSE,OFL.txt,...} returned 404",
+     "https://fonter.am/en/fonts/montserrat-arm and https://fonter.am/en/fonts/montserrat returned 307 redirects; the correct page https://fonter.am/en/fonts/montserrat-armenian was fetched",
+     "First attempted paths https://raw.githubusercontent.com/google/fonts/main/apache/arimo/... and apache/tinos/... returned 404 (the families now live under ofl/, which was fetched successfully)"
+    ],
+    "open_questions": [
+     "Is Google Sans's strong association with Google's own products acceptable for the MOD Academy brand? If not, use the all-Noto pairing: Noto Serif Armenian Variable for display and Noto Sans Armenian Variable for text, 135,992 B. That pairing is fully verified, but its Latin set is narrower and has no italics.",
+     "Should the build import the Fontsource package CSS directly (simplest, but every Armenian page fetches an extra 18 KB Google Sans Georgian file and dist gets 25 Google Sans files), or use hand-written @font-face rules for the 4 armenian+latin files (verified in Chromium)? How the site's bundler (e.g. Astro/Vite) resolves bare-package url() paths in custom CSS was not tested. An option is to import the woff2 files with '?url' or copy them into public/.",
+     "Do headlines need the width axis? wdth.css costs about 51 KB more than wght.css (128,872 vs 77,600 B arm+lat). font-stretch has no effect with the wght-only files.",
+     "Fontsource's @fontsource-variable/google-sans@5.3.2 ships font 'Version 13.002', while google/fonts main has 'Version 14.000' (archive v14.000). The Armenian coverage is identical, but a future Fontsource update may change file bytes; pin exact versions.",
+     "Montserrat Armenian (a geometric display option) and Mardoto are not on npm. Using them would mean vendoring font files into the repo, and Montserrat Armenian's license file was not verifiable from here.",
+     "If Armenian italics in the serif are wanted: Noto Serif Armenian has no italic, so decide between avoiding italics in display text or allowing synthetic oblique (font-synthesis)."
+    ],
+    "downloaded_files": [
+     "(working dir)/research/agents/type/dl/gf_metadata.json",
+     "(working dir)/research/agents/type/dl/fontsource_all.json",
+     "(working dir)/research/agents/type/dl/gf_ttf/ (upstream TTFs: NotoSerifArmenian, NotoSansArmenian, GoogleSans + Italic, Handjet, Montserrat, Inter, Manrope, GolosText, Onest, Unbounded, Raleway, Arimo, Tinos, IBMPlexSans, Roboto, OpenSans, NotoSansDisplay, Commissioner, Geologica, WixMadeforDisplay/Text; METADATA.pb for googlesans, notosansarmenian, notoserifarmenian)",
+     "(working dir)/research/agents/type/npm/node_modules/@fontsource-variable/{noto-serif-armenian@5.3.0,noto-sans-armenian@5.3.0,google-sans@5.3.2,handjet@5.3.1}",
+     "(working dir)/research/agents/type/npm/node_modules/@fontsource/{noto-serif-armenian@5.3.0,noto-sans-armenian@5.3.0,google-sans@5.3.2}",
+     "(working dir)/research/agents/type/npm2/node_modules/@fontsource/{dejavu-sans,dejavu-serif,arimo}@5.3.0",
+     "(working dir)/research/agents/type/dl/web/ (fonter.am pages for mardoto, arian-amu, ghea-grapalat, montserrat-armenian; slackbuilds README/info; Mardoto LICENSE; montserrat-arm GitHub Pages HTML; Fontsource API JSON and site HTML for the 3 recommended fonts)",
+     "(working dir)/research/agents/type/out/specimen.png",
+     "(working dir)/research/agents/type/out/browser_specimen.png",
+     "(working dir)/research/agents/type/out/browser_minimal.png",
+     "(working dir)/research/agents/type/web/fonts.css",
+     "(working dir)/research/agents/type/web/minimal.html",
+     "(working dir)/research/agents/type/scripts/cov.py"
+    ]
+   }
+  }
+ ],
+ "critic": {
+  "summary": "CRITIC REVIEW (label \"critic\"), accessed 2026-10-23.\n\nTHE BIG CORRECTION: current prices and timetables are published. The web agent said \"No current course prices are published\". That is wrong. The pinned post of 2026-10-14 (DeerP2liLhF) and the Corona post of 2026-10-15 (DehIqTPoOkF) both show schedules and prices in their slide images. Only the captions lack them, which is why the agents missed them. I read the images from the files already saved in research/media/ig_mod_academy/.\n- Interior Design, morning group: 6 months, Mon/Wed/Fri 11:00–12:30, 67,000 AMD per month.\n- Interior Design, evening group: 6 months, Tue/Thu/Sat 19:30–21:00, 67,000 AMD per month.\n- Sales Management: 4 months, Tue/Thu/Sat 17:30–19:00, 77,000 AMD per month.\n- Graphic Design: 4 months, Tue/Thu/Sat 19:30–21:00, 50,000 AMD per month.\n- Corona Renderer Level UP: an individual course, 1 month, 77,000 AMD, 2 days a week for 2 hours, 09:00–11:00 or 11:00–13:00. It is aimed at working interior designers, 3D visualisers and freelancers.\n- The Aug 2026 laptop post (Db5wNZ9iI--) gives the recommended laptop: Intel Core i7 H-series or better, 16 GB+ RAM, 1 TB SSD, IPS screen, NVIDIA GeForce RTX. This suggests students work on their own laptop.\n\nCONFLICTS\n- Hours: the Yandex hours (Mon–Fri 10:00–18:00, not owner-verified) clash with the official timetable, which has Saturday classes, classes until 21:00 and a 09:00 start. Do not publish the Yandex hours.\n- Courses: an older IG name and Facebook snippet say \"Revit\", and TikTok used #revit in May 2026. The current IG name says \"Sales\" and the Oct 2026 list has no Revit.\n- 3Ds Max: the IG name lists 3Ds MAX and a 3Ds Max graduate was posted 2026-10-22, but no 3Ds Max slide is in the Oct 2026 pinned list. Its current price, schedule and duration are unknown.\n- Contacts by year: 2022 used Nalbandyan 5, 093 384 498 and mod.modschool@gmail.com. Every 2026 graphic uses Tigran Mets 4, 093 950 960 and mod.modacademy@gmail.com.\n- Partner spelling: the academy's own overlay says \"Clasis Decor Armenia\", while the showroom sign, the Instagram handle and the website say \"Classis\".\n- Brand colour: the design agent's \"MOD red #C4161C\" and \"red D motif\" are unsourced and inaccurate. The logo has a black M, a red open-arc O and a black D. The red measures about #B80814 in the logo crop and about #B40008 on the CTA pills (JPEG-derived, so approximate). Against white that is about 6.8:1 and 7.1:1. Against black it is about 3.1:1 and 2.9:1, still failing for small text, so the agent's advice to use red only for large text on dark backgrounds still holds.\n- Font recommendations differ between agents. Design suggests Noto Sans Armenian with its width axis for headings. Type suggests Noto Serif Armenian for headings plus Google Sans for text. This is a choice to make, not a factual conflict.\n- Studio details conflict (floor, postcode and hours across 2GIS, Yandex and Spyur), as the maps agent reported.\n\nCONFUSION CHECK\nI found no clear mix-up with another business. The agents correctly excluded MekStep and CC Academy (same building), the Italian @mod.academy (modacademy.it), the Arabic YouTube channel, the Polish, German and Spanish namesakes, 2GIS's Atelier Mod and V.mod, and mod.academy (Japan). Remaining risks:\n- The Spyur \"MOD SCHOOL\" (computer training at Tigran Mets 4) matches only by name and address.\n- The only review text sits on the STUDIO's Yandex listing, not the academy's.\n- The webinar's Zoom label name matches a public official, which may be a mistaken identity.\n- The old handle mod_school__ was read from a low-resolution video frame.\n\nMY EXTRA CHECKS\n- Google Maps search for the 2022 phone (+374 93 384 498): no results.\n- WebSearch for MOD Academy, 3Ds Max, Revit and Tigran Mets 4: nothing about MOD.\n- The maps agent had already searched Google Maps for \"MOD School Yerevan\" (gq_4.txt) and found no MOD listing.\n\nSo there is still no Google rating or Google reviews.",
+  "facts": [
+   {
+    "topic": "CORRECTION: current course timetable and prices (pinned post slides)",
+    "fact": "The pinned post's slides (images) give:\n- ԻՆՏԵՐԻԵՐ ԴԻԶԱՅՆ (Interior Design): 6 ԱՄԻՍ (6 months), ԵՐԿ, ՉՈՐ, ՈՒՐԲ (Mon, Wed, Fri) 11:00-12:30, 67 000/ ԱՄՍԱԿԱՆ (67,000 AMD per month), 'ՄՆԱՑԵԼ Է 4 ՏԵՂ' (4 places left).\n- A second Interior Design group: 6 months, ԵՐՔ, ՀՆԳ, ՇԲԹ (Tue, Thu, Sat) 19:30-21:00, 67,000 per month, 4 places left.\n- ՎԱՃԱՌՔԻ ԿԱՌԱՎԱՐՈՒՄ (Sales Management): 4 months, Tue, Thu, Sat 17:30-19:00, 77,000 per month, 2 places left.\n- ԳՐԱՖԻԿ ԴԻԶԱՅՆ (Graphic Design): 4 months, Tue, Thu, Sat 19:30-21:00, 50,000 per month, 1 place left.\n- Footer on every slide: Տիգրան Մեծ 4 / mod.modacademy@gmail.com / 093 950 960.\n- Caption: 'Շտապի՛ր գրանցվել մեկնարկող խմբերին և դիմավորի՛ր Նոր տարին՝ նոր մասնագիտությամբ' (register for the starting groups and meet the New Year with a new profession).",
+    "source_url": "https://www.instagram.com/p/DeerP2liLhF/",
+    "source_date": "2026-10-14",
+    "status": "verified_current",
+    "notes": "Accessed 2026-10-23 from the slide images already downloaded: (working dir)/research/media/ig_mod_academy/DeerP2liLhF_00..04.jpg (contact sheet: research/media/sheet_courses.jpg). This contradicts the web agent's 'No current course prices are published'. The prices apply to the autumn 2026 intake and no exact start date is given, so publish them with a date or 'as of Oct 2026'. Do NOT publish the seats-left counts, which are time-limited marketing. Totals (for example 6 x 67,000) are not stated by MOD, so do not publish computed totals. Sessions are 1.5 h, 3 times a week."
+   },
+   {
+    "topic": "CORRECTION: Corona Renderer Level UP details",
+    "fact": "Slide: 'LEVEL UP CORONA RENDERER — ԱՆՀԱՏԱԿԱՆ ԴԱՍԸՆԹԱՑ' (individual course). Details: 1 ԱՄԻՍ (1 month); 77 000 ԴՐԱՄ (77,000 AMD; not marked monthly); ՇԱԲԱԹԱԿԱՆ 2 ՕՐ | 2 ԺԱՄ (2 days a week, 2 hours); 9:00-11:00 ԿԱՄ 11:00-13:00 (or). The caption says it is for working interior designers and 3D visualisers, for people who want more complex and professional renders and more market competitiveness, and for freelancers strengthening their portfolio.",
+    "source_url": "https://www.instagram.com/p/DehIqTPoOkF/",
+    "source_date": "2026-10-15",
+    "status": "verified_current",
+    "notes": "Accessed 2026-10-23 from the saved image research/media/ig_mod_academy/DehIqTPoOkF_00.jpg. 'Individual' presumably means one-to-one; confirm. The 09:00 start conflicts with the Yandex 10:00 opening time."
+   },
+   {
+    "topic": "Student laptop requirements (official)",
+    "fact": "The Aug 2026 carousel 'Ի՞նչ նոթբուք է անհրաժեշտ դասընթացի ընթացքում' (which laptop is needed during the course) recommends:\n- processor: Intel Core i7 H or higher\n- RAM: 16 GB or more\n- SSD: 1 TB\n- screen: IPS\n- graphics card: NVIDIA GeForce RTX ('especially important for 3D modelling and renders')",
+    "source_url": "https://www.instagram.com/p/Db5wNZ9iI--/",
+    "source_date": "2026-08-11",
+    "status": "verified_current",
+    "notes": "Accessed 2026-10-23 from saved slides Db5wNZ9iI--_00..06.jpg. This partly answers the design agent's open question: students appear to work on their own laptops. Use this official guidance in the FAQ rather than the unverified Autodesk 'Windows only' snippet. Whether the academy lends machines is unknown."
+   },
+   {
+    "topic": "Hours conflict (do not publish Yandex hours)",
+    "fact": "Yandex gives the 'Mod' listing Mon–Fri 10:00–18:00, closed Sat–Sun, and it is not owner-verified. The academy's own Oct 2026 timetable has classes on Saturday, classes until 21:00, and a Corona slot starting at 09:00.",
+    "source_url": "https://yandex.com/maps/org/mod/233735196629/",
+    "source_date": "Yandex live 2026-10-23 vs IG 2026-10-14/15",
+    "status": "conflicting",
+    "notes": "Publish the official class timetable (dated). Get office or consultation hours from the academy; the only source for them is Yandex."
+   },
+   {
+    "topic": "Brand colour / logo (design-agent claim corrected)",
+    "fact": "The MOD Academy logo has a black 'M', a red open-arc 'O' and a black 'D', with 'A C A D E M Y' in spaced capitals below. The red element is the O, not the D. Measured dominant red (JPEG-derived, approximate): about #B80814 in the logo crop and about #B40008 on the CTA pills of the 2026 graphics. The Graphic Design slide uses a more crimson red. Contrast: #B80814 on white 6.81:1, on #F3F1EE 6.04:1, on black 3.08:1. #B40008 on white 7.13:1.",
+    "source_url": "https://www.instagram.com/p/DeerP2liLhF/",
+    "source_date": "2026-10-14",
+    "status": "verified_current",
+    "notes": "Measured locally on research/media/logo_crop.png and DeerP2liLhF_04.jpg with Pillow. The design agent's '#C4161C' and 'red D motif' have no source. Ask MOD for the official logo files or vector and hex value."
+   },
+   {
+    "topic": "Course list completeness",
+    "fact": "Current, confirmed offerings (Oct 2026): Interior Design (6 months, 2 groups), Sales Management (4 months), Graphic Design (4 months) and Corona Renderer Level UP (1 month, individual). 3Ds Max is in the IG full name ('Courses of Interior design | 3Ds MAX | Sales'), and a '3Ds Max' course graduate (@tevosyan.design) was posted 2026-10-22, but 3Ds Max has no slide in the pinned list. Its current price, schedule and duration are unknown. It may be a module of Interior Design or a separate course.",
+    "source_url": "https://www.instagram.com/p/DezOW2GCMyH/",
+    "source_date": "2026-10-22",
+    "status": "verified_current",
+    "notes": "Not confirmed as current: Revit (older bio and FB snippets plus May 2026 TikTok hashtags), Architecture or ArchiCAD (2022 'Master of Architecture'; May 2026 TikTok measured-survey video; webinar wording 'design, architecture and business'), and AutoCAD or Photoshop (2022 hashtags only). Do not list these until MOD confirms."
+   },
+   {
+    "topic": "Google rating / reviews",
+    "fact": "No Google Business Profile exists for MOD Academy, MOD School or the studio. Two more Google Maps queries for the 2022 phone (+374 93 384 498 and 093384498 Yerevan) returned no business. The maps agent's earlier 'MOD School Yerevan' query (gq_4.txt) returned only unrelated schools (PASS Center, TUMO, Mashtots Private School, Think Engineering, M.A.M).",
+    "source_url": "https://www.google.com/search?tbm=map&hl=en&gl=am&q=%2B374%2093%20384%20498",
+    "source_date": "2026-10-23 (live)",
+    "status": "verified_current",
+    "notes": "Raw files: (working dir)/research/agents/critic/gq_phone_1.txt and gq_phone_2.txt. The site must show no star rating or review count."
+   },
+   {
+    "topic": "Web search (gap check)",
+    "fact": "WebSearch for '\"MOD Academy\" Yerevan 3Ds Max Revit course \"Տիգրան Մեծ 4\"' returned nothing about MOD Academy, only unrelated Revit or 3ds Max training (NUACA, TUMO, LinkedIn profiles).",
+    "source_url": "https://nuaca.am/archives/news/autodesk-revit-training-for-architects?lang=en",
+    "source_date": "2026-10-23",
+    "status": "verified_current",
+    "notes": "Negative result. The URL shown is one of the unrelated results returned; there is no MOD source. The Revit question stays open."
+   },
+   {
+    "topic": "Partner name spelling",
+    "fact": "The academy's 2026-10-08 caption and overlay say 'Clasis Decor Armenia'. The showroom wall sign in the same video reads 'Classis'. The Instagram handle is @classis_decor_curtains, and Capital Interiors' Google listing links classisdecor.com. Captions describe 'continued effective cooperation' with Clasis/Classis, 'hospitality' from Electrica Group, and a visit to @capital_interiors.",
+    "source_url": "https://www.instagram.com/p/DePkN9foA7V/",
+    "source_date": "2026-10-08",
+    "status": "conflicting",
+    "notes": "Use 'Classis Decor' only after the academy or partner confirms. Describe these as 'practical lessons at showrooms' rather than 'official partners', and use no partner logos without permission."
+   },
+   {
+    "topic": "Do-not-publish: weakly sourced claims",
+    "fact": "Must NOT be published as current fact:\n(1) Yandex hours Mon–Fri 10–18.\n(2) Phones 055 204721 and 055 214721. They appear on no official MOD channel; use only 093 950 960.\n(3) '7th floor'. Yandex is the only source and the listing is not owner-verified; confirm first.\n(4) 'Online courses'. Only machine captions of the webinar, plus a 2022 #Distance_courses hashtag, support it.\n(5) Revit and Architecture courses.\n(6) 2022 prices (90,000 / 97,000 AMD), the 2022 group size (max 4) and the 2022 contacts (Nalbandyan 5, 093 384 498, mod.modschool@gmail.com).\n(7) The Spyur 'MOD SCHOOL' entity and any rename date.\n(8) The studio email mod.modstudio@gmail.com and studio follower counts (search summaries only).\n(9) The Yandex 'Ara' review as a testimonial. It is on the STUDIO listing, its translation is the agent's own, and there is no consent.\n(10) Any person named in the webinar Zoom label or in the 2022 giveaway video.\n(11) The certificate as accredited, state-issued, or Autodesk/Chaos-authorised. Only 'Վկայական ավարտին' (certificate at completion) is claimed.\n(12) '7+ years / 1000+ students' as independent fact. Attribute them as the academy's own figures; the earliest dated MOD education post found is 2022-04-17.\n(13) Yandex user photos (rights).\n(14) Student names, handles and work (e.g. @tevosyan.design) without consent.\n(15) The Summer 2026 'first month free' offer (expired).\n(16) Seats-left counts.",
+    "source_url": "https://www.instagram.com/mod_academy_/",
+    "source_date": "2026-10-23",
+    "status": "unverified",
+    "notes": "Compiled from the maps, web and design findings plus my own image checks."
+   },
+   {
+    "topic": "Confusion check",
+    "fact": "No agent clearly mixed MOD Academy up with another business. Unrelated namesakes were correctly excluded: MekStep and CC Academy (same building), @mod.academy / modacademy.it (Italian makeup), YouTube @modacademy4355 (Arabic), akademiamod.pl, mod-education.de, TikTok @modacademy (Spanish), 2GIS Atelier Mod and V.mod hotel, and mod.academy (Japan). Residual identity risks:\n(a) Spyur 'MOD SCHOOL' (computer training, Tigran Mets 4) matches only by name and address and has not been viewed.\n(b) The Yandex 'Mod' listing is matched by the phone 093 950 960, which is acceptable.\n(c) Academy and studio are separate entities at separate addresses that share a phone, so keep them separate on the site.\n(d) The webinar presenter label matches a public official's name; this is not established, so do not attribute it.\n(e) The handles mod_school__ and facebook.com/www.modschool were read from a low-resolution video frame.",
+    "source_url": "https://yandex.com/maps/org/mod/233735196629/",
+    "source_date": "2026-10-23",
+    "status": "verified_current",
+    "notes": "The design and type agents researched other schools and fonts only and make no MOD identity claims, except the unsourced brand red noted above."
+   },
+   {
+    "topic": "Teaching language and format (still inferred)",
+    "fact": "All 2026 slides, captions and footers are in Armenian. In-person teaching is evidenced by showroom practical lessons and a Sales class at a whiteboard (2026-10-09). The academy needs to confirm whether lessons are Armenian-only and whether any online option exists.",
+    "source_url": "https://www.instagram.com/p/DeRoJTRoQ-A/",
+    "source_date": "2026-10-09",
+    "status": "unverified",
+    "notes": "Armenian is a strong inference, not a stated fact."
+   }
+  ],
+  "inaccessible_sources": [
+   "https://www.spyur.am/en/companies/52947 and .../58494: Cloudflare 403 (from the earlier agents; I did not retry)",
+   "Facebook pages behind the login wall (www.mod.academy, MODInteriorArchitectureStudio): not retried",
+   "Instagram comments on posts: not collected by any agent (embeds do not expose them reliably). Student feedback from comments remains unknown."
+  ],
+  "open_questions": [
+   "3Ds Max course: is it still run as its own course in Oct 2026? What are its current price, schedule, duration and group size? Or is it now a module of Interior Design?",
+   "Curriculum: which software is taught in Interior Design (3ds Max, Corona, AutoCAD, Photoshop?), in Graphic Design (Adobe apps?) and in Sales Management? Is there a module-by-module outline?",
+   "Revit and Architecture: are they current courses? The older bio said Revit and May 2026 TikTok used #revit / #revitarmenia, but they are absent from the Oct 2026 list.",
+   "Next start dates for each group. The pinned post says only that groups are starting and to 'meet the New Year with a new profession'.",
+   "Is Corona Level UP one-to-one? Is its 77,000 AMD the total or monthly? (The slide says '77 000 ԴՐԱՄ', not monthly.)",
+   "Instructors: names, photos, bios, and consent to be shown. Is any instructor from MOD Interior & Architecture Studio?",
+   "Certificate: exact title and issuer. Is there any accreditation? Only 'certificate at completion' is claimed.",
+   "Format and language: in person only, or also online? Armenian only?",
+   "Office or consultation hours (as opposed to class times), and the exact floor or office at Tigran Mets 4 (Yandex says 7th floor).",
+   "Contact channels: is WhatsApp, Viber or Telegram live on 093 950 960? Should 055 204721 be shown?",
+   "Official brand assets: vector logo and exact brand red (measured about #B80814 / #B40008, not #C4161C).",
+   "Student feedback: can the academy supply consented testimonials? There is no Google profile, Yandex has 0 reviews for the academy, and the only review text is on the studio listing.",
+   "Founding year behind '7+ years': does it count MOD School and studio years? The earliest dated MOD education post found is April 2022.",
+   "Prerequisites, age limits, and whether laptops are provided or students must bring them (the official post implies students use their own: i7 H / 16 GB / 1 TB SSD / RTX).",
+   "Is the partner spelled 'Classis Decor' or 'Clasis Decor'? Do the showrooms permit use of their names or logos?"
+  ],
+  "downloaded_files": [
+   "(working dir)/research/agents/critic/gq_phone_1.txt",
+   "(working dir)/research/agents/critic/gq_phone_2.txt",
+   "(working dir)/research/agents/critic/laptop_text.jpg"
+  ]
+ }
+}

@@ -1,0 +1,99 @@
+---
+import SectionIndex from './SectionIndex.astro';
+import SplitText from './SplitText.astro';
+import Icon from './Icon.astro';
+import { faq, type FaqItem } from '../data/faq';
+
+interface Props {
+  items?: FaqItem[];
+  n?: string;
+  title?: string;
+}
+const { items = faq, n = '08', title = 'Հաճախ տրվող հարցեր' } = Astro.props;
+---
+<section class="faq section" id="faq" aria-labelledby="faq-title">
+  <div class="wrap faq__grid">
+    <div class="faq__head">
+      <SectionIndex n={n} label="Հարցեր" />
+      <SplitText id="faq-title" class="h1" text={title} />
+      <p class="muted faq__hint" data-reveal>Չգտա՞ք ձեր հարցի պատասխանը։ Գրեք այն հայտում՝ ակադեմիան կպատասխանի։</p>
+    </div>
+    <div class="faq__list">
+      {items.map((item, i) => (
+        <details class="faq__item" data-reveal style={`--i:${i % 4}`} id={`faq-${item.id}`}>
+          <summary class="faq__q">
+            <span>{item.q}</span>
+            <span class="faq__icon" aria-hidden="true"><Icon name="plus" /></span>
+          </summary>
+          <div class="faq__a">
+            {item.a.map((p) => <p>{p}</p>)}
+            {item.list && (
+              <ul>
+                {item.list.map((li) => <li>{li}</li>)}
+              </ul>
+            )}
+          </div>
+        </details>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .faq { background: var(--paper-2); }
+  .faq__grid { display: grid; gap: clamp(32px, 5vw, 72px); }
+  .faq__head { display: grid; gap: 20px; align-content: start; }
+  .faq__hint { max-width: 24rem; }
+
+  .faq__list { border-top: 1px solid var(--line-strong); }
+  .faq__item { border-bottom: 1px solid var(--line-strong); interpolate-size: allow-keywords; }
+
+  .faq__q {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 20px;
+    padding-block: 22px;
+    cursor: pointer;
+    list-style: none;
+    font-family: var(--font-display);
+    font-stretch: 87.5%;
+    font-size: clamp(1.12rem, 1rem + 0.5vw, 1.45rem);
+    line-height: 1.3;
+    transition: color 0.3s ease;
+  }
+
+  .faq__q::-webkit-details-marker { display: none; }
+  .faq__q:hover { color: var(--red); }
+
+  .faq__icon {
+    flex: none;
+    display: grid;
+    place-items: center;
+    width: 36px;
+    height: 36px;
+    border: 1px solid var(--line-strong);
+    border-radius: 50%;
+    transition: transform 0.5s var(--ease-out), background-color 0.3s, color 0.3s;
+  }
+
+  .faq__icon :global(svg) { width: 18px; height: 18px; }
+  .faq__item[open] .faq__icon { transform: rotate(45deg); background: var(--ink); color: var(--paper); border-color: var(--ink); }
+
+  .faq__item::details-content {
+    block-size: 0;
+    overflow: clip;
+    transition: block-size 0.55s var(--ease-out), content-visibility 0.55s allow-discrete;
+  }
+
+  .faq__item[open]::details-content { block-size: auto; }
+
+  .faq__a { display: grid; gap: 12px; padding-bottom: 24px; max-width: 44rem; color: var(--ink-soft); }
+  .faq__a ul { margin: 0; padding-left: 1.1em; display: grid; gap: 6px; }
+  .faq__a li::marker { color: var(--red); }
+
+  @media (min-width: 1000px) {
+    .faq__grid { grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr); }
+    .faq__head { position: sticky; top: calc(var(--header-h) + 40px); }
+  }
+</style>

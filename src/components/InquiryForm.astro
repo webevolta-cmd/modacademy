@@ -1,0 +1,208 @@
+---
+import Icon from './Icon.astro';
+import { courses } from '../data/courses';
+import { site } from '../data/site';
+import { formMode, formEndpoint } from '../../site.config.mjs';
+
+interface Props {
+  preselect?: string;
+  heading?: string;
+}
+const { preselect = '', heading = 'Ուղարկել հայտ' } = Astro.props;
+---
+<div class="inq" data-inquiry>
+  <form
+    class="inq__form"
+    name="inquiry"
+    method="POST"
+    action="/inquiry-sent/"
+    data-netlify="true"
+    netlify-honeypot="bot-field"
+    data-form-mode={formMode}
+    data-endpoint={formEndpoint}
+    novalidate
+    data-inquiry-form
+    aria-labelledby="inq-heading"
+  >
+    <input type="hidden" name="form-name" value="inquiry" />
+    <p class="inq__hp" aria-hidden="true">
+      <label>Մի լրացրեք այս դաշտը <input name="bot-field" tabindex="-1" autocomplete="off" /></label>
+    </p>
+
+    <div class="inq__top">
+      <h3 class="h2" id="inq-heading">{heading}</h3>
+      <p class="muted inq__intro">Լրացրեք ձևը՝ ակադեմիան կկապվի ձեզ հետ դասընթացի, գրաֆիկի և արժեքի մանրամասներով։</p>
+    </div>
+
+    <div class="inq__summary" role="alert" tabindex="-1" hidden data-inq-summary></div>
+
+    <div class="field">
+      <label for="inq-name">Անուն <span aria-hidden="true" class="req">*</span></label>
+      <input id="inq-name" name="name" type="text" autocomplete="name" required maxlength="80" aria-describedby="inq-name-err" />
+      <p class="field__error" id="inq-name-err" hidden></p>
+    </div>
+
+    <div class="inq__row">
+      <div class="field">
+        <label for="inq-phone">Հեռախոս</label>
+        <input id="inq-phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" maxlength="24" placeholder="093 000 000" aria-describedby="inq-contact-hint inq-phone-err" />
+        <p class="field__error" id="inq-phone-err" hidden></p>
+      </div>
+      <div class="field">
+        <label for="inq-email">Էլ. փոստ</label>
+        <input id="inq-email" name="email" type="email" inputmode="email" autocomplete="email" maxlength="120" aria-describedby="inq-contact-hint inq-email-err" />
+        <p class="field__error" id="inq-email-err" hidden></p>
+      </div>
+      <p class="field__hint" id="inq-contact-hint">Նշեք հեռախոսահամար կամ էլ. փոստ (առնվազն մեկը)։</p>
+    </div>
+
+    <div class="field">
+      <label for="inq-course">Դասընթաց</label>
+      <div class="field__select">
+        <select id="inq-course" name="course" data-inq-course>
+          <option value="Դեռ չեմ որոշել" selected={!preselect}>Դեռ չեմ որոշել / խորհրդատվություն</option>
+          {courses.map((c) => (
+            <option value={c.title} data-slug={c.slug} selected={c.slug === preselect}>{c.title}</option>
+          ))}
+        </select>
+        <Icon name="chevron-right" class="field__chev" />
+      </div>
+    </div>
+
+    <div class="field">
+      <label for="inq-message">Հաղորդագրություն <span class="muted">(ըստ ցանկության)</span></label>
+      <textarea id="inq-message" name="message" rows="4" maxlength="1500" placeholder="Օրինակ՝ հարմար ժամ, փորձ, հարցեր"></textarea>
+    </div>
+
+    <div class="inq__submit">
+      <button class="btn btn--red inq__btn" type="submit" data-inq-submit>
+        <span data-inq-label>Ուղարկել հայտը</span>
+        <Icon name="arrow" class="btn__icon" />
+      </button>
+      <p class="inq__legal muted">
+        Հայտը դեռ գրանցում չէ․ տեղը խմբում հաստատվում է ակադեմիայի հետ պայմանավորվելուց հետո։ Ձեր տվյալներն
+        օգտագործվում են միայն ձեզ հետ կապվելու համար։
+      </p>
+    </div>
+  </form>
+
+  <div class="inq__done" role="status" tabindex="-1" hidden data-inq-success>
+    <span class="inq__done-mark" aria-hidden="true"><Icon name="check" /></span>
+    <h3 class="h2">Հայտը ստացված է</h3>
+    <p>Շնորհակալություն։ Ակադեմիան կկապվի ձեզ հետ՝ դասընթացի մանրամասներով։ Սա դեռ գրանցման հաստատում չէ։</p>
+    <p class="muted">Շտապ հարցերի համար՝ <a href={site.phone.href}>{site.phone.display}</a></p>
+  </div>
+
+  <div class="inq__fallback" role="alert" tabindex="-1" hidden data-inq-fallback>
+    <h3 class="h3" data-inq-fallback-title>Հայտը չհաջողվեց ուղարկել</h3>
+    <p data-inq-fallback-text>Խնդրում ենք կապվել ակադեմիայի հետ ստորև նշված եղանակներից մեկով․ ձեր լրացրած տվյալները պահպանված են։</p>
+    <div class="inq__alts">
+      <a class="btn btn--sm" href={`mailto:${site.email}`} data-inq-mailto><Icon name="mail" class="btn__icon" />Ուղարկել էլ. փոստով</a>
+      <a class="btn btn--ghost btn--sm" href={site.phone.href}><Icon name="phone" class="btn__icon" />{site.phone.local}</a>
+      <a class="btn btn--ghost btn--sm" href={site.social.instagramDirect} target="_blank" rel="noopener"><Icon name="instagram" class="btn__icon" />Instagram</a>
+    </div>
+  </div>
+</div>
+
+<style>
+  .inq { position: relative; background: var(--card); border: 1px solid var(--line); padding: clamp(20px, 3vw, 44px); }
+
+  .inq__form { display: grid; gap: 20px; }
+  .inq__top { display: grid; gap: 10px; margin-bottom: 4px; }
+  .inq__intro { max-width: 34rem; }
+  .inq__hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+
+  .inq__summary {
+    padding: 14px 16px;
+    border-left: 3px solid var(--red);
+    background: var(--red-soft);
+    color: var(--red-deep);
+    font-size: 0.92rem;
+  }
+
+  .inq__row { display: grid; gap: 20px; }
+  .inq__row .field__hint { margin-top: -10px; }
+
+  .field { display: grid; gap: 8px; }
+  .field label { font-size: 0.9rem; font-weight: 560; }
+  .req { color: var(--red); }
+
+  .field input,
+  .field select,
+  .field textarea {
+    width: 100%;
+    min-height: 52px;
+    padding: 12px 14px;
+    border: 1px solid var(--line-strong);
+    border-radius: var(--radius);
+    background: var(--paper);
+    font-size: 1rem;
+    line-height: 1.4;
+    transition: border-color 0.25s ease, box-shadow 0.25s ease, background-color 0.25s;
+    -webkit-appearance: none;
+    appearance: none;
+  }
+
+  .field textarea { resize: vertical; min-height: 120px; }
+  .field input::placeholder,
+  .field textarea::placeholder { color: #8b7f73; }
+
+  .field input:hover,
+  .field select:hover,
+  .field textarea:hover { border-color: var(--ink); }
+
+  .field input:focus-visible,
+  .field select:focus-visible,
+  .field textarea:focus-visible {
+    outline: none;
+    border-color: var(--ink);
+    box-shadow: 0 0 0 3px rgb(179 18 27 / 0.22);
+    background: #fff;
+  }
+
+  .field [aria-invalid='true'] { border-color: var(--red); background: #fff7f6; }
+
+  .field__select { position: relative; }
+  .field__select select { padding-right: 44px; cursor: pointer; }
+  .field__select :global(.field__chev) { position: absolute; right: 14px; top: 50%; width: 18px; height: 18px; transform: translateY(-50%) rotate(90deg); pointer-events: none; }
+
+  .field__error { color: var(--red-deep); font-size: 0.85rem; display: flex; gap: 6px; }
+  .field__error::before { content: '!'; display: inline-grid; place-items: center; flex: none; width: 18px; height: 18px; border-radius: 50%; background: var(--red); color: #fff; font-size: 0.7rem; font-weight: 700; margin-top: 2px; }
+  .field__hint { font-size: 0.82rem; color: var(--muted); }
+
+  .inq__submit { display: grid; gap: 14px; margin-top: 6px; }
+  .inq__btn { width: 100%; }
+  .inq__btn[aria-busy='true'] { pointer-events: none; opacity: 0.8; }
+  .inq__btn[aria-busy='true'] .btn__icon { animation: inq-pulse 0.9s ease-in-out infinite; }
+  .inq__legal { font-size: 0.8rem; line-height: 1.5; }
+
+  .inq__done,
+  .inq__fallback { display: grid; gap: 14px; }
+  .inq__done[hidden],
+  .inq__fallback[hidden] { display: none; }
+
+  .inq__done-mark {
+    display: grid;
+    place-items: center;
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: var(--red);
+    color: #fff;
+    animation: inq-pop 0.7s var(--ease-out) both;
+  }
+
+  .inq__done-mark :global(svg) { width: 28px; height: 28px; }
+
+  .inq__fallback { margin-top: 20px; padding: 18px; border: 1px solid var(--red); background: #fff7f6; }
+  .inq__alts { display: flex; flex-wrap: wrap; gap: 8px; }
+
+  @keyframes inq-pop { from { transform: scale(0.6); opacity: 0; } }
+  @keyframes inq-pulse { 50% { transform: translateX(4px); } }
+
+  @media (min-width: 640px) {
+    .inq__row { grid-template-columns: 1fr 1fr; }
+    .inq__row .field__hint { grid-column: 1 / -1; }
+    .inq__btn { width: auto; justify-self: start; }
+  }
+</style>

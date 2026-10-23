@@ -1,0 +1,280 @@
+---
+import Logo from './Logo.astro';
+import Icon from './Icon.astro';
+import { nav, site } from '../data/site';
+
+interface Props {
+  ctaHref?: string;
+}
+const { ctaHref = '/#inquiry' } = Astro.props;
+---
+<header class="header" data-header>
+  <div class="header__bar wrap">
+    <a class="header__logo" href="/" aria-label="MOD Academy — գլխավոր էջ">
+      <Logo class="header__logo-svg" />
+    </a>
+
+    <nav class="header__nav" aria-label="Հիմնական նավարկություն">
+      <ul role="list">
+        {nav.map((item) => (
+          <li><a href={item.href}>{item.label}</a></li>
+        ))}
+      </ul>
+    </nav>
+
+    <div class="header__actions">
+      <a class="header__phone" href={site.phone.href} aria-label={`Զանգահարել ${site.phone.display}`}>
+        <Icon name="phone" />
+        <span>{site.phone.local}</span>
+      </a>
+      <a class="btn btn--red btn--sm header__cta" href={ctaHref}>Ուղարկել հայտ</a>
+      <button
+        class="header__menu-btn"
+        type="button"
+        aria-haspopup="dialog"
+        aria-controls="site-menu"
+        data-menu-open
+      >
+        <Icon name="menu" />
+        <span class="visually-hidden">Բացել ընտրացանկը</span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<dialog class="menu" id="site-menu" aria-label="Ընտրացանկ" data-menu>
+  <div class="menu__inner">
+    <div class="menu__top">
+      <Logo class="menu__logo" />
+      <button class="menu__close" type="button" data-menu-close>
+        <Icon name="close" />
+        <span class="visually-hidden">Փակել ընտրացանկը</span>
+      </button>
+    </div>
+    <nav aria-label="Ընտրացանկի նավարկություն">
+      <ol class="menu__list" role="list">
+        {nav.map((item, i) => (
+          <li style={`--i:${i}`}>
+            <a href={item.href} data-menu-link>
+              <span class="menu__n" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
+              {item.label}
+            </a>
+          </li>
+        ))}
+      </ol>
+    </nav>
+    <div class="menu__foot">
+      <a class="btn btn--red" href={ctaHref} data-menu-link>Ուղարկել հայտ<Icon name="arrow" class="btn__icon" /></a>
+      <a class="menu__contact" href={site.phone.href}><Icon name="phone" />{site.phone.display}</a>
+      <a class="menu__contact" href={site.social.instagram} target="_blank" rel="noopener"><Icon name="instagram" />{site.social.instagramHandle}</a>
+    </div>
+  </div>
+</dialog>
+
+<style>
+  .header {
+    position: fixed;
+    inset: 0 0 auto;
+    z-index: 50;
+    height: var(--header-h);
+    transition: background-color 0.4s ease, box-shadow 0.4s ease, transform 0.45s var(--ease-out);
+  }
+
+  .header.is-scrolled {
+    background: rgb(244 239 232 / 0.86);
+    -webkit-backdrop-filter: saturate(1.2) blur(14px);
+    backdrop-filter: saturate(1.2) blur(14px);
+    box-shadow: 0 1px 0 var(--line);
+  }
+
+  .header.is-dark {
+    background: rgb(17 15 13 / 0.78);
+    color: var(--on-night);
+    box-shadow: 0 1px 0 var(--line-night);
+  }
+
+  .header.is-dark .header__logo,
+  .header.is-dark .header__phone { color: var(--on-night); }
+  .header.is-dark .header__nav a { color: var(--on-night-muted); }
+  .header.is-dark .header__nav a:hover,
+  .header.is-dark .header__nav a[aria-current='true'] { color: var(--on-night); }
+  .header.is-dark .header__menu-btn { border-color: var(--line-night); color: var(--on-night); }
+  .header.is-dark .header__menu-btn:hover { background: var(--night-2); }
+
+  .header__bar {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    gap: 24px;
+  }
+
+  .header__logo { display: inline-flex; color: var(--ink); flex: none; }
+  .header__logo :global(svg) { width: auto; height: 30px; }
+
+  .header__nav { display: none; margin-inline: auto; }
+
+  .header__nav ul { display: flex; gap: clamp(14px, 1.7vw, 30px); }
+
+  .header__nav a {
+    position: relative;
+    font-size: 0.9rem;
+    font-weight: 500;
+    text-decoration: none;
+    padding-block: 6px;
+    color: var(--ink-soft);
+    transition: color 0.3s ease;
+  }
+
+  .header__nav a::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 1px;
+    background: var(--red);
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform 0.45s var(--ease-out);
+  }
+
+  .header__nav a:hover,
+  .header__nav a[aria-current='true'] { color: var(--ink); }
+
+  .header__nav a:hover::after,
+  .header__nav a:focus-visible::after,
+  .header__nav a[aria-current='true']::after { transform: scaleX(1); transform-origin: left; }
+
+  .header__actions { display: flex; align-items: center; gap: 10px; margin-left: auto; }
+
+  .header__phone {
+    display: none;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.9rem;
+    font-weight: 560;
+    text-decoration: none;
+    padding: 8px;
+    white-space: nowrap;
+  }
+
+  .header__phone :global(svg) { width: 18px; height: 18px; }
+
+  .header__cta { display: none; }
+
+  .header__menu-btn {
+    display: inline-grid;
+    place-items: center;
+    width: 46px;
+    height: 46px;
+    border: 1px solid var(--line-strong);
+    border-radius: 50%;
+    background: transparent;
+    transition: background-color 0.3s ease;
+  }
+
+  .header__menu-btn :global(svg) { width: 20px; height: 20px; }
+  .header__menu-btn:hover { background: var(--paper-2); }
+
+  @media (min-width: 560px) {
+    .header__cta { display: inline-flex; }
+  }
+
+  @media (min-width: 1100px) {
+    .header__nav { display: block; }
+    .header__menu-btn { display: none; }
+    .header__actions { margin-left: 0; }
+    .header__logo :global(svg) { height: 34px; }
+  }
+
+  @media (min-width: 1280px) {
+    .header__phone { display: inline-flex; }
+  }
+
+  /* Mobile menu (native dialog: focus trap, Esc and inert background built in) */
+  .menu {
+    width: 100%;
+    max-width: none;
+    height: 100%;
+    max-height: none;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background: var(--night);
+    color: var(--on-night);
+    overscroll-behavior: contain;
+  }
+
+  .menu::backdrop { background: rgb(17 15 13 / 0.5); }
+
+  .menu__inner {
+    min-height: 100%;
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    gap: 32px;
+    padding: 14px var(--gutter) max(28px, env(safe-area-inset-bottom));
+  }
+
+  .menu__top { display: flex; align-items: center; justify-content: space-between; height: 48px; }
+  .menu__top > :global(svg) { height: 28px; width: auto; color: var(--on-night); }
+
+  .menu__close {
+    display: inline-grid;
+    place-items: center;
+    width: 46px;
+    height: 46px;
+    border: 1px solid var(--line-night);
+    border-radius: 50%;
+    background: transparent;
+    color: var(--on-night);
+  }
+
+  .menu__close :global(svg) { width: 20px; height: 20px; }
+
+  .menu__list { display: grid; align-content: center; gap: 4px; }
+
+  .menu__list a {
+    display: flex;
+    align-items: baseline;
+    gap: 16px;
+    padding-block: 10px;
+    border-bottom: 1px solid var(--line-night);
+    font-family: var(--font-display);
+    font-stretch: 87.5%;
+    font-size: clamp(1.9rem, 1.2rem + 3vw, 2.8rem);
+    font-weight: 380;
+    line-height: 1.15;
+    text-decoration: none;
+  }
+
+  .menu__n { font-size: 0.85rem; color: #ff8a82; font-family: var(--font-text); }
+
+  .menu__foot { display: grid; gap: 14px; }
+  .menu__foot .btn { width: 100%; }
+
+  .menu__contact {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--on-night-muted);
+    text-decoration: none;
+    font-size: 0.95rem;
+  }
+
+  .menu__contact :global(svg) { width: 18px; height: 18px; }
+
+  .menu[open] .menu__list li {
+    animation: menu-in 0.7s var(--ease-out) both;
+    animation-delay: calc(var(--i) * 50ms + 80ms);
+  }
+
+  .menu[open] { animation: menu-fade 0.35s ease both; }
+
+  @keyframes menu-in {
+    from { opacity: 0; transform: translateY(18px); }
+  }
+
+  @keyframes menu-fade {
+    from { opacity: 0; }
+  }
+</style>

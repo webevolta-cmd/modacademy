@@ -1,0 +1,30 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Icon from '../components/Icon.astro';
+import { courses } from '../data/courses';
+---
+<BaseLayout title="Էջը չի գտնվել — MOD Academy" description="Փնտրվող էջը չի գտնվել։" noindex>
+  <section class="nf section">
+    <div class="wrap nf__inner">
+      <p class="label label--red">404</p>
+      <h1 class="display">Էջը չի գտնվել</h1>
+      <p class="lead">Հնարավոր է՝ հղումը փոխվել է։ Սկսեք դասընթացներից կամ վերադարձեք գլխավոր էջ։</p>
+      <div class="nf__actions">
+        <a class="btn btn--red" href="/#courses">Դասընթացներ<Icon name="arrow" class="btn__icon" /></a>
+        <a class="btn btn--ghost" href="/">Գլխավոր էջ</a>
+      </div>
+      <ul class="nf__list" role="list">
+        {courses.map((c) => (
+          <li><a class="link-arrow" href={`/courses/${c.slug}/`}>{c.title}<Icon name="arrow" /></a></li>
+        ))}
+      </ul>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .nf { min-height: 86svh; display: grid; align-items: center; padding-top: calc(var(--header-h) + 64px); }
+  .nf__inner { display: grid; gap: 22px; justify-items: start; }
+  .nf__actions { display: flex; flex-wrap: wrap; gap: 10px; }
+  .nf__list { display: flex; flex-wrap: wrap; gap: 12px 28px; margin-top: 16px; }
+</style>

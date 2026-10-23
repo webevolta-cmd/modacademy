@@ -1,0 +1,24 @@
+---
+// Confirmation page for submissions sent without JavaScript (Netlify Forms redirects here).
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Icon from '../components/Icon.astro';
+import { site } from '../data/site';
+---
+<BaseLayout title="Հայտն ուղարկված է — MOD Academy" description="Ձեր հայտն ուղարկված է MOD Academy-ին։" noindex>
+  <section class="sent section">
+    <div class="wrap sent__inner">
+      <span class="sent__mark" aria-hidden="true"><Icon name="check" /></span>
+      <h1 class="h1">Հայտը ստացված է</h1>
+      <p class="lead">Շնորհակալություն։ Ակադեմիան կկապվի ձեզ հետ՝ դասընթացի մանրամասներով։ Սա դեռ գրանցման հաստատում չէ։</p>
+      <p class="muted">Շտապ հարցերի համար զանգահարեք <a href={site.phone.href}>{site.phone.display}</a>։</p>
+      <a class="btn" href="/">Վերադառնալ գլխավոր էջ<Icon name="arrow" class="btn__icon" /></a>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .sent { min-height: 80svh; display: grid; align-items: center; padding-top: calc(var(--header-h) + 64px); }
+  .sent__inner { display: grid; gap: 20px; justify-items: start; max-width: 48rem; }
+  .sent__mark { display: grid; place-items: center; width: 64px; height: 64px; border-radius: 50%; background: var(--red); color: #fff; }
+  .sent__mark :global(svg) { width: 30px; height: 30px; }
+</style>

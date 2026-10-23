@@ -1,0 +1,28 @@
+---
+// Server-rendered word split for headline reveals. The text stays real, selectable and
+// readable by assistive technology; each word is only wrapped for the motion mask.
+interface Props {
+  text: string;
+  as?: 'h1' | 'h2' | 'h3' | 'p' | 'span';
+  class?: string;
+  id?: string;
+  delay?: number;
+  accent?: string;
+}
+const { text, as: Tag = 'h2', class: className, id, delay = 0, accent } = Astro.props;
+const words = text.split(/\s+/).filter(Boolean);
+---
+<Tag class:list={['split', className]} id={id} data-split style={`--sd:${delay}ms`}>
+  {words.map((word, i) => (
+    <>
+      <span class="w" style={`--wi:${i}`}>
+        <span class:list={[{ accent: accent && word.includes(accent) }]}>{word}</span>
+      </span>{i < words.length - 1 ? ' ' : ''}
+    </>
+  ))}
+</Tag>
+
+<style>
+  .accent { color: var(--red); }
+  :global(.on-night) .accent { color: #ff6b62; }
+</style>

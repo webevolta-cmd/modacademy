@@ -1,0 +1,122 @@
+---
+import Icon from './Icon.astro';
+---
+<dialog class="lb" aria-label="Պատկերների դիտում" data-lightbox>
+  <div class="lb__stage" data-lb-stage>
+    <figure class="lb__figure">
+      <div class="lb__media">
+        <img class="lb__img" data-lb-img alt="" decoding="async" />
+        <span class="lb__spinner" aria-hidden="true"></span>
+      </div>
+      <figcaption class="lb__cap">
+        <span class="lb__title" data-lb-title></span>
+        <span class="lb__credit" data-lb-credit></span>
+      </figcaption>
+    </figure>
+  </div>
+  <div class="lb__bar">
+    <span class="lb__count num" aria-live="polite" data-lb-count></span>
+    <div class="lb__nav">
+      <button type="button" class="lb__btn" data-lb-prev>
+        <Icon name="chevron-left" /><span class="visually-hidden">Նախորդը</span>
+      </button>
+      <button type="button" class="lb__btn" data-lb-next>
+        <Icon name="chevron-right" /><span class="visually-hidden">Հաջորդը</span>
+      </button>
+      <button type="button" class="lb__btn lb__btn--close" data-lb-close>
+        <Icon name="close" /><span class="visually-hidden">Փակել</span>
+      </button>
+    </div>
+  </div>
+</dialog>
+
+<style>
+  .lb {
+    width: 100%;
+    max-width: none;
+    height: 100%;
+    max-height: none;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background: rgb(13 11 10 / 0.97);
+    color: var(--on-night);
+    overscroll-behavior: contain;
+  }
+
+  .lb::backdrop { background: rgb(13 11 10 / 0.6); }
+  .lb[open] { display: grid; grid-template-rows: 1fr auto; animation: lb-in 0.35s ease both; }
+
+  .lb__stage {
+    display: grid;
+    place-items: center;
+    padding: max(16px, env(safe-area-inset-top)) 16px 8px;
+    min-height: 0;
+    touch-action: pan-y;
+  }
+
+  .lb__figure { display: grid; gap: 12px; justify-items: center; max-width: 100%; max-height: 100%; min-height: 0; }
+
+  .lb__media { position: relative; display: grid; place-items: center; min-height: 0; }
+
+  .lb__img {
+    max-width: min(100%, 1500px);
+    max-height: calc(100svh - 150px);
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    transition: opacity 0.35s ease, transform 0.45s var(--ease-out);
+  }
+
+  .lb__img.is-loading { opacity: 0.25; }
+  .lb__img.is-swipe-left { transform: translateX(-24px); opacity: 0; }
+  .lb__img.is-swipe-right { transform: translateX(24px); opacity: 0; }
+
+  .lb__spinner {
+    position: absolute;
+    width: 28px;
+    height: 28px;
+    border: 2px solid rgb(255 255 255 / 0.25);
+    border-top-color: #fff;
+    border-radius: 50%;
+    animation: lb-spin 0.9s linear infinite;
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .lb__img.is-loading + .lb__spinner { opacity: 1; }
+
+  .lb__cap { display: grid; gap: 2px; text-align: center; font-size: 0.9rem; }
+  .lb__title { font-weight: 560; }
+  .lb__credit { color: var(--on-night-muted); font-size: 0.82rem; }
+
+  .lb__bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 10px 16px max(14px, env(safe-area-inset-bottom));
+  }
+
+  .lb__count { font-size: 0.9rem; color: var(--on-night-muted); }
+  .lb__nav { display: flex; gap: 8px; }
+
+  .lb__btn {
+    display: inline-grid;
+    place-items: center;
+    width: 48px;
+    height: 48px;
+    border: 1px solid var(--line-night);
+    border-radius: 50%;
+    background: transparent;
+    color: var(--on-night);
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+
+  .lb__btn :global(svg) { width: 20px; height: 20px; }
+  .lb__btn:hover { background: var(--on-night); color: var(--night); }
+  .lb__btn[disabled] { opacity: 0.35; pointer-events: none; }
+
+  @keyframes lb-in { from { opacity: 0; } }
+  @keyframes lb-spin { to { transform: rotate(360deg); } }
+</style>

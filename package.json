@@ -1,0 +1,29 @@
+{
+  "name": "mod-academy-website",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "MOD Academy (Yerevan) public website — courses, student work, inquiries.",
+  "engines": {
+    "node": ">=22.12.0"
+  },
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "check": "astro check",
+    "test:e2e": "playwright test",
+    "brand": "node scripts/generate-brand-assets.mjs"
+  },
+  "dependencies": {
+    "@astrojs/sitemap": "3.7.4",
+    "@fontsource-variable/noto-sans-armenian": "5.3.0",
+    "@fontsource-variable/noto-serif-armenian": "5.3.0",
+    "astro": "7.3.8",
+    "sharp": "0.35.5"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.64.1",
+    "typescript": "5.9.3"
+  }
+}

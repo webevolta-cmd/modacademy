@@ -1,0 +1,140 @@
+---
+import SectionIndex from './SectionIndex.astro';
+import SplitText from './SplitText.astro';
+import { journey } from '../data/journey';
+---
+<section class="journey section on-night" id="journey" aria-labelledby="journey-title" data-journey>
+  <div class="wrap journey__grid">
+    <div class="journey__aside">
+      <div class="journey__sticky">
+        <SectionIndex n="04" label="Ուսուցման ընթացքը" />
+        <SplitText id="journey-title" class="h1" text="Գաղափարից՝ ավարտուն աշխատանք" accent="աշխատանք" />
+        <p class="lead" data-reveal>Ինչպես է կառուցված ուսուցումը MOD Academy-ում՝ ընտրությունից մինչև պորտֆոլիո։</p>
+        <div class="journey__meter" aria-hidden="true">
+          <svg viewBox="0 0 120 120" class="journey__arc">
+            <circle cx="60" cy="60" r="52" class="journey__arc-track" />
+            <circle cx="60" cy="60" r="52" class="journey__arc-fill" pathLength="100" data-journey-arc />
+          </svg>
+          <span class="journey__meter-n num" data-journey-n>01</span>
+          <span class="journey__meter-of">/ 0{journey.length}</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="journey__track">
+    <span class="journey__line" aria-hidden="true"><span data-journey-line></span></span>
+    <ol class="journey__steps" role="list">
+      {journey.map((s, i) => (
+        <li class="journey__step" data-journey-step={i}>
+          <span class="journey__dot" aria-hidden="true"></span>
+          <div class="journey__content" data-reveal>
+            <span class="journey__n num">{s.n}</span>
+            <h3 class="h2">{s.title}</h3>
+            <p>{s.text}</p>
+            {s.note && <p class="journey__note">{s.note}</p>}
+          </div>
+        </li>
+      ))}
+    </ol>
+    </div>
+  </div>
+</section>
+
+<style>
+  .journey { overflow: clip; }
+
+  .journey__grid { display: grid; gap: clamp(40px, 6vw, 96px); }
+
+  .journey__sticky { display: grid; gap: 20px; }
+
+  .journey__meter {
+    position: relative;
+    display: none;
+    width: 120px;
+    height: 120px;
+    margin-top: 24px;
+  }
+
+  .journey__arc { width: 120px; height: 120px; transform: rotate(-90deg); }
+  .journey__arc circle { fill: none; stroke-width: 6; }
+  .journey__arc-track { stroke: var(--line-night); }
+
+  .journey__arc-fill {
+    stroke: var(--red);
+    stroke-dasharray: 100;
+    stroke-dashoffset: calc(100 - var(--jp, 0) * 100);
+    stroke-linecap: butt;
+  }
+
+  .journey__meter-n {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    font-size: 1.9rem;
+    font-weight: 400;
+  }
+
+  .journey__meter-of {
+    position: absolute;
+    left: 132px;
+    bottom: 18px;
+    white-space: nowrap;
+    font-size: 0.85rem;
+    color: var(--on-night-muted);
+  }
+
+  .journey__track { position: relative; padding-left: 36px; }
+
+  .journey__steps { display: grid; gap: clamp(48px, 9vh, 120px); }
+
+  .journey__line {
+    position: absolute;
+    left: 6px;
+    top: 8px;
+    bottom: 8px;
+    width: 1px;
+    background: var(--line-night);
+  }
+
+  @media (min-width: 1000px) {
+    .journey__line { top: calc(18vh + 8px); bottom: calc(18vh + 8px); }
+  }
+
+  .journey__line span {
+    position: absolute;
+    inset: 0;
+    background: var(--red);
+    transform-origin: top;
+    transform: scaleY(var(--jp, 0));
+  }
+
+  .journey__step { position: relative; }
+
+  .journey__dot {
+    position: absolute;
+    left: -36px;
+    top: 10px;
+    width: 13px;
+    height: 13px;
+    border-radius: 50%;
+    border: 1px solid var(--on-night-muted);
+    background: var(--night);
+    transition: background-color 0.5s ease, border-color 0.5s ease, transform 0.6s var(--ease-out);
+  }
+
+  .journey__step.is-active .journey__dot { background: var(--red); border-color: var(--red); transform: scale(1.25); }
+
+  .journey__content { display: grid; gap: 12px; max-width: 36rem; }
+  .journey__n { font-size: 0.95rem; color: #ff8a82; }
+  .journey__content p { color: var(--on-night-muted); font-size: var(--fs-lead); line-height: 1.55; }
+  .journey__step.is-active .journey__content p { color: var(--on-night); }
+  .journey__content .journey__note { font-size: 0.85rem; letter-spacing: 0.04em; color: var(--on-night-muted); border-top: 1px solid var(--line-night); padding-top: 12px; }
+
+  @media (min-width: 1000px) {
+    .journey__grid { grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr); }
+    .journey__sticky { position: sticky; top: calc(var(--header-h) + 40px); }
+    .journey__meter { display: block; }
+    .journey__track { padding-block: 18vh; }
+  }
+</style>

@@ -1,0 +1,295 @@
+---
+import { Picture } from 'astro:assets';
+import SectionIndex from './SectionIndex.astro';
+import SplitText from './SplitText.astro';
+import CourseFacts from './CourseFacts.astro';
+import CourseArt from './CourseArt.astro';
+import Icon from './Icon.astro';
+import { courses, categories, priceNote, formatFee } from '../data/courses';
+
+const counts = Object.fromEntries(
+  categories.map((c) => [c.id, c.id === 'all' ? courses.length : courses.filter((x) => x.category === c.id).length]),
+);
+---
+<section class="courses section" id="courses" aria-labelledby="courses-title" data-courses>
+  <div class="wrap">
+    <SectionIndex n="02" label="Դասընթացներ" />
+    <div class="courses__head">
+      <SplitText id="courses-title" class="h1" text="Ընտրիր քո ուղղությունը" accent="ուղղությունը" />
+      <p class="lead" data-reveal>
+        Դիզայն, 3D վիզուալիզացիա և բիզնես․ յուրաքանչյուր դասընթաց ունի իր ձևաչափը, գրաֆիկը և մանրամասն էջը։
+      </p>
+    </div>
+
+    <div class="courses__toolbar" data-reveal>
+      <div class="courses__filters" role="group" aria-label="Զտել դասընթացներն ըստ ուղղության">
+        {categories.map((c, i) => (
+          <button
+            type="button"
+            class="chip"
+            data-filter={c.id}
+            aria-pressed={i === 0 ? 'true' : 'false'}
+            aria-controls="course-list"
+          >
+            {c.label}
+            <span class="chip__count" aria-hidden="true">{counts[c.id]}</span>
+          </button>
+        ))}
+      </div>
+      <p class="courses__status muted" aria-live="polite" data-filter-status>
+        Ցուցադրված է {courses.length} դասընթաց
+      </p>
+    </div>
+
+    <ol class="courses__list" id="course-list" role="list">
+      {courses.map((c, i) => (
+        <li class="course" data-category={c.category} data-course-row style={`--i:${i}`}>
+          <article class="course__inner" aria-labelledby={`course-${c.slug}`}>
+            <span class="course__n num" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
+            <a class="course__visual frame" href={`/courses/${c.slug}/`} tabindex="-1" aria-hidden="true">
+              {c.image ? (
+                <Picture
+                  src={c.image}
+                  alt=""
+                  widths={[320, 480, 720]}
+                  sizes="(min-width: 1100px) 260px, (min-width: 700px) 40vw, 92vw"
+                  formats={['avif', 'webp']}
+                  loading="lazy"
+                />
+              ) : (
+                <CourseArt letter={c.title.charAt(0)} />
+              )}
+            </a>
+            <div class="course__main">
+              <p class="label course__kicker">{c.kicker}</p>
+              <h3 class="h2 course__title" id={`course-${c.slug}`}>
+                <a href={`/courses/${c.slug}/`}>{c.title}</a>
+              </h3>
+              <p class="course__summary">{c.summary}</p>
+              <div class="course__actions">
+                <a class="btn btn--sm" href={`/courses/${c.slug}/`}>
+                  Մանրամասն<span class="visually-hidden"> «{c.title}» դասընթացի մասին</span>
+                  <Icon name="arrow" class="btn__icon" />
+                </a>
+                <a class="btn btn--ghost btn--sm" href={`/?course=${c.slug}#inquiry`} data-inquiry-course={c.slug}>
+                  {c.fee ? 'Ուղարկել հայտ' : 'Ստանալ մանրամասներ'}
+                  <span class="visually-hidden"> «{c.title}» դասընթացի համար</span>
+                </a>
+              </div>
+            </div>
+            <CourseFacts course={c} compact />
+          </article>
+        </li>
+      ))}
+    </ol>
+
+    <p class="courses__note muted" data-reveal>{priceNote}</p>
+
+    <details class="compare" data-reveal>
+      <summary class="compare__summary">
+        <span>Համեմատել դասընթացները</span>
+        <Icon name="plus" class="compare__icon" />
+      </summary>
+      <div class="compare__scroll" tabindex="0" role="region" aria-label="Դասընթացների համեմատական աղյուսակ">
+        <table class="compare__table">
+          <caption class="visually-hidden">Դասընթացների համեմատություն</caption>
+          <thead>
+            <tr>
+              <th scope="col">Դասընթաց</th>
+              <th scope="col">Ձևաչափ</th>
+              <th scope="col">Տևողություն</th>
+              <th scope="col">Գրաֆիկ</th>
+              <th scope="col">Արժեք</th>
+              <th scope="col">Ում համար</th>
+            </tr>
+          </thead>
+          <tbody>
+            {courses.map((c) => (
+              <tr>
+                <th scope="row"><a href={`/courses/${c.slug}/`}>{c.title}</a></th>
+                <td>{c.format}</td>
+                <td>{c.duration ?? '—'}</td>
+                <td>
+                  {c.schedule ? c.schedule.map((g) => <span class="compare__line">{g.daysShort} · {g.time}</span>) : '—'}
+                </td>
+                <td>{c.fee ? `${formatFee(c.fee.amount)} · ${c.fee.unit}` : '—'}</td>
+                <td>{c.level ?? 'Ճշտեք ակադեմիայում'}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      <p class="muted compare__foot">«—» նշանակում է, որ տվյալը հրապարակված չէ․ ճշտեք հայտ ուղարկելիս։</p>
+    </details>
+  </div>
+</section>
+
+<style>
+  .courses { background: var(--paper-2); }
+
+  .courses__head { display: grid; gap: 20px; margin-bottom: clamp(32px, 4vw, 56px); }
+
+  .courses__toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px 24px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--line-strong);
+  }
+
+  .courses__filters { display: flex; flex-wrap: wrap; gap: 8px; }
+
+  .chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    min-height: 44px;
+    padding: 8px 16px;
+    border: 1px solid var(--line-strong);
+    border-radius: 999px;
+    background: transparent;
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: background-color 0.35s var(--ease-out), color 0.35s var(--ease-out), border-color 0.35s;
+  }
+
+  .chip:hover { border-color: var(--ink); }
+
+  .chip[aria-pressed='true'] { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+
+  .chip__count {
+    display: inline-grid;
+    place-items: center;
+    min-width: 22px;
+    height: 22px;
+    border-radius: 999px;
+    background: var(--paper-3);
+    color: var(--ink);
+    font-size: 0.72rem;
+    font-weight: 600;
+  }
+
+  .chip[aria-pressed='true'] .chip__count { background: var(--red); color: #fff; }
+
+  .courses__status { font-size: 0.85rem; }
+
+  .courses__list { display: grid; }
+
+  .course {
+    border-bottom: 1px solid var(--line-strong);
+    transition: opacity 0.5s var(--ease-out), transform 0.6s var(--ease-out), filter 0.5s var(--ease-out);
+  }
+
+  .course[hidden] { display: none; }
+  .course.is-leaving { opacity: 0; transform: translateY(-10px); filter: blur(4px); }
+  .course.is-entering { opacity: 0; transform: translateY(16px); filter: blur(4px); }
+
+  .course__inner {
+    position: relative;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 18px;
+    padding-block: 28px;
+  }
+
+  .course__n { display: none; }
+
+  .course__visual { display: block; aspect-ratio: 16 / 10; }
+
+  .course__visual :global(img) {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transform: scale(1.02);
+    transition: transform 1.2s var(--ease-out), filter 0.8s ease;
+  }
+
+  .course__main { display: grid; gap: 10px; align-content: start; }
+  .course__kicker { color: var(--red); }
+  .course__title a { text-decoration: none; background: linear-gradient(currentColor, currentColor) left 92% / 0 1px no-repeat; transition: background-size 0.6s var(--ease-out); }
+  .course__title a:hover,
+  .course__title a:focus-visible { background-size: 100% 1px; }
+  .course__summary { color: var(--ink-soft); max-width: 40rem; }
+  .course__actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 8px; }
+
+  .course__inner::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: -1px;
+    height: 1px;
+    width: 100%;
+    background: var(--red);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.8s var(--ease-out);
+  }
+
+  .course:hover .course__inner::before,
+  .course:focus-within .course__inner::before { transform: scaleX(1); }
+
+  .course:hover .course__visual :global(img) { transform: scale(1.07); }
+
+  @media (min-width: 700px) {
+    .course__inner { grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr); column-gap: 28px; }
+    .course__visual { grid-row: 1 / span 2; aspect-ratio: 4 / 3; }
+  }
+
+  @media (min-width: 1100px) {
+    .course__inner {
+      grid-template-columns: 48px 240px minmax(0, 1fr) minmax(280px, 340px);
+      column-gap: clamp(20px, 2.4vw, 40px);
+      align-items: start;
+      padding-block: 36px;
+    }
+
+    .course__n { display: block; font-size: 1rem; color: var(--muted); padding-top: 4px; }
+    .course__visual { grid-row: auto; aspect-ratio: 4 / 5; }
+  }
+
+  .courses__note { margin-top: 24px; font-size: 0.85rem; max-width: 52rem; }
+
+  /* Comparison */
+  .compare { margin-top: 40px; border-top: 1px solid var(--line-strong); border-bottom: 1px solid var(--line-strong); }
+
+  .compare__summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding-block: 20px;
+    cursor: pointer;
+    list-style: none;
+    font-family: var(--font-display);
+    font-stretch: 87.5%;
+    font-size: var(--fs-h3);
+  }
+
+  .compare__summary::-webkit-details-marker { display: none; }
+  .compare__summary :global(.compare__icon) { width: 22px; height: 22px; flex: none; transition: transform 0.45s var(--ease-out); }
+  .compare[open] :global(.compare__icon) { transform: rotate(45deg); }
+
+  .compare__scroll { overflow-x: auto; padding-bottom: 8px; }
+
+  .compare__table { width: 100%; min-width: 860px; border-collapse: collapse; font-size: 0.92rem; }
+
+  .compare__table th,
+  .compare__table td { text-align: left; vertical-align: top; padding: 14px 16px 14px 0; border-top: 1px solid var(--line); }
+
+  .compare__table thead th {
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    border-top: 0;
+  }
+
+  .compare__table tbody th { font-weight: 600; }
+  .compare__table a { text-decoration: none; }
+  .compare__table a:hover { color: var(--red); }
+  .compare__line { display: block; white-space: nowrap; }
+  .compare__foot { font-size: 0.8rem; padding-block: 8px 20px; }
+</style>

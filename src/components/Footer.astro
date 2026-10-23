@@ -1,0 +1,129 @@
+---
+import Logo from './Logo.astro';
+import Icon from './Icon.astro';
+import { site, nav } from '../data/site';
+import { courses } from '../data/courses';
+
+const year = new Date(site.dataAsOf).getFullYear();
+---
+<footer class="footer on-night">
+  <div class="wrap footer__grid">
+    <div class="footer__brand">
+      <a href="/" class="footer__logo" aria-label="MOD Academy — գլխավոր էջ"><Logo /></a>
+      <p class="footer__tagline">{site.tagline}։</p>
+      <p class="muted footer__note">
+        Ակադեմիան ունի նաև գործող ստուդիա՝
+        <a href={site.studio.instagram} target="_blank" rel="noopener">{site.studio.name}</a>։
+      </p>
+    </div>
+
+    <nav class="footer__col" aria-label="Դասընթացներ">
+      <p class="label footer__h">Դասընթացներ</p>
+      <ul role="list">
+        {courses.map((c) => (
+          <li><a href={`/courses/${c.slug}/`}>{c.title}</a></li>
+        ))}
+      </ul>
+    </nav>
+
+    <nav class="footer__col" aria-label="Կայքի բաժիններ">
+      <p class="label footer__h">Բաժիններ</p>
+      <ul role="list">
+        {nav.map((n) => (
+          <li><a href={n.href}>{n.label}</a></li>
+        ))}
+      </ul>
+    </nav>
+
+    <div class="footer__col">
+      <p class="label footer__h">Կապ</p>
+      <ul role="list" class="footer__contact">
+        <li><a href={site.phone.href}><Icon name="phone" />{site.phone.display}</a></li>
+        <li><a href={`mailto:${site.email}`}><Icon name="mail" />{site.email}</a></li>
+        <li>
+          <a href={site.maps.google} target="_blank" rel="noopener">
+            <Icon name="pin" />{site.address.city}, {site.address.street}
+          </a>
+        </li>
+      </ul>
+      <ul role="list" class="footer__social">
+        <li><a href={site.social.instagram} target="_blank" rel="noopener" aria-label="Instagram"><Icon name="instagram" /></a></li>
+        <li><a href={site.social.facebook} target="_blank" rel="noopener" aria-label="Facebook"><Icon name="facebook" /></a></li>
+        <li><a href={site.social.tiktok} target="_blank" rel="noopener" aria-label="TikTok"><Icon name="tiktok" /></a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="wrap footer__legal">
+    <p>© {year} {site.name}</p>
+    <p class="muted">
+      Լուսանկարները և ուսանողական աշխատանքները՝ ակադեմիայի պաշտոնական հրապարակումներից։ Գլխավոր էջի տեսահոլովակը
+      AI-ով ստեղծված կինեմատոգրաֆիկ ներկայացում է՝ հիմնված ուսանողական ռենդերի վրա, և ակադեմիայի տարածքի լուսանկար չէ։
+    </p>
+  </div>
+</footer>
+
+<style>
+  .footer { padding-block: clamp(64px, 6vw, 112px) 32px; }
+
+  .footer__grid {
+    display: grid;
+    gap: 40px;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .footer__brand { grid-column: 1 / -1; display: grid; gap: 16px; max-width: 28rem; }
+  .footer__logo { display: block; color: var(--on-night); width: 168px; }
+  .footer__logo :global(svg) { width: 100%; height: auto; }
+  .footer__tagline { font-family: var(--font-display); font-size: var(--fs-h3); font-stretch: 87.5%; line-height: 1.25; }
+  .footer__note a { color: var(--on-night); }
+
+  .footer__col ul { display: grid; gap: 10px; }
+  .footer__h { color: var(--on-night-muted); margin-bottom: 18px; }
+
+  .footer__col a {
+    color: var(--on-night);
+    text-decoration: none;
+    font-size: 0.95rem;
+    transition: color 0.3s ease;
+  }
+
+  .footer__col a:hover { color: #ff8a82; }
+
+  .footer__contact { grid-column: 1 / -1; }
+
+  .footer__contact a { display: inline-flex; align-items: flex-start; gap: 10px; overflow-wrap: anywhere; }
+  .footer__contact :global(svg) { width: 18px; height: 18px; flex: none; margin-top: 3px; }
+
+  .footer__social { display: flex !important; gap: 10px; margin-top: 18px; }
+
+  .footer__social a {
+    display: inline-grid;
+    place-items: center;
+    width: 44px;
+    height: 44px;
+    border: 1px solid var(--line-night);
+    border-radius: 50%;
+  }
+
+  .footer__social :global(svg) { width: 18px; height: 18px; }
+
+  .footer__legal {
+    display: grid;
+    gap: 10px;
+    margin-top: clamp(48px, 6vw, 88px);
+    padding-top: 24px;
+    border-top: 1px solid var(--line-night);
+    font-size: 0.8rem;
+    line-height: 1.55;
+  }
+
+  .footer__legal p { max-width: 62rem; }
+
+  @media (min-width: 900px) {
+    .footer__grid { grid-template-columns: 1.4fr 1fr 1fr 1.2fr; }
+    .footer__brand { grid-column: auto; }
+    .footer__contact { grid-column: auto; }
+    .footer__legal { grid-template-columns: auto 1fr; gap: 40px; }
+  }
+</style>

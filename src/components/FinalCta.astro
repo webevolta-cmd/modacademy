@@ -1,0 +1,43 @@
+---
+import Icon from './Icon.astro';
+import SplitText from './SplitText.astro';
+import { site } from '../data/site';
+---
+<section class="cta on-night" aria-labelledby="cta-title">
+  <div class="cta__arc" aria-hidden="true" data-parallax style="--ps:1"></div>
+  <div class="wrap cta__inner">
+    <p class="label label--red" data-reveal>Հերթը քոնն է</p>
+    <SplitText id="cta-title" class="display cta__title" text="Պատրա՞ստ ես սկսել քո ուղին" accent="ուղին" />
+    <p class="lead" data-reveal>Ուղարկիր հայտ կամ զանգահարիր՝ ակադեմիան կներկայացնի ընթացիկ խմբերը, գրաֆիկը և պայմանները։</p>
+    <div class="cta__actions" data-reveal>
+      <a class="btn btn--red" href="#inquiry">Ուղարկել հայտ<Icon name="arrow" class="btn__icon" /></a>
+      <a class="btn btn--ghost" href={site.phone.href}><Icon name="phone" class="btn__icon" />{site.phone.display}</a>
+      <a class="btn btn--ghost" href={site.social.instagramDirect} target="_blank" rel="noopener"><Icon name="instagram" class="btn__icon" />Գրել Instagram-ում</a>
+    </div>
+  </div>
+</section>
+
+<style>
+  .cta { position: relative; overflow: hidden; padding-block: clamp(96px, 12vw, 200px); }
+  .cta__inner { position: relative; display: grid; gap: 24px; justify-items: start; }
+  .cta__title { max-width: 12ch; }
+  .cta__actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 8px; }
+
+  .cta__arc {
+    position: absolute;
+    width: min(90vw, 980px);
+    aspect-ratio: 1;
+    right: -22vw;
+    top: 50%;
+    margin-top: calc(min(90vw, 980px) / -2);
+    border: clamp(28px, 6vw, 84px) solid var(--red);
+    border-left-color: transparent;
+    border-radius: 50%;
+    rotate: -45deg;
+    opacity: 0.9;
+  }
+
+  @media (max-width: 700px) {
+    .cta__arc { right: -55vw; opacity: 0.55; }
+  }
+</style>

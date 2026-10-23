@@ -1,0 +1,65 @@
+---
+// Typographic placeholder for courses without verified photography. Clearly graphic, never
+// presented as a photo of the academy or of student work.
+interface Props {
+  letter: string;
+  class?: string;
+}
+const { letter, class: className } = Astro.props;
+---
+<div class:list={['art', className]} aria-hidden="true">
+  <span class="art__grid"></span>
+  <span class="art__arc"></span>
+  <span class="art__letter">{letter}</span>
+  <span class="art__cmyk"><i></i><i></i><i></i><i></i></span>
+</div>
+
+<style>
+  .art {
+    position: relative;
+    overflow: hidden;
+    background: var(--ink);
+    color: var(--paper);
+    width: 100%;
+    height: 100%;
+  }
+
+  .art__grid {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgb(244 239 232 / 0.07) 1px, transparent 1px),
+      linear-gradient(90deg, rgb(244 239 232 / 0.07) 1px, transparent 1px);
+    background-size: 24px 24px;
+  }
+
+  .art__arc {
+    position: absolute;
+    width: 74%;
+    aspect-ratio: 1;
+    right: -12%;
+    top: 50%;
+    border: clamp(10px, 3vw, 22px) solid var(--red);
+    border-left-color: transparent;
+    border-radius: 50%;
+    transform: translateY(-50%) rotate(-45deg);
+  }
+
+  .art__letter {
+    position: absolute;
+    left: 10%;
+    bottom: -6%;
+    font-family: var(--font-display);
+    font-stretch: 75%;
+    font-weight: 300;
+    font-size: clamp(7rem, 22vw, 16rem);
+    line-height: 1;
+  }
+
+  .art__cmyk { position: absolute; right: 8%; top: 8%; display: flex; gap: 5px; }
+  .art__cmyk i { width: 10px; height: 10px; border-radius: 50%; }
+  .art__cmyk i:nth-child(1) { background: #00a3e0; }
+  .art__cmyk i:nth-child(2) { background: #e0007a; }
+  .art__cmyk i:nth-child(3) { background: #ffd400; }
+  .art__cmyk i:nth-child(4) { background: var(--paper); }
+</style>

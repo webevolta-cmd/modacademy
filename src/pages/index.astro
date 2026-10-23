@@ -1,0 +1,70 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Hero from '../components/Hero.astro';
+import About from '../components/About.astro';
+import Courses from '../components/Courses.astro';
+import Finder from '../components/Finder.astro';
+import Journey from '../components/Journey.astro';
+import Work from '../components/Work.astro';
+import Practice from '../components/Practice.astro';
+import Teaching from '../components/Teaching.astro';
+import Faq from '../components/Faq.astro';
+import FinalCta from '../components/FinalCta.astro';
+import Contact from '../components/Contact.astro';
+import Lightbox from '../components/Lightbox.astro';
+import { site } from '../data/site';
+import { courses } from '../data/courses';
+import { faq } from '../data/faq';
+
+const siteUrl = Astro.site!;
+
+const jsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'ItemList',
+    name: 'MOD Academy դասընթացներ',
+    itemListElement: courses.map((c, i) => ({
+      '@type': 'ListItem',
+      position: i + 1,
+      item: {
+        '@type': 'Course',
+        name: c.title,
+        description: c.summary,
+        url: new URL(`/courses/${c.slug}/`, siteUrl).href,
+        provider: { '@id': new URL('/#organization', siteUrl).href },
+      },
+    })),
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faq.map((f) => ({
+      '@type': 'Question',
+      name: f.q,
+      acceptedAnswer: { '@type': 'Answer', text: [...f.a, ...(f.list ?? [])].join(' ') },
+    })),
+  },
+];
+---
+<BaseLayout
+  title="MOD Academy — ինտերիեր դիզայնի, 3Ds Max-ի և գրաֆիկ դիզայնի դասընթացներ Երևանում"
+  description={site.description}
+  jsonLd={jsonLd}
+>
+  <Fragment slot="head">
+    <link rel="preload" as="image" href="/media/hero/hero-1440-poster.webp" media="(min-aspect-ratio: 4/5)" fetchpriority="high" />
+    <link rel="preload" as="image" href="/media/hero/hero-900x1200-poster.webp" media="(max-aspect-ratio: 4/5)" fetchpriority="high" />
+  </Fragment>
+  <Hero />
+  <About />
+  <Courses />
+  <Finder />
+  <Journey />
+  <Work />
+  <Practice />
+  <Teaching />
+  <Faq />
+  <FinalCta />
+  <Contact />
+  <Lightbox />
+</BaseLayout>

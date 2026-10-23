@@ -1,0 +1,139 @@
+---
+import SectionIndex from './SectionIndex.astro';
+import SplitText from './SplitText.astro';
+import Icon from './Icon.astro';
+import InquiryForm from './InquiryForm.astro';
+import { site } from '../data/site';
+
+interface Props {
+  preselect?: string;
+}
+const { preselect } = Astro.props;
+---
+<section class="contact section" id="contact" aria-labelledby="contact-title">
+  <div class="wrap contact__grid">
+    <div class="contact__info">
+      <SectionIndex n="09" label="Կապ" />
+      <SplitText id="contact-title" class="h1" text="Եկեք ծանոթանանք" />
+      <p class="lead" data-reveal>Հարցեր ունե՞ք դասընթացների, խմբերի կամ արժեքի մասին։ Զանգահարեք, գրեք կամ ուղարկեք հայտ։</p>
+
+      <ul class="contact__list" role="list" data-reveal>
+        <li>
+          <span class="label">Հեռախոս</span>
+          <a class="contact__big" href={site.phone.href}>{site.phone.display}</a>
+        </li>
+        <li>
+          <span class="label">Էլ. փոստ</span>
+          <a href={`mailto:${site.email}`}>{site.email}</a>
+        </li>
+        <li>
+          <span class="label">Հասցե</span>
+          <address>{site.address.city}, {site.address.street}</address>
+          <span class="muted contact__landmark">{site.address.landmark}</span>
+        </li>
+        <li>
+          <span class="label">Սոցիալական ցանցեր</span>
+          <span class="contact__social">
+            <a href={site.social.instagram} target="_blank" rel="noopener"><Icon name="instagram" />Instagram</a>
+            <a href={site.social.facebook} target="_blank" rel="noopener"><Icon name="facebook" />Facebook</a>
+            <a href={site.social.tiktok} target="_blank" rel="noopener"><Icon name="tiktok" />TikTok</a>
+          </span>
+        </li>
+      </ul>
+
+      <div class="map" data-map data-reveal>
+        <div class="map__canvas" data-map-canvas>
+          <div class="map__placeholder" aria-hidden="true">
+            <span class="map__grid"></span>
+            <span class="map__street map__street--a">Մհեր Մկրտչյան փ.</span>
+            <span class="map__street map__street--b">Տիգրան Մեծի պող.</span>
+            <span class="map__pin"><Icon name="pin" /></span>
+          </div>
+        </div>
+        <div class="map__bar">
+          <button type="button" class="btn btn--sm" data-map-load>Ցույց տալ քարտեզը</button>
+          <a class="link-arrow" href={site.maps.google} target="_blank" rel="noopener">Google Maps<Icon name="arrow-up-right" /></a>
+          <a class="link-arrow" href={site.maps.yandex} target="_blank" rel="noopener">Yandex Maps<Icon name="arrow-up-right" /></a>
+        </div>
+        <p class="map__note muted">Քարտեզը բեռնվում է Google-ից միայն սեղմելուց հետո։</p>
+      </div>
+    </div>
+
+    <div class="contact__form" id="inquiry" data-reveal>
+      <InquiryForm preselect={preselect} />
+    </div>
+  </div>
+</section>
+
+<style>
+  .contact { background: var(--paper); }
+  .contact__grid { display: grid; gap: clamp(40px, 6vw, 88px); }
+  .contact__info { display: grid; gap: 24px; align-content: start; }
+
+  .contact__list { display: grid; gap: 0; border-top: 1px solid var(--line-strong); }
+  .contact__list li { display: grid; gap: 4px; padding-block: 16px; border-bottom: 1px solid var(--line); }
+  .contact__list .label { color: var(--muted); }
+  .contact__list a { text-decoration: none; overflow-wrap: anywhere; }
+  .contact__list a:hover { color: var(--red); }
+  .contact__list address { font-style: normal; font-weight: 520; }
+  .contact__big { font-family: var(--font-display); font-size: var(--fs-h2); line-height: 1.15; }
+  .contact__landmark { font-size: 0.88rem; }
+
+  .contact__social { display: flex; flex-wrap: wrap; gap: 8px 20px; }
+  .contact__social a { display: inline-flex; align-items: center; gap: 8px; }
+  .contact__social :global(svg) { width: 18px; height: 18px; }
+
+  .map { border: 1px solid var(--line-strong); }
+
+  .map__canvas { position: relative; aspect-ratio: 16 / 10; background: var(--paper-2); overflow: hidden; }
+  .map__canvas :global(iframe) { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+
+  .map__placeholder { position: absolute; inset: 0; }
+
+  .map__grid {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(var(--line) 1px, transparent 1px),
+      linear-gradient(90deg, var(--line) 1px, transparent 1px);
+    background-size: 28px 28px;
+  }
+
+  .map__street {
+    position: absolute;
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted);
+    padding: 4px 0;
+    border-top: 6px solid var(--paper-3);
+    white-space: nowrap;
+  }
+
+  .map__street--a { left: 6%; right: 6%; top: 54%; }
+  .map__street--b { top: 8%; bottom: 8%; left: 58%; width: 0; border-top: 0; border-left: 6px solid var(--paper-3); }
+  .map__street--b { writing-mode: vertical-rl; padding: 0 0 0 6px; }
+
+  .map__pin {
+    position: absolute;
+    left: 58%;
+    top: 54%;
+    display: grid;
+    place-items: center;
+    width: 46px;
+    height: 46px;
+    margin: -46px 0 0 -20px;
+    color: var(--red);
+  }
+
+  .map__pin :global(svg) { width: 40px; height: 40px; fill: var(--red-soft); }
+
+  .map__bar { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 20px; padding: 14px; border-top: 1px solid var(--line); font-size: 0.9rem; }
+  .map__note { font-size: 0.75rem; padding: 0 14px 12px; }
+
+  @media (min-width: 1000px) {
+    .contact__grid { grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr); align-items: start; }
+    .contact__form { position: sticky; top: calc(var(--header-h) + 24px); }
+  }
+</style>

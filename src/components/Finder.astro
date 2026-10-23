@@ -1,0 +1,167 @@
+---
+import SectionIndex from './SectionIndex.astro';
+import SplitText from './SplitText.astro';
+import Icon from './Icon.astro';
+import { courses, formatFee } from '../data/courses';
+
+const interests = [
+  { id: 'space', label: 'Տարածություն և ինտերիեր' },
+  { id: 'visual', label: '3D մոդելավորում և ռենդեր' },
+  { id: 'graphic', label: 'Գրաֆիկա և վիզուալ հաղորդակցություն' },
+  { id: 'sales', label: 'Վաճառք և աշխատանք հաճախորդների հետ' },
+];
+
+const levels = [
+  { id: 'new', label: 'Սկսում եմ զրոյից' },
+  { id: 'pro', label: 'Արդեն աշխատում եմ ոլորտում' },
+];
+
+// Serialized for the client-side matcher; only verified fields are used.
+const finderData = courses.map((c) => ({
+  slug: c.slug,
+  title: c.title,
+  kicker: c.kicker,
+  duration: c.duration,
+  fee: c.fee ? `${formatFee(c.fee.amount)} · ${c.fee.unit}` : null,
+  interests: c.finder.interests,
+  levels: c.finder.levels,
+  reason: c.finder.reason,
+}));
+---
+<section class="finder section section--tight" id="finder" aria-labelledby="finder-title" data-finder>
+  <div class="wrap finder__grid">
+    <div class="finder__intro">
+      <SectionIndex n="03" label="Գտիր քո դասընթացը" />
+      <SplitText id="finder-title" class="h1" text="Ո՞րն է քո առաջին քայլը" />
+      <p class="lead" data-reveal>Նշիր՝ ինչն է քեզ հետաքրքրում և որտեղից ես սկսում։ Կառաջարկենք համապատասխան դասընթացները և կբացատրենք՝ ինչու։</p>
+      <p class="finder__disclaimer muted" data-reveal>
+        Սա ուղղորդող առաջարկ է և ոչ թե մասնագիտական գնահատում։ Վերջնական ընտրության համար խորհրդակցեք ակադեմիայի հետ։
+      </p>
+    </div>
+
+    <form class="finder__form" data-finder-form data-reveal>
+      <fieldset class="finder__set">
+        <legend class="label">1 · Ի՞նչն է քեզ հետաքրքրում <span class="muted">(կարող ես ընտրել մի քանիսը)</span></legend>
+        <div class="finder__options">
+          {interests.map((o) => (
+            <label class="opt">
+              <input type="checkbox" name="interest" value={o.id} />
+              <span class="opt__box"><Icon name="check" class="opt__check" /></span>
+              <span>{o.label}</span>
+            </label>
+          ))}
+        </div>
+      </fieldset>
+      <fieldset class="finder__set">
+        <legend class="label">2 · Քո փորձը</legend>
+        <div class="finder__options finder__options--row">
+          {levels.map((o, i) => (
+            <label class="opt opt--radio">
+              <input type="radio" name="level" value={o.id} checked={i === 0} />
+              <span class="opt__box"></span>
+              <span>{o.label}</span>
+            </label>
+          ))}
+        </div>
+      </fieldset>
+
+      <div class="finder__results" aria-live="polite" data-finder-results>
+        <p class="finder__empty muted" data-finder-empty>Ընտրիր առնվազն մեկ հետաքրքրություն՝ առաջարկները տեսնելու համար։</p>
+        <ol class="finder__list" role="list" data-finder-list></ol>
+      </div>
+      <noscript>
+        <p class="muted">Առաջարկների համար անհրաժեշտ է JavaScript։ Բոլոր դասընթացները տես <a href="#courses">վերևում</a>։</p>
+      </noscript>
+    </form>
+  </div>
+  <script type="application/json" data-finder-courses set:html={JSON.stringify(finderData)} />
+</section>
+
+<style>
+  .finder { background: var(--paper); }
+
+  .finder__grid { display: grid; gap: clamp(32px, 5vw, 80px); }
+
+  .finder__intro { display: grid; gap: 18px; align-content: start; }
+  .finder__disclaimer { font-size: 0.85rem; max-width: 30rem; padding-left: 14px; border-left: 2px solid var(--red); }
+
+  .finder__form {
+    display: grid;
+    gap: 28px;
+    padding: clamp(20px, 3vw, 40px);
+    background: var(--card);
+    border: 1px solid var(--line);
+  }
+
+  .finder__set { border: 0; margin: 0; padding: 0; display: grid; gap: 14px; min-width: 0; }
+  .finder__set legend { padding: 0; margin-bottom: 14px; }
+  .finder__set legend .muted { text-transform: none; letter-spacing: 0; font-weight: 400; }
+
+  .finder__options { display: grid; gap: 8px; }
+  .finder__options--row { grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); }
+
+  .opt {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    min-height: 52px;
+    padding: 12px 16px;
+    border: 1px solid var(--line-strong);
+    cursor: pointer;
+    transition: border-color 0.3s ease, background-color 0.3s ease;
+    line-height: 1.35;
+  }
+
+  .opt input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+
+  .opt__box {
+    flex: none;
+    display: inline-grid;
+    place-items: center;
+    width: 22px;
+    height: 22px;
+    border: 1px solid var(--line-strong);
+    background: var(--paper);
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+  }
+
+  .opt--radio .opt__box { border-radius: 50%; }
+  .opt :global(.opt__check) { width: 16px; height: 16px; color: #fff; opacity: 0; transform: scale(0.6); transition: 0.3s var(--ease-out); }
+
+  .opt:hover { border-color: var(--ink); }
+  .opt:has(input:checked) { border-color: var(--ink); background: var(--paper); }
+  .opt input:checked + .opt__box { background: var(--red); border-color: var(--red); }
+  .opt input:checked + .opt__box :global(.opt__check) { opacity: 1; transform: none; }
+  .opt--radio input:checked + .opt__box { box-shadow: inset 0 0 0 5px var(--paper); }
+  .opt:has(input:focus-visible) { outline: 2px solid var(--red); outline-offset: 2px; }
+
+  .finder__results { border-top: 1px solid var(--line-strong); padding-top: 20px; min-height: 120px; }
+  .finder__list { display: grid; gap: 12px; }
+  .finder__empty[hidden] { display: none; }
+
+  .finder__list :global(.match) {
+    display: grid;
+    gap: 8px;
+    padding: 18px;
+    border: 1px solid var(--line);
+    background: var(--paper);
+    animation: match-in 0.6s var(--ease-out) both;
+    animation-delay: calc(var(--i, 0) * 70ms);
+  }
+
+  .finder__list :global(.match__top) { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 6px 16px; }
+  .finder__list :global(.match__title) { font-family: var(--font-display); font-stretch: 87.5%; font-size: var(--fs-h3); line-height: 1.2; }
+  .finder__list :global(.match__badge) { font-size: 0.72rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--red); }
+  .finder__list :global(.match__meta) { font-size: 0.85rem; color: var(--muted); }
+  .finder__list :global(.match__links) { display: flex; flex-wrap: wrap; gap: 10px 20px; margin-top: 4px; }
+
+  @keyframes match-in {
+    from { opacity: 0; transform: translateY(10px); }
+  }
+
+  @media (min-width: 1000px) {
+    .finder__grid { grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr); align-items: start; }
+    .finder__intro { position: sticky; top: calc(var(--header-h) + 32px); }
+  }
+</style>
