@@ -135,6 +135,7 @@ function fmt(iso: string) {
                 widths={[480, 720, 1080, 1440]}
                 sizes="(min-width: 1000px) 46vw, 92vw"
                 formats={['avif', 'webp']}
+                fallbackFormat="webp"
                 loading="eager"
                 fetchpriority="high"
                 data-parallax
@@ -241,7 +242,9 @@ function fmt(iso: string) {
                   data-lb-credit={g.credit}
                   aria-label={`Բացել մեծ չափով՝ ${g.title}`}
                 >
-                  <Picture src={g.image} alt={g.alt} widths={[360, 540, 800]} sizes="(min-width: 900px) 24vw, 46vw" formats={['avif', 'webp']} loading="lazy" />
+                  <Picture src={g.image} alt={g.alt} widths={[360, 540, 800]} sizes="(min-width: 900px) 24vw, 46vw" formats={['avif', 'webp']}
+                fallbackFormat="webp"
+                loading="lazy" />
                 </button>
                 <p class="credit">{g.title} · {g.credit}</p>
               </li>

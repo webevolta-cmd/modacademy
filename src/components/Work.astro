@@ -7,8 +7,8 @@ import { work, student } from '../data/media';
 
 const items = await Promise.all(
   work.map(async (w) => {
-    const large = await getImage({ src: w.image, width: 2048, format: 'webp', quality: 86 });
-    const medium = await getImage({ src: w.image, width: 1280, format: 'webp', quality: 84 });
+    const large = await getImage({ src: w.image, width: 1920, format: 'webp', quality: 80 });
+    const medium = await getImage({ src: w.image, width: 1280, format: 'webp', quality: 78 });
     return { ...w, large: large.src, medium: medium.src };
   }),
 );
@@ -46,7 +46,7 @@ const layout = ['a', 'b', 'c', 'd', 'e', 'f', 'g'];
               class="work__btn frame"
               data-lb-group="work"
               data-lb-src={w.large}
-              data-lb-srcset={`${w.medium} 1280w, ${w.large} 2048w`}
+              data-lb-srcset={`${w.medium} 1280w, ${w.large} 1920w`}
               data-lb-alt={w.alt}
               data-lb-title={w.title}
               data-lb-credit={`${student.name} · ${student.role}`}
@@ -58,6 +58,7 @@ const layout = ['a', 'b', 'c', 'd', 'e', 'f', 'g'];
                 widths={[400, 640, 960, 1280]}
                 sizes={i === 0 ? '(min-width: 900px) 56vw, 92vw' : '(min-width: 900px) 32vw, 46vw'}
                 formats={['avif', 'webp']}
+                fallbackFormat="webp"
                 loading="lazy"
                 data-parallax
                 style={`--ps:${i % 2 ? 1.1 : 1.14}`}
