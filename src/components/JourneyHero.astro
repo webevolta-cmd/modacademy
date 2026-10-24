@@ -73,7 +73,7 @@ const stills = [
         </div>
       </header>
 
-      <ol class="jh__chapters" role="list">
+      <ol class="jh__chapters" role="list" aria-label="Ճանապարհի հինգ փուլերը" tabindex="0" data-jh-chapters>
         {chapters.map((c, i) => (
           <li class="jh__ch" data-jh-ch={i} id={`journey-${c.n}`}>
             {i < stills.length && (
@@ -205,9 +205,9 @@ const stills = [
   }
 
   .jh__title {
-    font-size: clamp(2.2rem, 1.1rem + 4.2vw, 5.4rem);
+    font-size: clamp(2.2rem, 1rem + 3.4vw, 4.6rem);
     overflow-wrap: normal;
-    max-width: 14ch;
+    max-width: 12em;
   }
 
   .jh__brand { white-space: nowrap; color: var(--red); }
@@ -241,6 +241,33 @@ const stills = [
 
   @media (min-width: 900px) {
     .jh__chapters { grid-auto-flow: row; grid-template-columns: repeat(5, minmax(0, 1fr)); overflow: visible; margin-inline: 0; padding-inline: 0; }
+  }
+
+  /* Wide storyboard: the real practice photographs sit beside the introduction as prints. */
+  @media (min-width: 1000px) {
+    .jh__copy { position: relative; }
+    :global(html:not(.jh-pin)) .jh__glimpse {
+      display: block;
+      position: absolute;
+      top: 8px;
+      right: var(--hero-x);
+      width: min(38%, 32rem);
+      aspect-ratio: 1 / 0.86;
+    }
+    :global(html:not(.jh-pin)) .jh__print {
+      position: absolute;
+      width: 50%;
+      padding: 10px 10px 30px;
+      background: #fffdf9;
+      box-shadow: 0 1px 1px rgb(21 18 15 / 0.08), 0 18px 40px -16px rgb(21 18 15 / 0.45);
+      transform: rotate(var(--r, 0deg));
+    }
+    :global(html:not(.jh-pin)) .jh__print :global(img) { display: block; width: 100%; aspect-ratio: 4 / 5; object-fit: cover; }
+    :global(html:not(.jh-pin)) .jh__print figcaption { position: absolute; left: 12px; right: 12px; bottom: 8px; font-size: 0.7rem; color: var(--muted); }
+    :global(html:not(.jh-pin)) .jh__print:nth-child(1) { left: 0; top: 6%; --r: -3deg; }
+    :global(html:not(.jh-pin)) .jh__print:nth-child(2) { left: 30%; top: 22%; --r: 2deg; z-index: 2; }
+    :global(html:not(.jh-pin)) .jh__print:nth-child(3) { right: 0; top: 0; width: 42%; --r: 4deg; }
+    :global(html:not(.jh-pin)) .jh__note { position: absolute; left: 0; bottom: -40px; font-size: 0.78rem; font-weight: 560; color: var(--ink-soft); }
   }
 
   /* ── Pinned, scroll-driven story (html.jh-pin: JS + motion + enough height) ── */

@@ -27,6 +27,16 @@ type Window4 = [number, number, number, number];
 const fade = (w: Window4, v: number) => smooth(w[0], w[1], v) * (1 - smooth(w[2], w[3], v));
 
 export function initJourneyHero(root: HTMLElement): void {
+  // The storyboard's chapter row is a tab stop only while it actually scrolls sideways.
+  const row = root.querySelector<HTMLElement>('[data-jh-chapters]');
+  if (row) {
+    const syncRow = () => {
+      row.tabIndex = row.scrollWidth > row.clientWidth + 1 ? 0 : -1;
+    };
+    new ResizeObserver(syncRow).observe(row);
+    syncRow();
+  }
+
   if (!motionAllowed()) return;
 
   const html = document.documentElement;

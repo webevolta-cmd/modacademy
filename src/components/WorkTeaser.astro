@@ -20,7 +20,8 @@ const views = projects.reduce((n, p) => n + p.views.length, 0);
       </p>
       <a class="btn btn--red" href="/student-work/" data-reveal>Դիտել հավաքածուն<Icon name="arrow" class="btn__icon" /></a>
     </div>
-    <a class="wt__covers" href="/student-work/" aria-label="Ուսանողական աշխատանքների հավաքածու">
+    <a class="wt__covers" href="/student-work/">
+      <span class="visually-hidden">Ուսանողական աշխատանքների հավաքածու՝ </span>
       {covers.map((c, i) => (
         <span class={`wt__cover wt__cover--${i} frame`} data-reveal="mask" style={`--i:${i}`}>
           <Picture src={c.image} alt="" widths={[480, 720, 960]} sizes="(min-width: 1000px) 30vw, 70vw" formats={['avif', 'webp']} fallbackFormat="webp" loading="lazy" data-parallax style={`--ps:${1.08 + i * 0.02}`} />
