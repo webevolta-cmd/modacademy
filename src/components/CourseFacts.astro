@@ -19,14 +19,14 @@ const ask = 'Ճշտեք ընթացիկ տվյալները';
   <div class="facts__item">
     <dt>Ժամանակացույց</dt>
     <dd class:list={{ 'is-ask': !course.schedule }}>
-      {course.schedule
-        ? course.schedule.map((g) => (
-            <span class="facts__line">
-              <abbr title={g.days}>{g.daysShort}</abbr>
-              <span class="facts__time">{keep(g.time)}</span>
-            </span>
-          ))
-        : ask}
+      {course.schedule ? (
+        <span class="facts__line">
+          <span>{course.schedule.frequency}</span>
+          <span class="facts__time">{keep(course.schedule.length)}</span>
+        </span>
+      ) : (
+        ask
+      )}
     </dd>
   </div>
   <div class="facts__item">
@@ -71,7 +71,6 @@ const ask = 'Ճշտեք ընթացիկ տվյալները';
   .facts dd { margin: 0; font-size: 0.95rem; line-height: 1.4; font-weight: 500; display: grid; gap: 4px; }
   .facts dd.is-ask { color: var(--muted); font-weight: 400; font-size: 0.88rem; }
 
-  .facts abbr { text-decoration: none; }
   .facts__line { display: flex; flex-wrap: wrap; column-gap: 8px; }
   .facts__time { color: var(--muted); font-variant-numeric: tabular-nums; }
   .facts__fee { font-size: 1.15rem; font-weight: 500; }

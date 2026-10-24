@@ -41,6 +41,11 @@ Pinned Instagram carousel, **2026-10-14**: https://www.instagram.com/p/DeerP2liL
 | Corona Renderer Level UP | 1 month, individual | 2 days/week, 2 h; 09:00–11:00 or 11:00–13:00 | 77,000 AMD | For working interior designers / 3D visualisers / freelancers (2026-10-15, https://www.instagram.com/p/DehIqTPoOkF/) |
 | 3Ds Max | **Not currently published** | — | — | In the Instagram name; graduate portfolio posted 2026-10-22 (https://www.instagram.com/p/DezOW2GCMyH/); “learn from 0” (TikTok 2026-05-03); webinar slide “3Ds MAX + V-Ray/Corona” (YouTube 2026-05-25, https://www.youtube.com/watch?v=no6VBxqSiUU) |
 
+**Schedule on the site (client instruction, 2026-10-24):** every course is shown as meeting three times
+a week, 90 minutes per lesson («Շաբաթական 3 անգամ՝ 90-ական րոպե»), replacing the day and time slots
+above. The sales course page also carries the academy's fuller description (identifying customer needs
+with the right questions, active listening, presenting the offer's value, handling objections).
+
 Not published on the site because they are outdated or time-limited: the 2022 “Master of 3D” price (90,000 AMD, 10 weeks, max 4 students), the summer-2026 “first month free” offer (https://www.instagram.com/p/Da79RS1DTPm/), and the “places left” counters on the October graphics.
 
 Payment: monthly (“ուսման վճարումը կատարվում է ամսական կտրվածքով”, summer 2026 offer post).

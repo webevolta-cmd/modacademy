@@ -318,6 +318,33 @@ test('the course index lists every course', async ({ page }) => {
   await expect(page.locator('.cp__crumbs a[href="/courses/"]')).toBeVisible();
 });
 
+test('every course meets three times a week for 90 minutes', async ({ page }) => {
+  // Rendered text carries invisible word joiners (see src/lib/text.ts); compare without them.
+  const plain = (s: string) => s.replace(/\u2060/g, '').replace(/\s+/g, ' ').trim();
+  const slugs = ['interior-design', '3ds-max', 'corona-renderer', 'graphic-design', 'sales-management'];
+  for (const slug of slugs) {
+    await page.goto(`/courses/${slug}/`);
+    const cell = plain(await page.locator('.sheet__cell', { hasText: 'Ժամանակացույց' }).innerText());
+    expect(cell, slug).toContain('Շաբաթական 3 անգամ');
+    expect(cell, slug).toContain('90-ական րոպե');
+    // No leftover day lists or clock times from earlier timetables.
+    expect(plain(await page.locator('main').innerText()), slug).not.toMatch(/\d{2}:\d{2}|երկուական ժամ|Շաբաթական 2/);
+  }
+  await page.goto('/');
+  const rows = page.locator('.compare__table tbody tr');
+  await expect(rows).toHaveCount(slugs.length);
+  for (const text of await rows.locator('td:nth-child(4)').allTextContents()) expect(plain(text)).toBe('Շաբաթական 3 անգամ՝ 90-ական րոպե');
+  // FAQ answers are collapsed, so read their text content rather than the rendered text.
+  expect(plain((await page.locator('#faq').textContent()) ?? '')).toContain('շաբաթական 3 անգամ՝ 90-ական րոպե');
+});
+
+test('the sales course page carries its full description', async ({ page }) => {
+  await page.goto('/courses/sales-management/');
+  const body = page.locator('.cp__main');
+  await expect(body).toContainText('Ի՞նչ է իրականում պետք հաճախորդին, և ինչպե՞ս բացահայտել դա ճիշտ հարցերի միջոցով։');
+  await expect(body).toContainText('կառուցելով վստահության վրա հիմնված վաճառքի զրույց։');
+});
+
 test('figures keep their real values for assistive technology', async ({ page }) => {
   await page.goto('/');
   const figures = await page.locator('.about__figure .visually-hidden').allTextContents();

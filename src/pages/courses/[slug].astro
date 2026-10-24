@@ -184,12 +184,12 @@ const description =
               <dt><Upper text={row.k} /></dt>
               <dd class:list={{ 'is-ask': !row.v }}>
                 {row.v === 'schedule' && course.schedule
-                  ? course.schedule.map((g) => (
+                  ? (
                       <span class="sheet__grp">
-                        <span>{g.days}</span>
-                        <span class="sheet__time">{keep(g.time)}</span>
+                        <span>{course.schedule.frequency}</span>
+                        <span class="sheet__time">{keep(course.schedule.length)}</span>
                       </span>
-                    ))
+                    )
                   : row.v === 'fee' && course.fee
                     ? (
                         <>

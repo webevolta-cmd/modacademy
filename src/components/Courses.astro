@@ -116,13 +116,13 @@ const counts = Object.fromEntries(
                 <td>{c.format}</td>
                 <td>{c.duration ?? '—'}</td>
                 <td>
-                  {c.schedule
-                    ? c.schedule.map((g) => (
-                        <span class="compare__line">
-                          {g.daysShort.replaceAll(' · ', ', ')}՝ <span class="compare__time">{keep(g.time)}</span>
-                        </span>
-                      ))
-                    : '—'}
+                  {c.schedule ? (
+                    <span class="compare__line">
+                      {c.schedule.frequency}՝ <span class="compare__time">{keep(c.schedule.length)}</span>
+                    </span>
+                  ) : (
+                    '—'
+                  )}
                 </td>
                 <td>
                   {c.fee ? (
