@@ -20,8 +20,4 @@ export default defineConfig({
         }),
       ]
     : [],
-  image: {
-    // Responsive images are generated at build time from the masters in src/assets.
-    layout: 'constrained',
-  },
 });
