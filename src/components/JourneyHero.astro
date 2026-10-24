@@ -231,6 +231,7 @@ const stills = [
   .jh__frame { display: block; aspect-ratio: 4 / 3; overflow: hidden; background: var(--paper-3); }
   .jh__frame img,
   .jh__frame :global(img) { width: 100%; height: 100%; object-fit: cover; }
+  .jh__ch :global(.jh__frame--photo) { object-position: 50% 28%; }
   .jh__ch-label { color: var(--red); }
   .jh__ch-title { font-size: var(--fs-h3); line-height: 1.2; }
   .jh__ch-text { color: var(--ink-soft); font-size: 0.95rem; }
@@ -362,7 +363,7 @@ const stills = [
     transform: translate3d(0, calc((1 - var(--b, 0)) * 40px), 0) rotate(calc(var(--r, 0deg) * var(--b, 0)));
   }
 
-  :global(.jh-pin) .jh__print :global(img) { display: block; width: 100%; aspect-ratio: 4 / 5; object-fit: cover; }
+  :global(.jh-pin) .jh__print :global(img) { display: block; width: 100%; aspect-ratio: 4 / 5; object-fit: cover; object-position: 50% 30%; }
   :global(.jh-pin) .jh__print figcaption { position: absolute; left: 12px; right: 12px; bottom: 9px; font-size: 0.7rem; color: var(--muted); }
 
   :global(.jh-pin) .jh__glimpse .jh__print:nth-child(1) { left: 0; top: 4%; --r: -3deg; }
@@ -405,7 +406,7 @@ const stills = [
   }
 
   :global(.jh-pin) .jh__story:hover { box-shadow: 0 1px 1px rgb(21 18 15 / 0.08), 0 24px 48px -16px rgb(21 18 15 / 0.5); }
-  :global(.jh-pin) .jh__story :global(img) { width: 100%; aspect-ratio: 1; object-fit: cover; }
+  :global(.jh-pin) .jh__story :global(img) { width: 100%; aspect-ratio: 1; object-fit: cover; object-position: 50% 25%; }
   .jh__story-body { display: grid; gap: 4px; }
   .jh__story-name { font-family: var(--font-display); font-stretch: 87.5%; font-size: var(--fs-h3); line-height: 1.15; }
   .jh__story-course { font-size: 0.8rem; color: var(--red); font-weight: 560; }
