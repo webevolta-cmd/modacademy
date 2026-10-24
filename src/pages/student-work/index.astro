@@ -1,0 +1,185 @@
+---
+import { Picture } from 'astro:assets';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PageHeader from '../../components/PageHeader.astro';
+import ProjectFilm from '../../components/ProjectFilm.astro';
+import Icon from '../../components/Icon.astro';
+import { projects, categoryLabels } from '../../data/projects';
+import { keep } from '../../lib/text';
+
+const siteUrl = Astro.site!;
+const featured = projects.find((p) => p.film) ?? projects[0];
+const categories = [...new Set(projects.map((p) => p.category))];
+const authors = new Set(projects.map((p) => p.author.name)).size;
+const fmt = (iso: string) => iso.split('-').reverse().join('.');
+
+const jsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'CollectionPage',
+    name: 'Ուսանողական աշխատանքներ — MOD Academy',
+    url: new URL('/student-work/', siteUrl).href,
+    hasPart: projects.map((p) => ({
+      '@type': 'CreativeWork',
+      name: p.title,
+      author: { '@type': 'Person', name: p.author.name },
+      url: new URL(`/student-work/${p.slug}/`, siteUrl).href,
+    })),
+  },
+];
+---
+<BaseLayout
+  title="Ուսանողական աշխատանքներ — MOD Academy, Երևան"
+  description="MOD Academy-ի ուսանողների և շրջանավարտների նախագծերը՝ հեղինակի անունով, դասընթացով և ակադեմիայի հրապարակման հղումով։"
+  jsonLd={jsonLd}
+>
+  <PageHeader
+    title="Ուսանողական աշխատանքներ"
+    kicker={`${projects.length} նախագիծ · ${authors} հեղինակ`}
+    lead="Նախագծեր, որոնք ակադեմիան հրապարակել է իր ուսանողների և շրջանավարտների անունով։ Յուրաքանչյուր նախագծի բոլոր տեսքերը հավաքված են մեկ էջում։"
+    crumbs={[{ label: 'Գլխավոր', href: '/' }, { label: 'Ուսանողական աշխատանքներ' }]}
+  />
+
+  {featured && (
+    <section class="sw-feature" aria-labelledby="sw-feature-title">
+      <div class="wrap sw-feature__grid">
+        <div class="sw-feature__text">
+          <p class="label label--red" data-reveal>Ընտրված նախագիծ</p>
+          <h2 class="h1" id="sw-feature-title" data-reveal>{featured.title}</h2>
+          <p class="sw-feature__by" data-reveal>
+            {featured.author.name} · {featured.author.role}
+          </p>
+          <p class="muted" data-reveal>{keep(featured.summary)}</p>
+          <div class="sw-feature__links" data-reveal>
+            <a class="btn btn--red" href={`/student-work/${featured.slug}/`}>Դիտել նախագիծը<Icon name="arrow" class="btn__icon" /></a>
+            {featured.courseSlug && <a class="link-arrow" href={`/courses/${featured.courseSlug}/`}>«{featured.course}» դասընթաց<Icon name="arrow" /></a>}
+          </div>
+        </div>
+        <div class="sw-feature__media" data-reveal="mask">
+          {featured.film ? (
+            <ProjectFilm film={featured.film} title={featured.title} />
+          ) : (
+            <Picture src={featured.views[0].image} alt={featured.views[0].alt} widths={[640, 960, 1280]} sizes="(min-width: 1000px) 50vw, 92vw" formats={['avif', 'webp']} fallbackFormat="webp" loading="eager" />
+          )}
+        </div>
+      </div>
+    </section>
+  )}
+
+  <section class="sw-list" aria-labelledby="sw-list-title" data-work-filter>
+    <div class="wrap">
+      <div class="sw-list__head">
+        <h2 class="h2" id="sw-list-title">Բոլոր նախագծերը</h2>
+        {categories.length > 1 && (
+          <div class="sw-list__filters" role="group" aria-label="Զտել ըստ ուղղության">
+            <button type="button" class="chip" data-wf="all" aria-pressed="true">Բոլորը</button>
+            {categories.map((c) => (
+              <button type="button" class="chip" data-wf={c} aria-pressed="false">{categoryLabels[c]}</button>
+            ))}
+          </div>
+        )}
+        <p class="muted sw-list__status" aria-live="polite" data-wf-status></p>
+      </div>
+      <ul class="sw-grid" role="list">
+        {projects.map((p, i) => (
+          <li class="sw-card" data-category={p.category} data-reveal="mask" style={`--i:${i % 3}`}>
+            <a class="sw-card__link" href={`/student-work/${p.slug}/`}>
+              <span class="sw-card__media frame">
+                <Picture src={p.views[0].image} alt={p.views[0].alt} widths={[400, 640, 960]} sizes="(min-width: 1000px) 30vw, (min-width: 640px) 46vw, 92vw" formats={['avif', 'webp']} fallbackFormat="webp" loading="lazy" />
+                <span class="sw-card__count">{p.views.length} տեսք</span>
+              </span>
+              <span class="sw-card__body">
+                <span class="label sw-card__cat">{categoryLabels[p.category]}</span>
+                <span class="sw-card__title">{p.title}</span>
+                <span class="sw-card__by">{p.author.name} · «{p.course}» դասընթաց</span>
+                <span class="sw-card__src">Հրապարակված՝ {fmt(p.sourceDate)}</span>
+              </span>
+            </a>
+          </li>
+        ))}
+      </ul>
+      <p class="sw-list__note muted">
+        Այստեղ ներկայացված են միայն ակադեմիայի կամ հեղինակի հրապարակած ուսանողական աշխատանքները։ Ակադեմիայի ստուդիայի
+        նախագծերը և կայքի ներածական AI անիմացիան այս հավաքածուի մաս չեն։
+      </p>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .sw-feature { padding-block: clamp(24px, 4vw, 56px) clamp(56px, 7vw, 112px); }
+  .sw-feature__grid { display: grid; gap: clamp(28px, 4vw, 64px); align-items: center; }
+  .sw-feature__text { display: grid; gap: 16px; align-content: start; }
+  .sw-feature__by { font-weight: 560; }
+  .sw-feature__links { display: flex; flex-wrap: wrap; align-items: center; gap: 14px 24px; margin-top: 8px; }
+
+  .sw-list { padding-block: clamp(56px, 7vw, 112px); background: var(--paper-2); }
+  .sw-list__head { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px 24px; margin-bottom: 28px; }
+  .sw-list__filters { display: flex; flex-wrap: wrap; gap: 8px; }
+  .sw-list__status { width: 100%; font-size: 0.85rem; }
+
+  .chip {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    padding: 8px 16px;
+    border: 1px solid var(--line-strong);
+    border-radius: 999px;
+    background: transparent;
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: background-color 0.35s var(--ease-out), color 0.35s var(--ease-out), border-color 0.35s;
+  }
+  .chip:hover { border-color: var(--ink); }
+  .chip[aria-pressed='true'] { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+
+  .sw-grid { display: grid; gap: clamp(28px, 4vw, 48px) clamp(16px, 2vw, 28px); }
+  .sw-card { transition: opacity 0.5s var(--ease-out), transform 0.6s var(--ease-out); }
+  .sw-card.is-leaving { opacity: 0; transform: translateY(-10px); }
+  .sw-card__link { display: grid; gap: 14px; text-decoration: none; }
+  .sw-card__media { position: relative; display: block; aspect-ratio: 4 / 3; }
+  .sw-card__media :global(img) { width: 100%; height: 100%; object-fit: cover; transition: transform 1.2s var(--ease-out); }
+  .sw-card__link:hover .sw-card__media :global(img),
+  .sw-card__link:focus-visible .sw-card__media :global(img) { transform: scale(1.06); }
+
+  .sw-card__count {
+    position: absolute;
+    right: 12px;
+    bottom: 12px;
+    padding: 5px 10px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    background: rgb(244 239 232 / 0.9);
+  }
+
+  .sw-card__body { display: grid; gap: 4px; position: relative; padding-top: 12px; }
+  .sw-card__body::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 1px;
+    width: 100%;
+    background: var(--red);
+    transform: scaleX(0.12);
+    transform-origin: left;
+    transition: transform 0.8s var(--ease-out);
+  }
+  .sw-card__link:hover .sw-card__body::before,
+  .sw-card__link:focus-visible .sw-card__body::before { transform: scaleX(1); }
+  .sw-card__cat { color: var(--red); }
+  .sw-card__title { font-family: var(--font-display); font-stretch: 87.5%; font-size: var(--fs-h3); line-height: 1.2; }
+  .sw-card__by { font-size: 0.9rem; }
+  .sw-card__src { font-size: 0.78rem; color: var(--muted); }
+
+  .sw-list__note { margin-top: clamp(32px, 4vw, 56px); font-size: 0.85rem; max-width: 52rem; }
+
+  @media (min-width: 640px) {
+    .sw-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  }
+
+  @media (min-width: 1000px) {
+    .sw-feature__grid { grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr); }
+    .sw-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  }
+</style>

@@ -71,7 +71,7 @@ const counts = Object.fromEntries(
               <h3 class="h2 course__title" id={`course-${c.slug}`}>
                 <a href={`/courses/${c.slug}/`}>{c.title}</a>
               </h3>
-              <p class="course__summary">{c.summary}</p>
+              <p class="course__summary">{keep(c.summary)}</p>
               <div class="course__actions">
                 <a class="btn btn--sm" href={`/courses/${c.slug}/`}>
                   Մանրամասն<span class="visually-hidden"> «{c.title}» դասընթացի մասին</span>

@@ -3,7 +3,11 @@
 import { site } from './site';
 import { courseBySlug, formatFee } from './courses';
 
-const fee = (slug: string) => formatFee(courseBySlug(slug)?.fee?.amount ?? 0);
+const fee = (slug: string) => {
+  const amount = courseBySlug(slug)?.fee?.amount;
+  if (!amount) throw new Error(`FAQ quotes a fee for "${slug}", but the course has none — update src/data/faq.ts.`);
+  return formatFee(amount);
+};
 
 export interface FaqItem {
   id: string;

@@ -13,6 +13,8 @@ const { preselect = '', heading = 'Ուղարկել հայտ' } = Astro.props;
 // Without JavaScript the form posts natively, so its target depends on the receiver.
 const netlify = formMode === 'netlify';
 const action = netlify ? '/inquiry-sent/' : formMode === 'endpoint' ? formEndpoint : undefined;
+// Honeypot field name understood by the receiver (Netlify: netlify-honeypot; Formspree-style endpoints: _gotcha).
+const honeypot = formMode === 'endpoint' ? '_gotcha' : 'bot-field';
 ---
 <div class="inq" data-inquiry>
   <form
@@ -28,9 +30,9 @@ const action = netlify ? '/inquiry-sent/' : formMode === 'endpoint' ? formEndpoi
     data-inquiry-form
     aria-labelledby="inq-heading"
   >
-    <input type="hidden" name="form-name" value="inquiry" />
+    {netlify && <input type="hidden" name="form-name" value="inquiry" />}
     <p class="inq__hp" aria-hidden="true">
-      <label>Մի լրացրեք այս դաշտը <input name="bot-field" tabindex="-1" autocomplete="off" /></label>
+      <label>Մի լրացրեք այս դաշտը <input name={honeypot} tabindex="-1" autocomplete="off" data-honeypot /></label>
     </p>
 
     <div class="inq__top">
@@ -189,6 +191,7 @@ const action = netlify ? '/inquiry-sent/' : formMode === 'endpoint' ? formEndpoi
   .inq__legal { font-size: 0.8rem; line-height: 1.5; }
   /* Offline builds have no receiver for a native post; without JS the direct contacts replace the button. */
   :global(html:not(.js)) .inq__btn[data-needs-js] { display: none; }
+  .inq__noscript a { white-space: nowrap; }
   .inq__noscript { font-size: 0.92rem; padding: 12px 14px; border-left: 3px solid var(--red); background: var(--paper); }
 
   .inq__done,

@@ -1,0 +1,611 @@
+---
+// Homepage hero: «from the first idea to a professional step», one scroll-driven story in five
+// chapters. A Higgsfield film (illustrative, designed for the site) carries chapters 1–4; real
+// photographs from the academy and verified graduate stories are layered over it.
+// Without JavaScript, with reduced motion or on short screens it becomes a compact storyboard.
+import { Picture } from 'astro:assets';
+import Icon from './Icon.astro';
+import Logo from './Logo.astro';
+import Upper from './Upper.astro';
+import { intro, chapters, filmSegments, projectStages, finale, filmCredit } from '../data/hero';
+import { practice } from '../data/media';
+import { graduationPhotos, graduateStories } from '../data/graduates';
+import { keep } from '../lib/text';
+
+const glimpse = [practice[1], practice[0], practice[4]];
+const prints = graduationPhotos.slice(0, 4);
+const stories = graduateStories.slice(0, 3);
+
+const first = filmSegments[0];
+const fmt = (iso: string) => iso.split('-').reverse().join('.');
+
+// Stills used by the storyboard (static) layout, one per chapter.
+const stills = [
+  { src: filmSegments[0].stillEnd, mobile: filmSegments[0].stillEndMobile, alt: 'Կարմիր թանաքով գծված ինտերիերի հատակագիծ՝ գծագրական թղթի վրա (AI նկարազարդում)' },
+  { src: filmSegments[1].stillEnd, mobile: filmSegments[1].stillEndMobile, alt: 'Հատակագիծ՝ չափսերով և նյութերի նմուշներով (AI նկարազարդում)' },
+  { src: filmSegments[2].stillEnd, mobile: filmSegments[2].stillEndMobile, alt: 'Ավարտուն ինտերիերի վիզուալիզացիա (AI նկարազարդում)' },
+  { src: filmSegments[3].stillEnd, mobile: filmSegments[3].stillEndMobile, alt: 'Պորտֆոլիո՝ նախագծի վիզուալիզացիայով (AI նկարազարդում)' },
+];
+---
+<section class="jh" id="top" data-jh aria-labelledby="jh-title">
+  <div class="jh__stage" data-jh-stage>
+    <div class="jh__film" aria-hidden="true">
+      <div class="jh__depth" data-jh-depth>
+        <picture class="jh__still">
+          <source media="(max-width: 899px), (orientation: portrait)" srcset={first.stillStartMobile} width="960" height="720" />
+          <img src={first.stillStart} alt="" width="1920" height="1080" fetchpriority="high" decoding="async" data-jh-still />
+        </picture>
+        {filmSegments.map((s, i) => (
+          <video
+            class="jh__video"
+            data-jh-video={i}
+            data-desktop={s.desktop}
+            data-mobile={s.mobile}
+            data-still-start={s.stillStart}
+            data-still-end={s.stillEnd}
+            data-still-start-mobile={s.stillStartMobile}
+            data-still-end-mobile={s.stillEndMobile}
+            data-from={s.from}
+            data-to={s.to}
+            hidden
+            muted
+            playsinline
+            preload="none"
+            disablepictureinpicture
+            disableRemotePlayback
+            tabindex="-1"
+          ></video>
+        ))}
+      </div>
+      <div class="jh__veil" data-jh-veil></div>
+    </div>
+
+    <div class="jh__copy">
+      <header class="jh__intro" data-jh-intro>
+        <p class="label jh__eyebrow"><span class="jh__dot" aria-hidden="true"></span><Upper text={intro.eyebrow} /></p>
+        <h1 id="jh-title" class="display jh__title">
+          Քո մասնագիտական ճանապարհը սկսվում է <span class="jh__brand">MOD{' '}Academy-ում</span>
+        </h1>
+        <p class="lead jh__lead">{intro.lead}</p>
+        <div class="jh__ctas" data-jh-intro-ctas>
+          <a class="btn btn--red" href={intro.primary.href}>{intro.primary.label}<Icon name="arrow" class="btn__icon" /></a>
+          <a class="btn btn--ghost" href={intro.secondary.href}>{intro.secondary.label}</a>
+        </div>
+      </header>
+
+      <ol class="jh__chapters" role="list">
+        {chapters.map((c, i) => (
+          <li class="jh__ch" data-jh-ch={i} id={`journey-${c.n}`}>
+            {i < stills.length && (
+              <picture class="jh__frame">
+                <source media="(max-width: 899px)" srcset={stills[i].mobile} width="960" height="720" />
+                <img src={stills[i].src} alt={stills[i].alt} width="1920" height="1080" loading="lazy" decoding="async" />
+              </picture>
+            )}
+            {i === 4 && stories[0] && (
+              <Picture class="jh__frame jh__frame--photo" src={stories[0].image} alt={stories[0].imageAlt} widths={[480, 720]} sizes="(min-width: 900px) 20vw, 80vw" formats={['avif', 'webp']} fallbackFormat="webp" loading="lazy" />
+            )}
+            <p class="label jh__ch-label"><span class="num">{c.n}</span> · <Upper text={c.label} /></p>
+            <h2 class="h1 jh__ch-title">{c.title}</h2>
+            {c.text && <p class="jh__ch-text">{c.text}</p>}
+
+            {i === 2 && (
+              <div class="jh__project" data-jh-stages>
+                <ol class="jh__stages" role="list" aria-label="Նախագծի փուլերը">
+                  {projectStages.map((s, k) => (
+                    <li data-jh-stage-item={k} data-at={s.at}>{s.label}</li>
+                  ))}
+                </ol>
+                <p class="jh__tools">3Ds Max · Corona Renderer</p>
+              </div>
+            )}
+
+          </li>
+        ))}
+      </ol>
+
+      <div class="jh__overlays">
+      <div class="jh__glimpse" data-jh-group="glimpse" role="group" aria-label="Իրական գործնական դասեր">
+        {glimpse.map((g, k) => (
+          <figure class="jh__print" data-jh-item={k} style={`--k:${k}`}>
+            <Picture src={g.image} alt={g.alt} widths={[320, 480]} sizes="(min-width: 900px) 15vw, 30vw" formats={['avif', 'webp']} fallbackFormat="webp" loading="lazy" />
+            <figcaption>{keep(`${g.partner} · ${fmt(g.date)}`)}</figcaption>
+          </figure>
+        ))}
+        <p class="jh__note">Իրական լուսանկարներ՝ ակադեմիայի գործնական դասերից</p>
+      </div>
+      {prints.length > 0 && (
+      <div class="jh__prints" data-jh-group="prints" role="group" aria-label="Մեր շրջանավարտները">
+        {prints.map((g, k) => (
+          <figure class="jh__print jh__print--grad" data-jh-item={k} style={`--k:${k}`}>
+            <Picture src={g.image} alt={g.alt} widths={[360, 540, 720]} sizes="(min-width: 900px) 18vw, 40vw" formats={['avif', 'webp']} fallbackFormat="webp" loading="lazy" />
+            <figcaption>{keep(`${g.caption} · ${fmt(g.date)}`)}</figcaption>
+          </figure>
+        ))}
+        <p class="jh__note">MOD Academy-ի շրջանավարտները՝ ակադեմիայի հրապարակումներից</p>
+      </div>
+      )}
+      {stories.length > 0 && (
+      <div class="jh__stories" data-jh-group="stories" role="group" aria-label="Շրջանավարտների պատմություններ">
+        {stories.map((s, k) => (
+          <a class="jh__story" href={`/graduates/#${s.slug}`} data-jh-item={k} style={`--k:${k}`}>
+            <Picture src={s.image} alt={s.imageAlt} widths={[240, 360, 480]} sizes="(min-width: 900px) 9vw, 22vw" formats={['avif', 'webp']} fallbackFormat="webp" loading="lazy" />
+            <span class="jh__story-body">
+              <span class="jh__story-name">{s.name}</span>
+              <span class="jh__story-course">«{s.course}» դասընթաց</span>
+              <span class="jh__story-outcome">{keep(s.outcome)}</span>
+            </span>
+          </a>
+        ))}
+      </div>
+      )}
+      </div>
+
+      <div class="jh__final" data-jh-final>
+        <Logo class="jh__final-logo" />
+        <p class="display jh__final-title">{finale.title}</p>
+        <div class="jh__ctas" data-jh-final-ctas>
+          <a class="btn btn--red" href={finale.primary.href}>{finale.primary.label}<Icon name="arrow" class="btn__icon" /></a>
+          <a class="btn btn--ghost" href={finale.secondary.href}>{finale.secondary.label}</a>
+        </div>
+      </div>
+    </div>
+
+    <nav class="jh__nav" aria-label="Պատմության գլուխները" data-jh-nav>
+      <span class="jh__nav-line" aria-hidden="true"><span data-jh-nav-fill></span></span>
+      <ol role="list">
+        {chapters.map((c, i) => (
+          <li>
+            <a href={`#journey-${c.n}`} data-jh-go={i} data-anchor={c.anchor}>
+              <span class="jh__nav-n num">{c.n}</span>
+              <span class="jh__nav-t">{c.nav}</span>
+            </a>
+          </li>
+        ))}
+      </ol>
+    </nav>
+
+    <a class="jh__skip" href="#courses" data-jh-skip>
+      Անցնել դասընթացներին<Icon name="arrow-down" />
+    </a>
+    <p class="jh__credit" data-jh-credit><span class="jh__credit-long">{filmCredit}</span><span class="jh__credit-short">AI նկարազարդում՝ ոչ ուսանողական աշխատանք</span></p>
+  </div>
+</section>
+
+<style>
+  /* ── Storyboard layout (no JS, reduced motion, short screens) ── */
+  .jh {
+    --hero-x: max(var(--gutter), calc((100vw - var(--maxw)) / 2 + var(--gutter)));
+    position: relative;
+    background: var(--paper);
+  }
+
+  .jh__stage { position: relative; padding: calc(var(--header-h) + 28px) 0 clamp(48px, 6vw, 88px); }
+
+  .jh__film,
+  .jh__nav,
+  .jh__glimpse,
+  .jh__prints,
+  .jh__stories,
+  .jh__final,
+  .jh__skip { display: none; }
+
+  .jh__copy { padding-inline: var(--hero-x); }
+
+  .jh__intro { display: grid; gap: 18px; max-width: 44rem; }
+  .jh__eyebrow { color: var(--muted); }
+
+  .jh__dot {
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    border: 2px solid var(--red);
+    border-left-color: transparent;
+    transform: rotate(-45deg);
+  }
+
+  .jh__title {
+    font-size: clamp(2.2rem, 1.1rem + 4.2vw, 5.4rem);
+    overflow-wrap: normal;
+    max-width: 14ch;
+  }
+
+  .jh__brand { white-space: nowrap; color: var(--red); }
+
+  .jh__lead { max-width: 32em; }
+  .jh__ctas { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 4px; }
+
+  .jh__chapters {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: minmax(250px, 72%);
+    gap: 18px;
+    margin: clamp(36px, 5vw, 64px) calc(var(--hero-x) * -1) 0;
+    padding: 0 var(--hero-x) 12px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-padding-inline: var(--hero-x);
+  }
+
+  .jh__ch { display: grid; gap: 10px; align-content: start; scroll-snap-align: start; }
+  .jh__frame { display: block; aspect-ratio: 4 / 3; overflow: hidden; background: var(--paper-3); }
+  .jh__frame img,
+  .jh__frame :global(img) { width: 100%; height: 100%; object-fit: cover; }
+  .jh__ch-label { color: var(--red); }
+  .jh__ch-title { font-size: var(--fs-h3); line-height: 1.2; }
+  .jh__ch-text { color: var(--ink-soft); font-size: 0.95rem; }
+  .jh__project { display: none; }
+
+  .jh__credit { margin: 18px var(--hero-x) 0; font-size: 0.75rem; color: var(--muted); max-width: 52rem; }
+  .jh__credit-short { display: none; }
+
+  @media (min-width: 900px) {
+    .jh__chapters { grid-auto-flow: row; grid-template-columns: repeat(5, minmax(0, 1fr)); overflow: visible; margin-inline: 0; padding-inline: 0; }
+  }
+
+  /* ── Pinned, scroll-driven story (html.jh-pin: JS + motion + enough height) ── */
+  :global(.jh-pin) .jh { height: 600svh; }
+
+  :global(.jh-pin) .jh__stage {
+    position: sticky;
+    top: 0;
+    height: 100svh;
+    padding: 0;
+    overflow: hidden;
+  }
+
+  :global(.jh-pin) .jh__film { display: block; position: absolute; inset: 0; background: var(--paper-2); }
+
+  :global(.jh-pin) .jh__depth {
+    position: absolute;
+    inset: -2%;
+    transform: translate3d(calc(var(--mx, 0) * -10px), calc(var(--my, 0) * -8px), 0) scale(1.02);
+    will-change: transform;
+  }
+
+  :global(.jh-pin) .jh__still,
+  :global(.jh-pin) .jh__still img,
+  :global(.jh-pin) .jh__video {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  :global(.jh-pin) .jh__video { opacity: 0; }
+  :global(.jh-pin) .jh__video.is-shown { opacity: 1; }
+
+  /* Paper veil: keeps copy legible on the left and quiets the film for the closing frame. */
+  :global(.jh-pin) .jh__veil {
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(90deg, rgb(244 239 232 / 0.94) 0%, rgb(244 239 232 / 0.78) 30%, rgb(244 239 232 / 0) 58%),
+      rgb(244 239 232 / var(--veil, 0));
+  }
+
+  :global(.jh-pin) .jh__copy { position: absolute; inset: 0; padding: 0; pointer-events: none; }
+  :global(.jh-pin) .jh__copy a,
+  :global(.jh-pin) .jh__copy button { pointer-events: auto; }
+
+  :global(.jh-pin) .jh__intro,
+  :global(.jh-pin) .jh__ch {
+    position: absolute;
+    left: var(--hero-x);
+    top: 50%;
+    width: min(40rem, 46vw);
+    transform: translate3d(0, calc(-50% + var(--y, 0px)), 0);
+    opacity: var(--a, 0);
+  }
+
+  :global(.jh-pin) .jh__intro { --a: 1; gap: 22px; }
+  /* Sized so «MOD Academy-ում» (kept on one line) always fits the copy column. */
+  :global(.jh-pin) .jh__title { font-size: clamp(2.2rem, 0.9rem + 3.8vw, 4.4rem); max-width: none; }
+  :global(.jh-pin) .jh__intro.is-gone,
+  :global(.jh-pin) .jh__ch:not(.is-on) { pointer-events: none; }
+
+  :global(.jh-pin) .jh__chapters { display: block; margin: 0; padding: 0; overflow: visible; }
+  :global(.jh-pin) .jh__frame { display: none; }
+  :global(.jh-pin) .jh__ch { gap: 16px; }
+  :global(.jh-pin) .jh__ch-title { font-size: var(--fs-h1); line-height: 1.06; }
+  :global(.jh-pin) .jh__ch-text { font-size: var(--fs-lead); line-height: 1.5; }
+
+  /* Real photographs arrive like prints laid on the drafting table. */
+  :global(.jh-pin) .jh__glimpse,
+  :global(.jh-pin) .jh__prints,
+  :global(.jh-pin) .jh__stories {
+    display: block;
+    position: absolute;
+    top: calc(var(--header-h) + 5svh);
+    bottom: 12svh;
+    left: 50%;
+    right: calc(var(--hero-x) + 140px);
+    pointer-events: none;
+    transform: translate3d(calc(var(--mx, 0) * 14px), calc(var(--my, 0) * 10px), 0);
+  }
+
+  :global(.jh-pin) .jh__print {
+    position: absolute;
+    width: 46%;
+    padding: 10px 10px 34px;
+    background: #fffdf9;
+    box-shadow: 0 1px 1px rgb(21 18 15 / 0.08), 0 18px 40px -16px rgb(21 18 15 / 0.45);
+    opacity: var(--b, 0);
+    transform: translate3d(0, calc((1 - var(--b, 0)) * 40px), 0) rotate(calc(var(--r, 0deg) * var(--b, 0)));
+  }
+
+  :global(.jh-pin) .jh__print :global(img) { display: block; width: 100%; aspect-ratio: 4 / 5; object-fit: cover; }
+  :global(.jh-pin) .jh__print figcaption { position: absolute; left: 12px; right: 12px; bottom: 9px; font-size: 0.7rem; color: var(--muted); }
+
+  :global(.jh-pin) .jh__glimpse .jh__print:nth-child(1) { left: 0; top: 4%; --r: -3deg; }
+  :global(.jh-pin) .jh__glimpse .jh__print:nth-child(2) { left: 34%; top: 22%; --r: 2deg; z-index: 2; }
+  :global(.jh-pin) .jh__glimpse .jh__print:nth-child(3) { left: 58%; top: 2%; width: 40%; --r: 4deg; }
+
+  :global(.jh-pin) .jh__prints .jh__print { width: 40%; }
+  :global(.jh-pin) .jh__prints .jh__print:nth-child(1) { left: 0; top: 0; --r: -4deg; }
+  :global(.jh-pin) .jh__prints .jh__print:nth-child(2) { left: 30%; top: 16%; --r: 2deg; z-index: 2; }
+  :global(.jh-pin) .jh__prints .jh__print:nth-child(3) { left: 58%; top: 2%; --r: 5deg; }
+  :global(.jh-pin) .jh__prints .jh__print:nth-child(4) { left: 46%; top: 44%; --r: -2deg; z-index: 3; }
+
+  :global(.jh-pin) .jh__note {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    font-size: 0.78rem;
+    font-weight: 560;
+    color: var(--ink-soft);
+    background: rgb(244 239 232 / 0.86);
+    padding: 6px 10px;
+    opacity: var(--b0, 0);
+  }
+
+  :global(.jh-pin) .jh__stories { display: grid; align-content: center; gap: 14px; }
+
+  :global(.jh-pin) .jh__story {
+    display: grid;
+    grid-template-columns: 30% 1fr;
+    gap: 16px;
+    align-items: center;
+    padding: 12px;
+    background: #fffdf9;
+    text-decoration: none;
+    box-shadow: 0 1px 1px rgb(21 18 15 / 0.08), 0 18px 40px -18px rgb(21 18 15 / 0.45);
+    opacity: var(--b, 0);
+    transform: translate3d(calc((1 - var(--b, 0)) * 48px), 0, 0);
+    pointer-events: auto;
+    transition: box-shadow 0.4s ease;
+  }
+
+  :global(.jh-pin) .jh__story:hover { box-shadow: 0 1px 1px rgb(21 18 15 / 0.08), 0 24px 48px -16px rgb(21 18 15 / 0.5); }
+  :global(.jh-pin) .jh__story :global(img) { width: 100%; aspect-ratio: 1; object-fit: cover; }
+  .jh__story-body { display: grid; gap: 4px; }
+  .jh__story-name { font-family: var(--font-display); font-stretch: 87.5%; font-size: var(--fs-h3); line-height: 1.15; }
+  .jh__story-course { font-size: 0.8rem; color: var(--red); font-weight: 560; }
+  .jh__story-outcome { font-size: 0.9rem; color: var(--ink-soft); line-height: 1.45; }
+
+  :global(.jh-pin) .jh__project { display: grid; gap: 12px; margin-top: 8px; }
+
+  :global(.jh-pin) .jh__stages {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px 4px;
+    font-size: 0.82rem;
+    font-weight: 560;
+  }
+
+  :global(.jh-pin) .jh__stages li {
+    padding: 6px 10px;
+    border: 1px solid var(--line-strong);
+    border-radius: 999px;
+    color: var(--muted);
+    background: rgb(244 239 232 / 0.7);
+    transition: color 0.4s ease, background-color 0.4s ease, border-color 0.4s ease;
+  }
+
+  :global(.jh-pin) .jh__stages li.is-on { color: #fff; background: var(--red); border-color: var(--red); }
+  :global(.jh-pin) .jh__stages li.is-done { color: var(--ink); border-color: var(--ink); }
+  :global(.jh-pin) .jh__tools { font-size: 0.8rem; letter-spacing: 0.08em; color: var(--muted); }
+
+  :global(.jh-pin) .jh__final {
+    display: grid;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: min(46rem, calc(100vw - 2 * var(--hero-x)));
+    justify-items: center;
+    gap: 22px;
+    text-align: center;
+    opacity: var(--f, 0);
+    transform: translate3d(-50%, calc(-50% + (1 - var(--f, 0)) * 28px), 0);
+    pointer-events: none;
+  }
+
+  :global(.jh-pin) .jh__final.is-on { pointer-events: auto; }
+  :global(.jh-pin) .jh__final :global(.jh__final-logo) { width: clamp(150px, 14vw, 200px); height: auto; color: var(--ink); }
+  :global(.jh-pin) .jh__final-title { font-size: clamp(2rem, 1rem + 3.6vw, 4.4rem); overflow-wrap: normal; }
+  :global(.jh-pin) .jh__final .jh__ctas { justify-content: center; }
+
+  /* Chapter navigation: the red line is the thread of the journey. */
+  :global(.jh-pin) .jh__nav {
+    display: block;
+    position: absolute;
+    right: var(--hero-x);
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 4;
+  }
+
+  :global(.jh-pin) .jh__nav ol { position: relative; display: grid; gap: 6px; }
+
+  :global(.jh-pin) .jh__nav a {
+    display: grid;
+    grid-template-columns: 26px auto;
+    align-items: center;
+    gap: 10px;
+    min-height: 40px;
+    padding: 4px 10px 4px 0;
+    text-decoration: none;
+    color: var(--muted);
+    font-size: 0.8rem;
+    font-weight: 560;
+  }
+
+  :global(.jh-pin) .jh__nav-n {
+    display: grid;
+    place-items: center;
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    border: 1px solid var(--line-strong);
+    background: var(--paper);
+    font-size: 0.72rem;
+    transition: background-color 0.35s ease, color 0.35s ease, border-color 0.35s ease;
+  }
+
+  :global(.jh-pin) .jh__nav a[aria-current='step'] { color: var(--ink); }
+  :global(.jh-pin) .jh__nav a[aria-current='step'] .jh__nav-n { background: var(--red); border-color: var(--red); color: #fff; }
+  :global(.jh-pin) .jh__nav a:hover .jh__nav-n { border-color: var(--ink); }
+  :global(.jh-pin) .jh__nav-t { background: rgb(244 239 232 / 0.75); padding: 2px 6px; }
+
+  :global(.jh-pin) .jh__nav-line {
+    position: absolute;
+    left: 12px;
+    top: 24px;
+    bottom: 24px;
+    width: 2px;
+    background: var(--line);
+  }
+
+  :global(.jh-pin) .jh__nav-line span {
+    position: absolute;
+    inset: 0;
+    background: var(--red);
+    transform-origin: top;
+    transform: scaleY(var(--p, 0));
+  }
+
+  :global(.jh-pin) .jh__skip {
+    display: inline-flex;
+    position: absolute;
+    left: var(--hero-x);
+    bottom: 22px;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 2px;
+    font-size: 0.85rem;
+    font-weight: 560;
+    text-decoration: none;
+    color: var(--ink);
+    z-index: 4;
+    background: linear-gradient(currentColor, currentColor) left bottom / 100% 1px no-repeat;
+  }
+
+  :global(.jh-pin) .jh__skip :global(svg) { width: 16px; height: 16px; }
+
+  :global(.jh-pin) .jh__credit {
+    position: absolute;
+    right: var(--hero-x);
+    bottom: 22px;
+    max-width: 24rem;
+    margin: 0;
+    padding: 6px 10px;
+    font-size: 0.7rem;
+    line-height: 1.4;
+    text-align: right;
+    color: var(--ink-soft);
+    background: rgb(244 239 232 / 0.82);
+    opacity: var(--c, 1);
+    z-index: 3;
+  }
+
+  /* Mobile and portrait: film window at the top, copy beneath, navigation along the bottom. */
+  @media (max-width: 899px), (orientation: portrait) {
+    :global(.jh-pin) .jh { height: 480svh; }
+
+    :global(.jh-pin) .jh__film {
+      top: var(--header-h);
+      bottom: auto;
+      height: min(46svh, 75vw);
+    }
+
+    :global(.jh-pin) .jh__depth { inset: 0; transform: none; }
+
+    :global(.jh-pin) .jh__veil { background: rgb(244 239 232 / var(--veil, 0)); }
+
+    :global(.jh-pin) .jh__intro,
+    :global(.jh-pin) .jh__ch {
+      top: calc(var(--header-h) + min(46svh, 75vw) + 20px);
+      left: var(--gutter);
+      right: var(--gutter);
+      width: auto;
+      transform: translate3d(0, var(--y, 0px), 0);
+    }
+
+    :global(.jh-pin) .jh__intro { gap: 12px; }
+    :global(.jh-pin) .jh__title { font-size: clamp(1.7rem, 0.9rem + 3.6vw, 2.5rem); }
+    :global(.jh-pin) .jh__intro .btn--ghost {
+      min-height: 0;
+      padding: 6px 0;
+      border: 0;
+      background: linear-gradient(currentColor, currentColor) left bottom / 100% 1px no-repeat;
+      font-size: 0.88rem;
+    }
+    :global(.jh-pin) .jh__intro .btn--ghost::before { display: none; }
+    :global(.jh-pin) .jh__intro .btn--ghost:hover { color: var(--red); }
+    :global(.jh-pin) .jh__credit-long { display: none; }
+    :global(.jh-pin) .jh__credit-short { display: inline; }
+    :global(.jh-pin) .jh__lead { font-size: 1rem; line-height: 1.5; }
+    :global(.jh-pin) .jh__ch-title { font-size: var(--fs-h2); }
+    :global(.jh-pin) .jh__ch-text { font-size: 1rem; }
+
+    :global(.jh-pin) .jh__glimpse,
+    :global(.jh-pin) .jh__prints,
+    :global(.jh-pin) .jh__stories {
+      top: calc(var(--header-h) + 10px);
+      bottom: auto;
+      height: calc(min(46svh, 75vw) - 20px);
+      left: var(--gutter);
+      right: var(--gutter);
+      transform: none;
+    }
+
+    :global(.jh-pin) .jh__print { width: 40%; padding: 6px 6px 22px; }
+    :global(.jh-pin) .jh__print figcaption { font-size: 0.6rem; left: 7px; right: 7px; bottom: 5px; }
+    :global(.jh-pin) .jh__note { display: none; }
+
+    :global(.jh-pin) .jh__stories { grid-template-columns: 1fr; gap: 8px; align-content: end; }
+    :global(.jh-pin) .jh__story { grid-template-columns: 64px 1fr; gap: 10px; padding: 8px; }
+    :global(.jh-pin) .jh__story-outcome { display: none; }
+    :global(.jh-pin) .jh__story-name { font-size: 1.05rem; }
+
+    :global(.jh-pin) .jh__final { top: auto; bottom: 88px; transform: translate3d(-50%, calc((1 - var(--f, 0)) * 28px), 0); }
+    :global(.jh-pin) .jh__final :global(.jh__final-logo) { width: 112px; }
+
+    :global(.jh-pin) .jh__nav {
+      top: auto;
+      bottom: 14px;
+      right: var(--gutter);
+      transform: none;
+    }
+
+    :global(.jh-pin) .jh__nav ol { grid-auto-flow: column; gap: 4px; }
+    :global(.jh-pin) .jh__nav a { grid-template-columns: 30px; padding: 0; min-height: 44px; justify-items: center; }
+    :global(.jh-pin) .jh__nav-n { width: 30px; height: 30px; }
+    :global(.jh-pin) .jh__nav-t { display: none; }
+    :global(.jh-pin) .jh__nav-line { left: 15px; right: 15px; top: 21px; bottom: auto; width: auto; height: 2px; }
+    :global(.jh-pin) .jh__nav-line span { transform-origin: left; transform: scaleX(var(--p, 0)); }
+
+    :global(.jh-pin) .jh__skip { left: var(--gutter); bottom: 22px; font-size: 0.8rem; }
+
+    :global(.jh-pin) .jh__credit {
+      top: calc(var(--header-h) + min(46svh, 75vw) - 30px);
+      bottom: auto;
+      right: var(--gutter);
+      left: auto;
+      max-width: none;
+      font-size: 0.66rem;
+      padding: 4px 8px;
+    }
+  }
+</style>

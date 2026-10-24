@@ -1,0 +1,95 @@
+---
+// A short film shown with a project, played only when the visitor asks. Always captioned with
+// what it is (e.g. an AI interpretation of a student's render) so it is never mistaken for the work.
+import type { ProjectFilm } from '../data/projects';
+
+interface Props {
+  film: ProjectFilm;
+  title: string;
+}
+const { film, title } = Astro.props;
+---
+<figure class="pf" data-pfilm>
+  <div class="pf__frame">
+    <video
+      class="pf__video"
+      data-pfilm-video
+      data-desktop={film.desktop}
+      data-mobile={film.mobile}
+      muted
+      playsinline
+      loop
+      preload="none"
+      poster={film.poster}
+      aria-label={`${title} — կինեմատոգրաֆիկ մեկնաբանություն`}
+    ></video>
+    <button type="button" class="pf__play" data-pfilm-toggle aria-pressed="false">
+      <span class="pf__icon" aria-hidden="true"></span>
+      <span class="pf__label" data-pfilm-label>Դիտել տեսանյութը</span>
+    </button>
+    <span class="pf__tag">AI մեկնաբանություն</span>
+  </div>
+  <figcaption class="pf__note">{film.note}</figcaption>
+</figure>
+
+<style>
+  .pf { display: grid; gap: 12px; }
+  .pf__frame { position: relative; aspect-ratio: 1; overflow: hidden; background: var(--paper-3); }
+  .pf__video { width: 100%; height: 100%; object-fit: cover; }
+
+  .pf__play {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 20px 12px 12px;
+    border: 0;
+    border-radius: 999px;
+    background: rgb(244 239 232 / 0.92);
+    color: var(--ink);
+    font-weight: 560;
+    transform: translate(-50%, -50%);
+    transition: transform 0.4s var(--ease-out), opacity 0.4s ease, background-color 0.3s;
+    box-shadow: 0 12px 30px -12px rgb(0 0 0 / 0.4);
+  }
+
+  .pf__play:hover { background: #fff; transform: translate(-50%, -50%) scale(1.04); }
+
+  .pf__icon {
+    display: grid;
+    place-items: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: var(--red);
+  }
+
+  .pf__icon::before {
+    content: '';
+    border-style: solid;
+    border-width: 7px 0 7px 12px;
+    border-color: transparent transparent transparent #fff;
+    margin-left: 3px;
+  }
+
+  .pf[data-playing] .pf__play { left: auto; top: auto; right: 14px; bottom: 14px; transform: none; padding: 8px 14px 8px 8px; font-size: 0.85rem; }
+  .pf[data-playing] .pf__icon { width: 30px; height: 30px; }
+  .pf[data-playing] .pf__icon::before { border: 0; width: 10px; height: 12px; margin: 0; background: linear-gradient(90deg, #fff 35%, transparent 35% 65%, #fff 65%); }
+
+  .pf__tag {
+    position: absolute;
+    left: 14px;
+    top: 14px;
+    padding: 5px 10px;
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #fff;
+    background: rgb(17 15 13 / 0.62);
+  }
+
+  .pf__note { font-size: 0.82rem; color: var(--muted); line-height: 1.5; }
+</style>

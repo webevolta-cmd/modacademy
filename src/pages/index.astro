@@ -1,13 +1,14 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import Hero from '../components/Hero.astro';
+import JourneyHero from '../components/JourneyHero.astro';
+import { filmSegments } from '../data/hero';
 import About from '../components/About.astro';
 import Courses from '../components/Courses.astro';
 import Finder from '../components/Finder.astro';
-import Journey from '../components/Journey.astro';
-import Work from '../components/Work.astro';
-import Practice from '../components/Practice.astro';
-import Teaching from '../components/Teaching.astro';
+import Learning from '../components/Learning.astro';
+import GraduatesFeature from '../components/GraduatesFeature.astro';
+import WorkTeaser from '../components/WorkTeaser.astro';
+import VideosTeaser from '../components/VideosTeaser.astro';
 import Faq from '../components/Faq.astro';
 import FinalCta from '../components/FinalCta.astro';
 import Contact from '../components/Contact.astro';
@@ -45,22 +46,22 @@ const jsonLd = [
 ];
 ---
 <BaseLayout
-  title="MOD Academy — ինտերիեր դիզայնի և 3D դասընթացներ Երևանում"
+  title="MOD Academy — դիզայնի և 3D դասընթացներ Երևանում"
   description={site.description}
   jsonLd={jsonLd}
 >
   <Fragment slot="head">
-    <link rel="preload" as="image" href="/media/hero/hero-desktop-v2-poster.webp" media="(min-aspect-ratio: 4/5)" fetchpriority="high" />
-    <link rel="preload" as="image" href="/media/hero/hero-mobile-v2-poster.webp" media="(max-aspect-ratio: 4/5)" fetchpriority="high" />
+    <link rel="preload" as="image" href={filmSegments[0].stillStart} media="(min-width: 900px) and (orientation: landscape)" fetchpriority="high" />
+    <link rel="preload" as="image" href={filmSegments[0].stillStartMobile} media="(max-width: 899px), (orientation: portrait)" fetchpriority="high" />
   </Fragment>
-  <Hero />
+  <JourneyHero />
   <About />
   <Courses />
   <Finder />
-  <Journey />
-  <Work />
-  <Practice />
-  <Teaching />
+  <Learning />
+  <GraduatesFeature />
+  <WorkTeaser />
+  <VideosTeaser />
   <Faq />
   <FinalCta />
   <Contact />

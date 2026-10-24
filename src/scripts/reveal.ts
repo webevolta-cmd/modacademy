@@ -31,7 +31,7 @@ export function initCounters(): void {
   const counters = document.querySelectorAll<HTMLElement>('[data-count]');
   if (!counters.length || !motionAllowed() || !('IntersectionObserver' in window)) return;
 
-  const format = (n: number) => n.toLocaleString('en-US').replace(/,/g, ' ');
+  const format = (n: number) => String(n);
 
   const run = (el: HTMLElement) => {
     const end = Number(el.dataset.count);

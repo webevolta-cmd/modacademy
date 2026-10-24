@@ -1,0 +1,39 @@
+---
+// Compact video entry point on the homepage: a small featured selection and a link to /videos/.
+import SectionIndex from './SectionIndex.astro';
+import VideoCard from './VideoCard.astro';
+import Icon from './Icon.astro';
+import { videos } from '../data/videos';
+
+const featured = videos.slice(0, 3);
+---
+{featured.length > 0 && (
+  <section class="vt section section--tight" id="videos" aria-labelledby="vt-title">
+    <div class="wrap">
+      <div class="vt__head">
+        <div>
+          <SectionIndex n="07" label="Տեսանյութեր" />
+          <h2 class="h1" id="vt-title" data-reveal>Տեսեք, թե ինչպես է անցնում ուսուցումը</h2>
+        </div>
+        <a class="link-arrow vt__all" href="/videos/" data-reveal>Բոլոր տեսանյութերը ({videos.length})<Icon name="arrow" /></a>
+      </div>
+      <div class="vt__grid">
+        {featured.map((v, i) => <VideoCard video={v} index={i} />)}
+      </div>
+    </div>
+  </section>
+)}
+
+<style>
+  .vt { background: var(--paper); }
+  .vt__head { display: flex; flex-wrap: wrap; align-items: end; justify-content: space-between; gap: 16px 32px; margin-bottom: clamp(28px, 4vw, 48px); }
+  .vt__grid { display: grid; gap: 28px 18px; }
+
+  @media (min-width: 640px) {
+    .vt__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  }
+
+  @media (min-width: 1000px) {
+    .vt__grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  }
+</style>

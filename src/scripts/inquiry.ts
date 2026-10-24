@@ -139,7 +139,7 @@ export function initInquiry(wrapper: HTMLElement): void {
     }
 
     // Spam trap: silently stop if the hidden field was filled.
-    if ((field('bot-field')?.value ?? '').length) return;
+    if ((form.querySelector<HTMLInputElement>('[data-honeypot]')?.value ?? '').length) return;
 
     if (mode === 'offline') {
       showFallback(true);

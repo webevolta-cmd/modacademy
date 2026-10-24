@@ -1,0 +1,274 @@
+---
+// Practical learning and guidance, kept compact: the hero tells the story; this section gives the
+// practical details. Only verified statements; no instructor portraits (none are published with
+// names and roles), so the section relies on typography and real material-study photographs.
+import { Picture, getImage } from 'astro:assets';
+import SectionIndex from './SectionIndex.astro';
+import SplitText from './SplitText.astro';
+import Icon from './Icon.astro';
+import { practice, extraImages } from '../data/media';
+import { site } from '../data/site';
+import { keep } from '../lib/text';
+
+const steps = [
+  {
+    n: '01',
+    title: 'Հիմքեր և գործիքներ',
+    text: 'Դասերն անցնում են ակադեմիայի լսարանում․ 3D վիզուալիզացիայի ուղղությամբ՝ 3Ds Max և Corona Renderer։',
+  },
+  {
+    n: '02',
+    title: 'Նյութն իրական տարածքում',
+    text: 'Գործնական դասեր Երևանի դիզայնի սրահներում՝ կահույքի, գործվածքների և լուսավորության իրական նմուշներով։',
+  },
+  {
+    n: '03',
+    title: 'Նախագծի զարգացում',
+    text: 'Աշխատանքը զարգանում է գաղափարից մինչև ավարտուն վիզուալիզացիա կամ լուծում։',
+  },
+  {
+    n: '04',
+    title: 'Պորտֆոլիո և վկայական',
+    text: 'Ուսանողական աշխատանքները կարող են դառնալ պորտֆոլիոյի հիմք․ ավարտին, ըստ ակադեմիայի, տրվում է վկայական։',
+  },
+];
+
+const shots = [practice[1], practice[2], practice[0], practice[4]];
+const items = await Promise.all(
+  shots.map(async (p) => ({ ...p, large: (await getImage({ src: p.image, width: 720, format: 'webp', quality: 86 })).src })),
+);
+const fmt = (iso: string) => iso.split('-').reverse().join('.');
+const partners = [...new Map(practice.filter((p) => p.partnerUrl).map((p) => [p.partner, p])).values()];
+---
+<section class="learn section" id="learning" aria-labelledby="learn-title">
+  <span id="practice" class="learn__alias" aria-hidden="true"></span>
+  <span id="journey" class="learn__alias" aria-hidden="true"></span>
+  <span id="teaching" class="learn__alias" aria-hidden="true"></span>
+  <div class="wrap">
+    <SectionIndex n="04" label="Ուսուցում" />
+    <div class="learn__head">
+      <SplitText id="learn-title" class="h1" text="Գործնական ուսուցում և ուղղորդում" accent="ուղղորդում" />
+      <p class="lead" data-reveal>
+        Դասերը լսարանում են, իսկ նյութերն ու լույսը ուսանողները տեսնում են նաև իրական սրահներում։ Ահա թե ինչպես է
+        կառուցված ճանապարհը։
+      </p>
+    </div>
+
+    <ol class="learn__steps" role="list" data-draw>
+      <svg class="learn__line" viewBox="0 0 100 2" preserveAspectRatio="none" aria-hidden="true">
+        <path d="M0 1 H100" pathLength="1" />
+      </svg>
+      {steps.map((s, i) => (
+        <li class="learn__step" data-reveal style={`--i:${i}`}>
+          <span class="learn__node" aria-hidden="true"></span>
+          <span class="num learn__n">{s.n}</span>
+          <h3 class="h3">{s.title}</h3>
+          <p class="muted">{keep(s.text)}</p>
+        </li>
+      ))}
+    </ol>
+
+    <div class="learn__practice">
+      <div class="learn__practice-text" data-reveal>
+        <p class="label label--red">Գործնական դասեր</p>
+        <p class="learn__big">Նյութը պետք է տեսնել և շոշափել։</p>
+        <p class="muted">
+          Ակադեմիայի հրապարակումներում ներկայացված են գործնական դասեր Երևանի դիզայնի սրահներում՝ գործվածքներ,
+          պաստառներ, կահույք և լուսավորություն։
+        </p>
+        <ul class="learn__partners" role="list" aria-label="Գործնական դասերի վայրեր">
+          {partners.map((p) => (
+            <li>
+              <a href={p.partnerUrl} target="_blank" rel="noopener" class="tag">{p.partner}<Icon name="arrow-up-right" class="learn__ext" /></a>
+            </li>
+          ))}
+        </ul>
+      </div>
+      <ul class="learn__shots" role="list">
+        {items.map((p, i) => (
+          <li class={`learn__shot learn__shot--${i}`} data-reveal="mask" style={`--i:${i}`}>
+            <figure>
+              <button
+                type="button"
+                class="learn__btn frame"
+                data-lb-group="learning"
+                data-lb-src={p.large}
+                data-lb-alt={p.alt}
+                data-lb-title={p.caption}
+                data-lb-credit={`${p.partner} · ${p.course} · Հրապարակված՝ ${fmt(p.date)}`}
+                aria-label={`Բացել մեծ չափով՝ ${p.caption}`}
+              >
+                <Picture
+                  src={p.image}
+                  alt={p.alt}
+                  widths={[320, 480, 720]}
+                  sizes="(min-width: 1000px) 22vw, (min-width: 600px) 40vw, 70vw"
+                  formats={['avif', 'webp']}
+                  fallbackFormat="webp"
+                  loading="lazy"
+                />
+              </button>
+              <figcaption>
+                <span class="learn__cap-t">{keep(p.caption)}</span>
+                <span class="learn__cap-m">{keep(p.partner)} · Հրապարակված՝ <time datetime={p.date}>{fmt(p.date)}</time></span>
+              </figcaption>
+            </figure>
+          </li>
+        ))}
+      </ul>
+    </div>
+
+    <div class="learn__guide">
+      <figure class="learn__guide-img" data-reveal="mask">
+        <div class="frame learn__guide-frame">
+          <Picture
+            src={extraImages.classisTable}
+            alt="Ուսանողները գործնական դասի ժամանակ ուսումնասիրում են գործվածքների նմուշները"
+            widths={[480, 720, 960]}
+            sizes="(min-width: 1000px) 34vw, 92vw"
+            formats={['avif', 'webp']}
+            fallbackFormat="webp"
+            loading="lazy"
+            data-parallax
+            style="--ps:1.1"
+          />
+        </div>
+        <figcaption class="credit">{keep('Գործնական դաս Classis Decor Armenia-ում · հրապարակված՝ 08.10.2026')}</figcaption>
+      </figure>
+      <div class="learn__guide-text">
+        <p class="label label--red" data-reveal>Ուղղորդում</p>
+        <p class="learn__quote" data-reveal>
+          Ըստ ակադեմիայի՝ դասընթացները վարում են «փորձառու դասախոսներ», իսկ գործնական դասերի ժամանակ իրենց փորձով
+          ուսանողների հետ կիսվում են նաև դիզայնի սրահների մասնագետները։
+        </p>
+        <p class="muted" data-reveal>
+          Յուրաքանչյուր խմբի դասընթացավարի և նրա մասնագիտական փորձի մասին կարող եք հարցնել հայտ ուղարկելիս կամ
+          զանգահարելով։
+        </p>
+        <a class="learn__studio" href={site.studio.instagram} target="_blank" rel="noopener" data-reveal>
+          <span class="label">Ակադեմիայի հետ կապված ստուդիա</span>
+          <span class="learn__studio-name">{site.studio.name}</span>
+          <span class="learn__studio-meta">{site.studio.handle}<Icon name="arrow-up-right" /></span>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .learn { background: var(--paper-2); overflow: clip; }
+  .learn__alias { position: absolute; top: 0; }
+
+  .learn__head { display: grid; gap: 20px; margin-bottom: clamp(40px, 5vw, 72px); }
+
+  /* Steps joined by the red architectural line, drawn as the section scrolls in. */
+  .learn__steps {
+    position: relative;
+    display: grid;
+    gap: 28px;
+    padding-top: 28px;
+  }
+
+  .learn__line {
+    position: absolute;
+    left: 0;
+    top: 6px;
+    width: 100%;
+    height: 2px;
+    overflow: visible;
+  }
+
+  .learn__line path {
+    fill: none;
+    stroke: var(--red);
+    stroke-width: 2;
+    vector-effect: non-scaling-stroke;
+    stroke-dasharray: 1;
+    stroke-dashoffset: calc(1 - var(--draw, 1));
+  }
+
+  .learn__step { position: relative; display: grid; gap: 8px; align-content: start; }
+  .learn__node {
+    position: absolute;
+    top: -28px;
+    left: 0;
+    width: 13px;
+    height: 13px;
+    border-radius: 50%;
+    background: var(--paper-2);
+    border: 2px solid var(--red);
+  }
+  .learn__n { color: var(--red); font-size: 0.95rem; }
+
+  .learn__practice { display: grid; gap: 32px; margin-top: clamp(64px, 8vw, 120px); }
+  .learn__practice-text { display: grid; gap: 16px; align-content: start; max-width: 30rem; }
+  .learn__big { font-family: var(--font-display); font-stretch: 87.5%; font-size: var(--fs-h2); line-height: 1.12; }
+  .learn__partners { display: flex; flex-wrap: wrap; gap: 8px; }
+  .learn__partners .tag { text-decoration: none; transition: background-color 0.3s ease, color 0.3s ease; }
+  .learn__partners .tag:hover { background: var(--ink); color: var(--paper); }
+  .learn__partners :global(.learn__ext) { width: 14px; height: 14px; }
+
+  .learn__shots {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: minmax(210px, 64%);
+    gap: 14px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    margin-inline: calc(var(--gutter) * -1);
+    padding: 0 var(--gutter) 12px;
+    scroll-padding-inline: var(--gutter);
+  }
+
+  .learn__shot { scroll-snap-align: start; }
+  .learn__btn { display: block; width: 100%; aspect-ratio: 4 / 5; padding: 0; border: 0; cursor: zoom-in; }
+  .learn__btn :global(img) { width: 100%; height: 100%; object-fit: cover; transition: transform 1.2s var(--ease-out); }
+  .learn__btn:hover :global(img),
+  .learn__btn:focus-visible :global(img) { transform: scale(1.05); }
+  .learn__shot figcaption { display: grid; gap: 2px; margin-top: 10px; }
+  .learn__cap-t { font-weight: 540; font-size: 0.92rem; line-height: 1.4; }
+  .learn__cap-m { font-size: 0.78rem; color: var(--muted); }
+
+  .learn__guide { display: grid; gap: 32px; margin-top: clamp(64px, 8vw, 120px); align-items: center; }
+  .learn__guide-frame { aspect-ratio: 5 / 4; }
+  .learn__guide-text { display: grid; gap: 18px; align-content: start; }
+  .learn__quote { font-family: var(--font-display); font-stretch: 87.5%; font-size: var(--fs-h2); line-height: 1.2; max-width: 30ch; }
+
+  .learn__studio {
+    display: grid;
+    gap: 6px;
+    max-width: 26rem;
+    margin-top: 8px;
+    padding: 18px 20px;
+    border: 1px solid var(--line-strong);
+    text-decoration: none;
+    transition: background-color 0.4s ease, color 0.4s ease, border-color 0.4s;
+  }
+  .learn__studio .label { color: var(--red); }
+  .learn__studio:hover { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+  .learn__studio:hover .label { color: #ff8a82; }
+  .learn__studio-name { font-family: var(--font-display); font-stretch: 87.5%; font-size: var(--fs-h3); }
+  .learn__studio-meta { display: inline-flex; align-items: center; gap: 6px; font-size: 0.9rem; opacity: 0.8; }
+  .learn__studio-meta :global(svg) { width: 14px; height: 14px; }
+
+  @media (min-width: 700px) {
+    .learn__steps { grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 32px; }
+    .learn__shots { grid-auto-columns: minmax(220px, 42%); }
+  }
+
+  @media (min-width: 1000px) {
+    .learn__head { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); align-items: end; }
+    .learn__steps { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+    .learn__practice { grid-template-columns: minmax(0, 0.7fr) minmax(0, 1.3fr); align-items: start; }
+    .learn__shots {
+      grid-auto-flow: row;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      overflow: visible;
+      margin-inline: 0;
+      padding-inline: 0;
+    }
+    .learn__shot--1,
+    .learn__shot--3 { margin-top: 18%; }
+    .learn__guide { grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr); gap: clamp(40px, 6vw, 96px); }
+  }
+</style>

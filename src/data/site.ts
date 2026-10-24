@@ -52,9 +52,9 @@ export const site = {
 
 export const nav = [
   { href: '/#courses', label: 'Դասընթացներ' },
-  { href: '/#work', label: 'Աշխատանքներ' },
-  { href: '/#journey', label: 'Ուսուցում' },
-  { href: '/#practice', label: 'Գործնական դասեր' },
-  { href: '/#faq', label: 'Հարցեր' },
+  { href: '/#learning', label: 'Ուսուցում' },
+  { href: '/graduates/', label: 'Շրջանավարտներ' },
+  { href: '/student-work/', label: 'Աշխատանքներ' },
+  { href: '/videos/', label: 'Տեսանյութեր' },
   { href: '/#contact', label: 'Կապ' },
 ] as const;

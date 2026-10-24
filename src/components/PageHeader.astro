@@ -1,0 +1,58 @@
+---
+// Header for inner pages: breadcrumb, index line, title and lead, with a red line drawn under it.
+import SplitText from './SplitText.astro';
+
+interface Props {
+  title: string;
+  lead?: string;
+  crumbs: { label: string; href?: string }[];
+  kicker?: string;
+  id?: string;
+}
+const { title, lead, crumbs, kicker, id = 'page-title' } = Astro.props;
+---
+<header class="ph">
+  <div class="wrap">
+    <nav aria-label="Ճանապարհ" class="ph__crumbs">
+      <ol role="list">
+        {crumbs.map((c) => (
+          <li aria-current={c.href ? undefined : 'page'}>{c.href ? <a href={c.href}>{c.label}</a> : c.label}</li>
+        ))}
+      </ol>
+    </nav>
+    {kicker && <p class="label label--red ph__kicker" data-reveal>{kicker}</p>}
+    <div class="ph__head">
+      <SplitText as="h1" id={id} class="display ph__title" text={title} />
+      {lead && <p class="lead" data-reveal>{lead}</p>}
+    </div>
+    <svg class="ph__line" viewBox="0 0 100 2" preserveAspectRatio="none" aria-hidden="true" data-draw>
+      <path d="M0 1 H100" pathLength="1" />
+    </svg>
+    <slot />
+  </div>
+</header>
+
+<style>
+  .ph { padding: calc(var(--header-h) + clamp(24px, 4vw, 56px)) 0 clamp(28px, 4vw, 48px); }
+  .ph__crumbs ol { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px; font-size: 0.82rem; color: var(--muted); }
+  .ph__crumbs li + li::before { content: '/'; content: '/' / ''; margin-right: 6px; opacity: 0.6; }
+  .ph__crumbs a { display: inline-block; padding-block: 10px; text-decoration: none; }
+  .ph__crumbs a:hover { color: var(--red); }
+  .ph__kicker { margin-top: 10px; }
+  .ph__head { display: grid; gap: 20px; margin-top: 12px; }
+  .ph__title { font-size: clamp(2.5rem, 1.2rem + 4.8vw, 6rem); overflow-wrap: normal; }
+
+  .ph__line { display: block; width: 100%; height: 2px; margin-top: clamp(28px, 4vw, 48px); overflow: visible; }
+  .ph__line path {
+    fill: none;
+    stroke: var(--red);
+    stroke-width: 2;
+    vector-effect: non-scaling-stroke;
+    stroke-dasharray: 1;
+    stroke-dashoffset: calc(1 - var(--draw, 1));
+  }
+
+  @media (min-width: 1000px) {
+    .ph__head { grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr); align-items: end; }
+  }
+</style>

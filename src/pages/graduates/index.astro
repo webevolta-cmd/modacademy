@@ -1,0 +1,174 @@
+---
+import { Picture, getImage } from 'astro:assets';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PageHeader from '../../components/PageHeader.astro';
+import Lightbox from '../../components/Lightbox.astro';
+import Icon from '../../components/Icon.astro';
+import { graduationPhotos, graduateStories, attributionLabel } from '../../data/graduates';
+import { keep } from '../../lib/text';
+
+const siteUrl = Astro.site!;
+const fmt = (iso: string) => iso.split('-').reverse().join('.');
+
+const photos = await Promise.all(
+  graduationPhotos.map(async (g) => ({ ...g, large: (await getImage({ src: g.image, width: 1600, format: 'webp', quality: 82 })).src })),
+);
+
+const jsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'CollectionPage',
+    name: 'Շրջանավարտներ — MOD Academy',
+    url: new URL('/graduates/', siteUrl).href,
+  },
+];
+---
+<BaseLayout
+  title="Շրջանավարտներ — MOD Academy, Երևան"
+  description="MOD Academy-ի շրջանավարտները՝ ավարտական լուսանկարներ և փաստագրված պատմություններ՝ աղբյուրների հղումներով։"
+  jsonLd={jsonLd}
+>
+  <PageHeader
+    title="Մեր շրջանավարտները"
+    kicker="Շրջանավարտներ"
+    lead="Ավարտական պահեր և շրջանավարտների հաջորդ քայլերը։ Յուրաքանչյուր պատմություն հիմնված է հրապարակված աղբյուրի վրա, որը նշված է պատմության տակ։"
+    crumbs={[{ label: 'Գլխավոր', href: '/' }, { label: 'Շրջանավարտներ' }]}
+  />
+
+  {graduateStories.length > 0 && (
+    <section class="gs" aria-labelledby="gs-title">
+      <div class="wrap">
+        <h2 class="h2 gs__title" id="gs-title" data-reveal>Պատմություններ</h2>
+        <ol class="gs__list" role="list">
+          {graduateStories.map((s, i) => (
+            <li class="gs__item" id={s.slug} data-reveal style={`--i:${i % 2}`}>
+              <article class="gs__card" aria-labelledby={`${s.slug}-name`}>
+                <div class="gs__img frame" data-reveal="mask">
+                  <Picture src={s.image} alt={s.imageAlt} widths={[360, 540, 720]} sizes="(min-width: 1000px) 26vw, 92vw" formats={['avif', 'webp']} fallbackFormat="webp" loading={i < 2 ? 'eager' : 'lazy'} />
+                </div>
+                <div class="gs__body">
+                  <p class="label label--red">«{s.course}» դասընթաց</p>
+                  <h3 class="h2" id={`${s.slug}-name`}>{s.name}</h3>
+                  <p class="gs__latin">{s.nameLatin}</p>
+                  <p class="gs__outcome">{keep(s.outcome)}</p>
+                  {s.quote && (
+                    <blockquote class="gs__quote">
+                      <p>«{s.quote.text}»</p>
+                      <footer><a href={s.quote.source} target="_blank" rel="noopener">{s.name}</a></footer>
+                    </blockquote>
+                  )}
+                  <p class="gs__src">
+                    {attributionLabel[s.attribution]} ·{' '}
+                    <a href={s.source} target="_blank" rel="noopener">{fmt(s.sourceDate)}<Icon name="arrow-up-right" /></a>
+                  </p>
+                  {(s.links.length > 0 || s.project || s.courseSlug) && (
+                    <ul class="gs__links" role="list">
+                      {s.project && <li><a class="link-arrow" href={`/student-work/${s.project}/`}>Նախագիծը<Icon name="arrow" /></a></li>}
+                      {s.links.map((l) => (
+                        <li><a class="link-arrow" href={l.url} target="_blank" rel="noopener">{l.label}<Icon name="arrow-up-right" /></a></li>
+                      ))}
+                      {s.courseSlug && <li><a class="link-arrow" href={`/courses/${s.courseSlug}/`}>«{s.course}» դասընթաց<Icon name="arrow" /></a></li>}
+                    </ul>
+                  )}
+                </div>
+              </article>
+            </li>
+          ))}
+        </ol>
+      </div>
+    </section>
+  )}
+
+  {photos.length > 0 && (
+    <section class="gp" aria-labelledby="gp-title">
+      <div class="wrap">
+        <div class="gp__head">
+          <h2 class="h2" id="gp-title" data-reveal>Ավարտական պահեր</h2>
+          <p class="muted" data-reveal>Լուսանկարները՝ ակադեմիայի պաշտոնական հրապարակումներից։ Նկարները կտրված և օպտիմալացված են կայքի համար՝ առանց դեմքերի, փաստաթղթերի կամ բովանդակության փոփոխության։</p>
+        </div>
+        <ul class="gp__grid" role="list">
+          {photos.map((g, i) => (
+            <li class={`gp__item gp__item--${i % 6}`} data-reveal="mask" style={`--i:${i % 3}`}>
+              <figure>
+                <button
+                  type="button"
+                  class="gp__btn frame"
+                  data-lb-group="graduation"
+                  data-lb-src={g.large}
+                  data-lb-alt={g.alt}
+                  data-lb-title={g.caption}
+                  data-lb-credit={`MOD Academy · Հրապարակված՝ ${fmt(g.date)}`}
+                  aria-label={`Բացել մեծ չափով՝ ${g.caption}`}
+                >
+                  <Picture src={g.image} alt={g.alt} widths={[360, 540, 720, 960]} sizes="(min-width: 1000px) 30vw, (min-width: 640px) 46vw, 92vw" formats={['avif', 'webp']} fallbackFormat="webp" loading="lazy" />
+                </button>
+                <figcaption>
+                  <span>{keep(g.caption)}</span>
+                  <a href={g.source} target="_blank" rel="noopener">Հրապարակված՝ {fmt(g.date)}</a>
+                </figcaption>
+              </figure>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+  )}
+
+  <section class="gcta section--tight">
+    <div class="wrap gcta__inner">
+      <p class="display gcta__title" data-reveal>Հաջորդ պատմությունը կարող է լինել Ձերը</p>
+      <div class="gcta__actions" data-reveal>
+        <a class="btn btn--red" href="/#courses">Բացահայտել դասընթացները<Icon name="arrow" class="btn__icon" /></a>
+        <a class="btn btn--ghost" href="/#inquiry">Ուղարկել հայտ</a>
+      </div>
+      <p class="muted gcta__note">Շրջանավարտների պատմությունները ցույց են տալիս անհատական քայլեր և չեն երաշխավորում աշխատանք կամ եկամուտ։</p>
+    </div>
+  </section>
+  <Lightbox />
+</BaseLayout>
+
+<style>
+  .gs { padding-block: clamp(32px, 4vw, 56px) clamp(64px, 8vw, 112px); }
+  .gs__title { margin-bottom: clamp(24px, 3vw, 40px); }
+  .gs__list { display: grid; gap: clamp(40px, 5vw, 72px); }
+  .gs__card { display: grid; gap: 24px; padding-top: clamp(24px, 3vw, 40px); border-top: 1px solid var(--line-strong); scroll-margin-top: calc(var(--header-h) + 24px); }
+  .gs__img { aspect-ratio: 4 / 5; max-width: 26rem; }
+  .gs__img :global(img) { width: 100%; height: 100%; object-fit: cover; }
+  .gs__body { display: grid; gap: 12px; align-content: start; max-width: 40rem; }
+  .gs__latin { color: var(--muted); font-size: 0.9rem; margin-top: -6px; }
+  .gs__outcome { font-size: var(--fs-lead); line-height: 1.55; color: var(--ink-soft); }
+  .gs__quote { margin: 4px 0 0; padding-left: 16px; border-left: 2px solid var(--red); }
+  .gs__quote p { font-family: var(--font-display); font-size: 1.15rem; line-height: 1.5; }
+  .gs__quote footer { margin-top: 6px; font-size: 0.85rem; color: var(--muted); }
+  .gs__src { font-size: 0.82rem; color: var(--muted); }
+  .gs__src a { display: inline-flex; align-items: center; gap: 4px; }
+  .gs__src :global(svg) { width: 12px; height: 12px; }
+  .gs__links { display: flex; flex-wrap: wrap; gap: 10px 24px; margin-top: 6px; font-size: 0.92rem; }
+
+  .gp { padding-block: clamp(64px, 8vw, 112px); background: var(--paper-2); }
+  .gp__head { display: grid; gap: 14px; margin-bottom: clamp(28px, 4vw, 48px); max-width: 52rem; }
+  .gp__grid { display: grid; gap: 24px 14px; }
+  .gp__btn { display: block; width: 100%; aspect-ratio: 4 / 5; padding: 0; border: 0; cursor: zoom-in; }
+  .gp__btn :global(img) { width: 100%; height: 100%; object-fit: cover; transition: transform 1.2s var(--ease-out); }
+  .gp__btn:hover :global(img) { transform: scale(1.04); }
+  .gp__item figcaption { display: grid; gap: 2px; margin-top: 10px; font-size: 0.85rem; }
+  .gp__item figcaption a { font-size: 0.78rem; color: var(--muted); }
+
+  .gcta { background: var(--paper); }
+  .gcta__inner { display: grid; gap: 22px; justify-items: start; }
+  .gcta__title { font-size: clamp(2rem, 1rem + 3.4vw, 4rem); max-width: 18ch; overflow-wrap: normal; }
+  .gcta__actions { display: flex; flex-wrap: wrap; gap: 10px; }
+  .gcta__note { font-size: 0.82rem; max-width: 40rem; }
+
+  @media (min-width: 640px) {
+    .gp__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  }
+
+  @media (min-width: 1000px) {
+    .gs__card { grid-template-columns: minmax(0, 0.42fr) minmax(0, 0.58fr); gap: clamp(32px, 5vw, 80px); }
+    .gs__item:nth-child(even) .gs__img { order: 2; justify-self: end; }
+    .gp__grid { grid-template-columns: repeat(3, minmax(0, 1fr)); align-items: start; }
+    .gp__item--1,
+    .gp__item--4 { margin-top: 12%; }
+  }
+</style>

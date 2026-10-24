@@ -1,0 +1,81 @@
+---
+// A video card: thumbnail with a play symbol, title, short description and category. The whole
+// card is a link that opens the original post on Instagram in a new tab — the label says so.
+import { Picture } from 'astro:assets';
+import Icon from './Icon.astro';
+import { videoCategoryLabels, type VideoItem } from '../data/videos';
+import { keep } from '../lib/text';
+
+interface Props {
+  video: VideoItem;
+  index?: number;
+  sizes?: string;
+}
+const { video, index = 0, sizes = '(min-width: 1000px) 30vw, (min-width: 640px) 46vw, 92vw' } = Astro.props;
+const fmt = (iso: string) => iso.split('-').reverse().join('.');
+const mmss = (s?: number) => (s ? `${Math.floor(s / 60)}:${String(Math.round(s % 60)).padStart(2, '0')}` : '');
+---
+<article class="vc" data-category={video.category} data-reveal="mask" style={`--i:${index % 3}`}>
+  <a class="vc__link" href={video.url} target="_blank" rel="noopener" aria-describedby={`vc-${video.id}-meta`}>
+    <span class="vc__media">
+      <Picture src={video.thumb} alt={video.thumbAlt} widths={[360, 540, 720]} sizes={sizes} formats={['avif', 'webp']} fallbackFormat="webp" loading="lazy" />
+      <span class="vc__play" aria-hidden="true"></span>
+      {video.duration && <span class="vc__dur num">{mmss(video.duration)}</span>}
+    </span>
+    <span class="vc__body">
+      <span class="label vc__cat">{videoCategoryLabels[video.category]}</span>
+      <span class="vc__title">{video.title}</span>
+      <span class="vc__desc">{keep(video.description)}</span>
+      <span class="vc__cta" id={`vc-${video.id}-meta`}>
+        Դիտել Instagram-ում<Icon name="arrow-up-right" /><span class="visually-hidden"> (բացվում է նոր ներդիրում)</span>
+        <span class="vc__date">· {fmt(video.date)}</span>
+      </span>
+    </span>
+  </a>
+</article>
+
+<style>
+  .vc { transition: opacity 0.5s var(--ease-out), transform 0.6s var(--ease-out); }
+  .vc.is-leaving { opacity: 0; transform: translateY(-10px); }
+  .vc__link { display: grid; gap: 14px; text-decoration: none; }
+  .vc__media { position: relative; display: block; aspect-ratio: 4 / 5; overflow: hidden; background: var(--paper-3); }
+  .vc__media :global(img) { width: 100%; height: 100%; object-fit: cover; transition: transform 1.2s var(--ease-out), filter 0.6s ease; }
+  .vc__link:hover .vc__media :global(img),
+  .vc__link:focus-visible .vc__media :global(img) { transform: scale(1.06); filter: brightness(0.9); }
+
+  .vc__play {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 64px;
+    height: 64px;
+    margin: -32px 0 0 -32px;
+    border-radius: 50%;
+    background: rgb(244 239 232 / 0.92);
+    box-shadow: 0 10px 28px -10px rgb(0 0 0 / 0.5);
+    transition: transform 0.5s var(--ease-out), background-color 0.3s ease;
+  }
+
+  .vc__play::before {
+    content: '';
+    position: absolute;
+    left: 26px;
+    top: 21px;
+    border-style: solid;
+    border-width: 11px 0 11px 17px;
+    border-color: transparent transparent transparent var(--red);
+  }
+
+  .vc__link:hover .vc__play,
+  .vc__link:focus-visible .vc__play { transform: scale(1.12); background: #fff; }
+
+  .vc__dur { position: absolute; right: 10px; bottom: 10px; padding: 3px 8px; font-size: 0.75rem; color: #fff; background: rgb(17 15 13 / 0.65); }
+  .vc__body { display: grid; gap: 6px; }
+  .vc__cat { color: var(--red); }
+  .vc__title { font-family: var(--font-display); font-stretch: 87.5%; font-size: var(--fs-h3); line-height: 1.2; }
+  .vc__desc { font-size: 0.92rem; color: var(--ink-soft); line-height: 1.5; }
+  .vc__cta { display: inline-flex; flex-wrap: wrap; align-items: center; gap: 6px; margin-top: 4px; font-size: 0.85rem; font-weight: 600; }
+  .vc__cta :global(svg) { width: 14px; height: 14px; transition: transform 0.4s var(--ease-out); }
+  .vc__link:hover .vc__cta :global(svg) { transform: translate(3px, -3px); }
+  .vc__date { font-weight: 400; color: var(--muted); }
+</style>

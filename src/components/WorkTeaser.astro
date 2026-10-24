@@ -1,0 +1,54 @@
+---
+// Compact entry point to the student-work collection (keeps the old #work anchor working).
+import { Picture } from 'astro:assets';
+import SectionIndex from './SectionIndex.astro';
+import Icon from './Icon.astro';
+import { projects } from '../data/projects';
+
+const covers = projects.slice(0, 3).map((p) => ({ ...p.views[0], project: p }));
+const authors = new Set(projects.map((p) => p.author.name)).size;
+const views = projects.reduce((n, p) => n + p.views.length, 0);
+---
+<section class="wt section section--tight" id="work" aria-labelledby="wt-title">
+  <div class="wrap wt__grid">
+    <div class="wt__text">
+      <SectionIndex n="06" label="Ուսանողական աշխատանքներ" />
+      <h2 class="h1" id="wt-title" data-reveal>Աշխատանքներ, որոնք ստեղծել են մեր ուսանողները</h2>
+      <p class="muted" data-reveal>
+        {projects.length} նախագիծ, {views} տեսք, {authors} հեղինակ․ յուրաքանչյուրը՝ հեղինակի անունով, դասընթացով և
+        ակադեմիայի հրապարակման հղումով։
+      </p>
+      <a class="btn btn--red" href="/student-work/" data-reveal>Դիտել հավաքածուն<Icon name="arrow" class="btn__icon" /></a>
+    </div>
+    <a class="wt__covers" href="/student-work/" aria-label="Ուսանողական աշխատանքների հավաքածու">
+      {covers.map((c, i) => (
+        <span class={`wt__cover wt__cover--${i} frame`} data-reveal="mask" style={`--i:${i}`}>
+          <Picture src={c.image} alt="" widths={[480, 720, 960]} sizes="(min-width: 1000px) 30vw, 70vw" formats={['avif', 'webp']} fallbackFormat="webp" loading="lazy" data-parallax style={`--ps:${1.08 + i * 0.02}`} />
+        </span>
+      ))}
+      <span class="wt__caption">{covers[0]?.project.author.name} · «{covers[0]?.project.course}»</span>
+    </a>
+  </div>
+</section>
+
+<style>
+  .wt { background: var(--paper-2); }
+  .wt__grid { display: grid; gap: clamp(32px, 5vw, 72px); align-items: center; }
+  .wt__text { display: grid; gap: 18px; align-content: start; justify-items: start; }
+
+  .wt__grid > * { min-width: 0; }
+  .wt__covers { position: relative; display: block; width: 100%; aspect-ratio: 5 / 4; text-decoration: none; }
+  .wt__cover { position: absolute; display: block; box-shadow: 0 24px 50px -30px rgb(21 18 15 / 0.6); transition: transform 0.8s var(--ease-out); }
+  .wt__cover :global(img) { width: 100%; height: 100%; object-fit: cover; }
+  .wt__cover--0 { left: 0; top: 0; width: 72%; aspect-ratio: 4 / 3; z-index: 2; }
+  .wt__cover--1 { right: 0; top: 18%; width: 46%; aspect-ratio: 1; }
+  .wt__cover--2 { left: 34%; bottom: 0; width: 40%; aspect-ratio: 1; z-index: 3; }
+  .wt__covers:hover .wt__cover--0 { transform: translate(-6px, -6px); }
+  .wt__covers:hover .wt__cover--1 { transform: translate(8px, -4px); }
+  .wt__covers:hover .wt__cover--2 { transform: translate(4px, 8px); }
+  .wt__caption { position: absolute; left: 0; bottom: 0; font-size: 0.78rem; color: var(--muted); max-width: 32%; }
+
+  @media (min-width: 1000px) {
+    .wt__grid { grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr); }
+  }
+</style>

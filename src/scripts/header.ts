@@ -40,7 +40,10 @@ export function initHeader(): void {
   });
 
   // Mark the nav link of the section currently in view.
-  const links = [...header.querySelectorAll<HTMLAnchorElement>('.header__nav a[href*="#"]')];
+  // Only links to sections of the current page are highlighted while scrolling.
+  const links = [...header.querySelectorAll<HTMLAnchorElement>('.header__nav a[href*="#"]')].filter(
+    (a) => a.pathname === location.pathname,
+  );
   const byId = new Map(links.map((a) => [a.hash.slice(1), a]));
   const sections = [...byId.keys()].map((id) => document.getElementById(id)).filter(Boolean) as HTMLElement[];
   if (sections.length && 'IntersectionObserver' in window) {

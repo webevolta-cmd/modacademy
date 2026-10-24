@@ -7,6 +7,9 @@ interface Props {
   ctaHref?: string;
 }
 const { ctaHref = '/#inquiry' } = Astro.props;
+// Page links (not in-page sections) are marked current on their own page and its sub-pages.
+const path = Astro.url.pathname;
+const isCurrent = (href: string) => !href.includes('#') && path.startsWith(href);
 ---
 <header class="header" data-header>
   <div class="header__bar wrap">
@@ -17,7 +20,7 @@ const { ctaHref = '/#inquiry' } = Astro.props;
     <nav class="header__nav" aria-label="Հիմնական նավարկություն">
       <ul role="list">
         {nav.map((item) => (
-          <li><a href={item.href}>{item.label}</a></li>
+          <li><a href={item.href} aria-current={isCurrent(item.href) ? 'page' : undefined}>{item.label}</a></li>
         ))}
       </ul>
     </nav>
@@ -56,7 +59,7 @@ const { ctaHref = '/#inquiry' } = Astro.props;
       <ol class="menu__list" role="list">
         {nav.map((item, i) => (
           <li style={`--i:${i}`}>
-            <a href={item.href} data-menu-link>
+            <a href={item.href} data-menu-link aria-current={isCurrent(item.href) ? 'page' : undefined}>
               <span class="menu__n" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
               {item.label}
             </a>
@@ -79,6 +82,7 @@ const { ctaHref = '/#inquiry' } = Astro.props;
     z-index: 50;
     height: var(--header-h);
     transition: background-color 0.4s ease, box-shadow 0.4s ease, transform 0.45s var(--ease-out);
+    view-transition-name: site-header;
   }
 
   .header.is-scrolled {
@@ -87,6 +91,9 @@ const { ctaHref = '/#inquiry' } = Astro.props;
     backdrop-filter: saturate(1.2) blur(14px);
     box-shadow: 0 1px 0 var(--line);
   }
+
+  /* Without JavaScript the scrolled state never applies, so the bar keeps a solid background. */
+  :global(html:not(.js)) .header { background: rgb(244 239 232 / 0.94); box-shadow: 0 1px 0 var(--line); }
 
   .header.is-dark {
     background: rgb(17 15 13 / 0.78);
@@ -98,7 +105,7 @@ const { ctaHref = '/#inquiry' } = Astro.props;
   .header.is-dark .header__phone { color: var(--on-night); }
   .header.is-dark .header__nav a { color: var(--on-night-muted); }
   .header.is-dark .header__nav a:hover,
-  .header.is-dark .header__nav a[aria-current='true'] { color: var(--on-night); }
+  .header.is-dark .header__nav a[aria-current] { color: var(--on-night); }
   .header.is-dark .header__menu-btn { border-color: var(--line-night); color: var(--on-night); }
   .header.is-dark .header__menu-btn:hover { background: var(--night-2); }
   .header.is-dark :global(:focus-visible) { outline-color: var(--on-night); }
@@ -141,11 +148,11 @@ const { ctaHref = '/#inquiry' } = Astro.props;
   }
 
   .header__nav a:hover,
-  .header__nav a[aria-current='true'] { color: var(--ink); }
+  .header__nav a[aria-current] { color: var(--ink); }
 
   .header__nav a:hover::after,
   .header__nav a:focus-visible::after,
-  .header__nav a[aria-current='true']::after { transform: scaleX(1); transform-origin: left; }
+  .header__nav a[aria-current]::after { transform: scaleX(1); transform-origin: left; }
 
   .header__actions { display: flex; align-items: center; gap: 10px; margin-left: auto; }
 

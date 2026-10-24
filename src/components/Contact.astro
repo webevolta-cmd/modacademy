@@ -46,7 +46,7 @@ const { preselect } = Astro.props;
           <div class="map__placeholder" aria-hidden="true">
             <span class="map__grid"></span>
             <span class="map__street map__street--a">Մհեր Մկրտչյան փ.</span>
-            <span class="map__street map__street--b">Տիգրան Մեծի պող.</span>
+            <span class="map__street map__street--b"><span>Տիգրան Մեծի պող.</span></span>
             <span class="map__pin"><Icon name="pin" /></span>
           </div>
         </div>
@@ -87,6 +87,8 @@ const { preselect } = Astro.props;
 
   .map__canvas { position: relative; aspect-ratio: 16 / 10; background: var(--paper-2); overflow: hidden; }
   .map__canvas :global(iframe) { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+  /* The iframe is focused by script after loading, which :focus-visible does not match. */
+  .map__canvas :global(iframe:focus) { outline: 2px solid var(--red); outline-offset: -2px; }
 
   .map__placeholder { position: absolute; inset: 0; }
 
@@ -113,7 +115,9 @@ const { preselect } = Astro.props;
 
   .map__street--a { left: 6%; right: 6%; top: 54%; }
   /* The label runs along the upper half of the avenue so it clears the pin and the crossing street. */
-  .map__street--b { top: 6%; height: 40%; left: 58%; width: 0; border-top: 0; border-left: 6px solid var(--paper-3); }
+  /* The avenue runs full height; its label sits right of the pin so neither covers the other. */
+  .map__street--b { top: 4%; bottom: 4%; left: 58%; width: 0; border-top: 0; border-left: 6px solid var(--paper-3); }
+  .map__street--b span { position: absolute; top: 0; left: 30px; }
   .map__street--b { writing-mode: vertical-rl; padding: 0 0 0 6px; }
 
   .map__pin {

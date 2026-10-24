@@ -8,6 +8,10 @@ const pages = [
   '/courses/corona-renderer/',
   '/courses/graphic-design/',
   '/courses/sales-management/',
+  '/student-work/',
+  '/student-work/tevosyan-living-kitchen/',
+  '/graduates/',
+  '/videos/',
   '/inquiry-sent/',
 ];
 
@@ -51,49 +55,92 @@ test.describe('every page', () => {
   });
 });
 
-test.describe('hero', () => {
-  test('scroll scrubs the film and reveals chapters', async ({ page }) => {
+const heroRange = (page: Page) =>
+  page.evaluate(() => {
+    const h = document.querySelector('[data-jh]') as HTMLElement;
+    return { top: h.getBoundingClientRect().top + window.scrollY, range: h.offsetHeight - window.innerHeight };
+  });
+
+async function scrubTo(page: Page, progress: number, steps = 16) {
+  const { top, range } = await heroRange(page);
+  const from = await page.evaluate(() => window.scrollY);
+  const to = top + range * progress;
+  for (let i = 1; i <= steps; i++) {
+    await page.evaluate((y) => window.scrollTo(0, y), from + ((to - from) * i) / steps);
+    await page.waitForTimeout(30);
+  }
+}
+
+test.describe('journey hero', () => {
+  test('opens with the heading and both actions visible, before any film loads', async ({ page }) => {
     const errors = trackErrors(page);
     await page.goto('/');
-    await expect(page.locator('html')).toHaveClass(/hero-pin/);
-    await expect(page.locator('#hero-title')).toBeVisible();
-    await expect(page.getByRole('link', { name: /Դիտել դասընթացները/ })).toBeVisible();
-    // The film stays out of rendering (and out of LCP) until the visitor scrolls.
-    await expect(page.locator('[data-hero-video]')).toBeHidden();
+    await expect(page.locator('html')).toHaveClass(/jh-pin/);
+    await expect(page.locator('#jh-title')).toBeVisible();
+    await expect(page.locator('#jh-title')).toContainText('Քո մասնագիտական ճանապարհը սկսվում');
+    await expect(page.locator('[data-jh-intro-ctas] a', { hasText: 'Բացահայտել դասընթացները' })).toBeInViewport();
+    await expect(page.locator('[data-jh-intro-ctas] a', { hasText: 'Մեր շրջանավարտների պատմությունները' })).toBeInViewport();
+    // Film segments stay out of rendering (and out of LCP) until the visitor scrolls.
+    expect(await page.locator('[data-jh-video]').evaluateAll((vs) => vs.every((v) => (v as HTMLVideoElement).hidden))).toBe(true);
+    expect(errors).toEqual([]);
+  });
 
-    const range = await page.evaluate(() => {
-      const h = document.querySelector('[data-hero]') as HTMLElement;
-      return h.offsetHeight - window.innerHeight;
-    });
-    for (let i = 1; i <= 20; i++) {
-      await page.evaluate((y) => window.scrollTo(0, y), (range * 0.5 * i) / 20);
-      await page.waitForTimeout(30);
-    }
-    const video = page.locator('[data-hero-video]');
-    await expect(video).toHaveClass(/is-live/, { timeout: 15_000 });
-    await page.waitForTimeout(800);
-    const state = await page.evaluate(() => {
-      const v = document.querySelector('[data-hero-video]') as HTMLVideoElement;
-      const w = document.querySelector('[data-hero-window]') as HTMLElement;
-      return { time: v.currentTime, duration: v.duration, clip: w.style.clipPath };
-    });
-    expect(state.time / state.duration).toBeGreaterThan(0.4);
-    expect(state.time / state.duration).toBeLessThan(0.65);
-    expect(state.clip).toMatch(/^inset\(0px( 0px){0,3}\)$/);
-    await expect(page.locator('[data-chapter].is-on').first()).toBeVisible();
-    // Faded chapters stay in the accessibility tree; only invisible links leave the tab order.
-    const hiddenHeadings = await page.locator('[data-chapter] h2').evaluateAll((els) =>
-      els.filter((e) => getComputedStyle(e).visibility === 'hidden').length,
+  test('scroll scrubs the film segments and tells the five chapters in order', async ({ page }) => {
+    const errors = trackErrors(page);
+    await page.goto('/');
+    await scrubTo(page, 0.5);
+    const project = page.locator('[data-jh-video="2"]');
+    await expect(project).toHaveClass(/is-shown/, { timeout: 15_000 });
+    await page.waitForTimeout(900);
+    const t = await project.evaluate((v: HTMLVideoElement) => v.currentTime / v.duration);
+    expect(t).toBeGreaterThan(0.3);
+    expect(t).toBeLessThan(0.65);
+    await expect(page.locator('#journey-03')).toHaveClass(/is-on/);
+    await expect(page.locator('.jh__nav a[href="#journey-03"]')).toHaveAttribute('aria-current', 'step');
+    await expect(page.locator('[data-jh-stage-item].is-on')).toHaveCount(1);
+
+    await scrubTo(page, 0.985);
+    await expect(page.locator('[data-jh-final]')).toHaveClass(/is-on/, { timeout: 5_000 });
+    await expect(page.locator('[data-jh-final-ctas] a', { hasText: 'Բացահայտել դասընթացները' })).toBeVisible();
+    await expect(page.locator('.jh__nav a[href="#journey-05"]')).toHaveAttribute('aria-current', 'step');
+
+    // Faded chapters remain readable by assistive technology.
+    const chapters = await page.locator('[data-jh-ch]').evaluateAll((els) =>
+      els.map((e) => ({ inert: (e as HTMLElement).inert, hidden: getComputedStyle(e.querySelector('h2')!).visibility === 'hidden' })),
     );
-    expect(hiddenHeadings).toBe(0);
-    expect(await page.locator('[data-chapter]:not(.is-on) [data-chapter-ctas]').evaluateAll((els) => els.every((e) => (e as HTMLElement).inert))).toBe(true);
+    expect(chapters).toHaveLength(5);
+    expect(chapters.every((c) => !c.inert && !c.hidden)).toBe(true);
 
-    // Reverse direction returns to the start state.
+    // Scrolling back returns to the opening state.
     await page.evaluate(() => window.scrollTo(0, 0));
     await page.waitForTimeout(1200);
-    const back = await page.evaluate(() => (document.querySelector('[data-hero-video]') as HTMLVideoElement).currentTime);
-    expect(back).toBeLessThan(0.2);
+    await expect(page.locator('[data-jh-intro-ctas] a').first()).toBeInViewport();
+    expect(await page.locator('[data-jh-intro-ctas]').evaluate((el) => (el as HTMLElement).inert)).toBe(false);
     expect(errors).toEqual([]);
+  });
+
+  test('chapter controls jump to a chapter and the skip link leaves the story', async ({ page }) => {
+    await page.goto('/');
+    await page.locator('.jh__nav a[href="#journey-02"]').click();
+    await expect(page.locator('#journey-02')).toHaveClass(/is-on/, { timeout: 5_000 });
+    await expect(page.locator('.jh__nav a[href="#journey-02"]')).toHaveAttribute('aria-current', 'step');
+    await page.locator('[data-jh-skip]').click();
+    await expect(page.locator('#courses')).toBeInViewport();
+  });
+
+  test('pointer movement adds depth on desktop only', async ({ page, isMobile }) => {
+    test.skip(isMobile, 'depth follows fine pointers only');
+    await page.goto('/');
+    await page.mouse.move(200, 200);
+    await page.mouse.move(1100, 700, { steps: 8 });
+    await page.waitForTimeout(500);
+    const mx = await page.locator('[data-jh]').evaluate((el) => Number((el as HTMLElement).style.getPropertyValue('--mx')));
+    expect(Math.abs(mx)).toBeGreaterThan(0.05);
+  });
+
+  test('the illustrative film is labelled as AI and not as student work', async ({ page }) => {
+    await page.goto('/');
+    await expect(page.locator('[data-jh-credit]')).toContainText('AI');
   });
 });
 
@@ -142,15 +189,15 @@ test('course finder explains its suggestions', async ({ page }) => {
 });
 
 test('lightbox supports keyboard navigation and restores focus', async ({ page }) => {
-  await page.goto('/#work');
-  const first = page.locator('[data-lb-group="work"]').first();
+  await page.goto('/student-work/tevosyan-living-kitchen/');
+  const first = page.locator('[data-lb-group="project"]').first();
   await first.scrollIntoViewIfNeeded();
   await first.click();
   const dialog = page.locator('[data-lightbox]');
   await expect(dialog).toBeVisible();
-  await expect(page.locator('[data-lb-count]')).toHaveText('1 / 7');
+  await expect(page.locator('[data-lb-count]')).toHaveText(/^1 \/ \d+$/);
   await page.keyboard.press('ArrowRight');
-  await expect(page.locator('[data-lb-count]')).toHaveText('2 / 7');
+  await expect(page.locator('[data-lb-count]')).toHaveText(/^2 \/ \d+$/);
   await page.keyboard.press('Escape');
   await expect(dialog).toBeHidden();
   await expect(first).toBeFocused();
@@ -223,9 +270,9 @@ test('choosing a menu link moves focus to that section', async ({ page, isMobile
   test.skip(!isMobile, 'menu button is only shown on small screens');
   await page.goto('/');
   await page.locator('[data-menu-open]').click();
-  await page.locator('[data-menu] a[href="/#faq"]').click();
+  await page.locator('[data-menu] a[href="/#learning"]').click();
   await expect(page.locator('[data-menu]')).toBeHidden();
-  await expect(page.locator('#faq')).toBeFocused();
+  await expect(page.locator('#learning')).toBeFocused();
 });
 
 test.describe('typography', () => {
@@ -238,8 +285,8 @@ test.describe('typography', () => {
     }
     await page.goto('/');
     const split = await page.evaluate(() => {
-      const em = document.querySelector('.hero__title em') as HTMLElement;
-      return em.getClientRects().length;
+      const brand = document.querySelector('.jh__brand') as HTMLElement;
+      return brand.getClientRects().length;
     });
     expect(split).toBe(1);
   });
@@ -263,17 +310,18 @@ test('figures keep their real values for assistive technology', async ({ page })
 test.describe('short screens', () => {
   test.use({ viewport: { width: 844, height: 390 }, isMobile: true, hasTouch: true });
 
-  test('use the static hero so the heading and main button are reachable', async ({ page }) => {
+  test('use the storyboard hero so the heading and main button are reachable', async ({ page }) => {
     const media: string[] = [];
     page.on('request', (r) => {
       if (r.url().endsWith('.mp4')) media.push(r.url());
     });
     await page.goto('/');
     await expect(page.locator('html')).toHaveClass(/motion/);
-    await expect(page.locator('html')).not.toHaveClass(/hero-pin/);
-    const cta = page.getByRole('link', { name: /Դիտել դասընթացները/ });
+    await expect(page.locator('html')).not.toHaveClass(/jh-pin/);
+    const cta = page.locator('[data-jh-intro-ctas] a', { hasText: 'Բացահայտել դասընթացները' });
     await cta.scrollIntoViewIfNeeded();
     await expect(cta).toBeInViewport({ ratio: 1 });
+    await expect(page.locator('[data-jh-ch]')).toHaveCount(5);
     await page.waitForTimeout(600);
     expect(media).toEqual([]);
   });
@@ -281,10 +329,10 @@ test.describe('short screens', () => {
   test('switch layouts when the screen height changes', async ({ page }) => {
     await page.setViewportSize({ width: 844, height: 900 });
     await page.goto('/');
-    await expect(page.locator('html')).toHaveClass(/hero-pin/);
+    await expect(page.locator('html')).toHaveClass(/jh-pin/);
     await page.setViewportSize({ width: 844, height: 390 });
-    await expect(page.locator('html')).not.toHaveClass(/hero-pin/);
-    expect(await page.locator('[data-hero-window]').evaluate((el) => (el as HTMLElement).style.clipPath)).toBe('');
+    await expect(page.locator('html')).not.toHaveClass(/jh-pin/);
+    expect(await page.locator('[data-jh-ch]').first().evaluate((el) => (el as HTMLElement).style.getPropertyValue('--a'))).toBe('');
   });
 });
 
@@ -297,12 +345,95 @@ test.describe('reduced motion', () => {
       if (r.url().endsWith('.mp4')) media.push(r.url());
     });
     await page.goto('/');
-    await expect(page.locator('html')).not.toHaveClass(/motion|hero-pin/);
+    await expect(page.locator('html')).not.toHaveClass(/motion|jh-pin/);
     await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight / 3));
     await page.waitForTimeout(800);
     expect(media).toEqual([]);
     const hidden = await page.locator('[data-reveal]').evaluateAll((els) => els.filter((e) => getComputedStyle(e).opacity !== '1').length);
     expect(hidden).toBe(0);
-    await expect(page.locator('[data-chapter]').first()).toBeVisible();
+    await expect(page.locator('[data-jh-ch]').first()).toBeVisible();
+  });
+});
+
+test.describe('site structure', () => {
+  test('navigation leads to the student work and video pages', async ({ page, isMobile }) => {
+    test.skip(isMobile, 'the desktop bar holds the inline navigation');
+    await page.goto('/');
+    await expect(page.locator('.header a[href="/student-work/"]').first()).toHaveText('Աշխատանքներ');
+    await expect(page.locator('.header a[href="/videos/"]').first()).toHaveText('Տեսանյութեր');
+    await page.locator('.header a[href="/student-work/"]').first().click();
+    await expect(page).toHaveURL(/\/student-work\/$/);
+    await expect(page.locator('.header a[href="/student-work/"]').first()).toHaveAttribute('aria-current', 'page');
+  });
+
+  test('the old #work anchor still lands on the student work entry point', async ({ page }) => {
+    await page.goto('/#work');
+    await expect(page.locator('#work')).toBeInViewport();
+    await expect(page.locator('#work a[href="/student-work/"]').first()).toBeVisible();
+  });
+
+  test('the homepage keeps its section order', async ({ page }) => {
+    await page.goto('/');
+    const ids = await page.locator('main > section[id], main > div > section[id]').evaluateAll((els) => els.map((e) => e.id));
+    const order = ['top', 'about', 'courses', 'learning', 'graduates', 'work', 'videos', 'faq', 'contact'].filter((id) => ids.includes(id));
+    expect(order.map((id) => ids.indexOf(id))).toEqual([...order.map((id) => ids.indexOf(id))].sort((a, b) => a - b));
+    expect(order).toEqual(expect.arrayContaining(['top', 'courses', 'learning', 'work', 'faq', 'contact']));
+  });
+
+  test('image reveals open once they scroll into view', async ({ page }) => {
+    for (const path of ['/', '/student-work/tevosyan-living-kitchen/']) {
+      await page.goto(path);
+      const masks = page.locator('[data-reveal="mask"]');
+      const n = await masks.count();
+      expect(n).toBeGreaterThan(0);
+      for (let i = 0; i < n; i++) {
+        const el = masks.nth(i);
+        await el.evaluate((e) => e.scrollIntoView({ block: 'center', behavior: 'instant' }));
+        await expect(el).toHaveClass(/is-in/);
+      }
+    }
+  });
+
+  test('the guidance section no longer shows the trainer photograph', async ({ page }) => {
+    await page.goto('/#learning');
+    const srcs = await page.locator('#learning img').evaluateAll((imgs) => imgs.map((i) => (i as HTMLImageElement).currentSrc || (i as HTMLImageElement).src));
+    expect(srcs.length).toBeGreaterThan(0);
+    expect(srcs.some((s) => s.includes('sales-class-trainer'))).toBe(false);
+  });
+
+  test('student work shows the AI film only as a labelled interpretation', async ({ page }) => {
+    await page.goto('/student-work/');
+    const film = page.locator('[data-pfilm]').first();
+    await expect(film).toContainText('AI');
+    await film.locator('[data-pfilm-toggle]').click();
+    await expect(film).toHaveAttribute('data-playing', '', { timeout: 10_000 });
+    const src = await film.locator('video').evaluate((v: HTMLVideoElement) => v.currentSrc);
+    expect(src).toMatch(/\.mp4$/);
+  });
+
+  test('video cards open the exact Instagram post in a new tab', async ({ page }) => {
+    await page.goto('/videos/');
+    const cards = page.locator('.vp__grid a');
+    const n = await cards.count();
+    expect(n).toBeGreaterThanOrEqual(6);
+    for (let i = 0; i < n; i++) {
+      const card = cards.nth(i);
+      await expect(card).toHaveAttribute('href', /^https:\/\/www\.instagram\.com\/(p|reel)\/[\w-]+\/$/);
+      await expect(card).toHaveAttribute('target', '_blank');
+      await expect(card).toHaveAttribute('rel', /noopener/);
+      await expect(card).toContainText('Դիտել Instagram-ում');
+      await expect(card.locator('img')).toHaveCount(1);
+    }
+  });
+
+  test('graduate stories cite their source and promise nothing', async ({ page }) => {
+    await page.goto('/graduates/');
+    const stories = page.locator('.gs__item');
+    const n = await stories.count();
+    expect(n).toBeGreaterThan(0);
+    for (let i = 0; i < n; i++) {
+      await expect(stories.nth(i).locator('.gs__src a[href^="https://"]')).toHaveCount(1);
+    }
+    await expect(page.locator('.gcta__note')).toContainText('չեն երաշխավորում');
   });
 });

@@ -78,13 +78,14 @@ const jsonLd = [
           offers: {
             '@type': 'Offer',
             category: 'Paid',
-            price: course.fee.amount,
+            // A monthly fee is multiplied out for the whole course; the monthly amount stays in the breakdown.
+            price: monthly && months ? course.fee.amount * months : course.fee.amount,
             priceCurrency: 'AMD',
             priceSpecification: {
               '@type': 'UnitPriceSpecification',
               price: course.fee.amount,
               priceCurrency: 'AMD',
-              ...(monthly ? { billingDuration: 'P1M' } : {}),
+              ...(monthly ? { billingDuration: 'P1M', unitText: 'MONTH' } : {}),
             },
           },
         }
@@ -144,7 +145,7 @@ const description =
           </nav>
           <p class="label label--red" data-reveal>{course.kicker}</p>
           <SplitText as="h1" id="cp-title" class="display cp__title" text={course.title} />
-          <p class="lead" data-reveal>{course.summary}</p>
+          <p class="lead" data-reveal>{keep(course.summary)}</p>
           <div class="cp__ctas" data-reveal>
             <a class="btn btn--red" href="#inquiry">
               {course.fee ? 'Ուղարկել հայտ' : 'Ստանալ ընթացիկ մանրամասներ'}<Icon name="arrow" class="btn__icon" />
@@ -256,7 +257,7 @@ const description =
             <ul role="list" class="cp__src">
               {course.sources.map((s) => (
                 <li>
-                  <a href={s.url} target="_blank" rel="noopener">{s.label}<Icon name="arrow-up-right" /></a>
+                  <a href={s.url} target="_blank" rel="noopener">{keep(s.label)}<Icon name="arrow-up-right" /></a>
                   <time class="muted" datetime={s.date}>{fmt(s.date)}</time>
                 </li>
               ))}
@@ -273,7 +274,7 @@ const description =
             {course.related === 'work'
               ? ownWork
                 ? 'Ուսանողական աշխատանքներ'
-                : `Ակադեմիայի ուսանողական աշխատանքներ («${student.course}» դասընթաց)`
+                : `Ակադեմիայի ուսանողական աշխատանքներ («${student.course.replace(' ', '\u00a0')}» դասընթաց)`
               : course.related === 'practice'
                 ? 'Գործնական դասերից'
                 : 'Դասերից'}
@@ -349,8 +350,8 @@ const description =
   .cp__intro { display: grid; gap: 20px; align-content: center; }
   .cp__title { font-size: clamp(2.6rem, 1.2rem + 5vw, 6.2rem); }
 
-  .cp__crumbs ol { display: flex; flex-wrap: wrap; gap: 6px; font-size: 0.82rem; color: var(--muted); }
-  .cp__crumbs li + li::before { content: '/'; margin-right: 6px; opacity: 0.6; }
+  .cp__crumbs ol { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px; font-size: 0.82rem; color: var(--muted); }
+  .cp__crumbs li + li::before { content: '/'; content: '/' / ''; margin-right: 6px; opacity: 0.6; }
   .cp__crumbs a { display: inline-block; padding-block: 10px; text-decoration: none; }
   .cp__crumbs a:hover { color: var(--red); }
 

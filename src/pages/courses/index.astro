@@ -8,6 +8,7 @@ import CourseArt from '../../components/CourseArt.astro';
 import Icon from '../../components/Icon.astro';
 import { courses, priceNote } from '../../data/courses';
 import { site } from '../../data/site';
+import { keep } from '../../lib/text';
 
 const siteUrl = Astro.site!;
 
@@ -34,7 +35,7 @@ const jsonLd = [
 ---
 <BaseLayout
   title="Դասընթացներ — MOD Academy, Երևան"
-  description="MOD Academy-ի դասընթացները՝ ինտերիեր դիզայն, 3Ds Max, Corona Renderer, գրաֆիկ դիզայն և վաճառքի կառավարում՝ տևողությամբ, ժամանակացույցով և արժեքով։"
+  description="Ինտերիեր դիզայն, 3Ds Max, Corona Renderer, գրաֆիկ դիզայն և վաճառքի կառավարում՝ տևողություն, ժամանակացույց և արժեք։"
   jsonLd={jsonLd}
 >
   <section class="ci section" aria-labelledby="ci-title">
@@ -54,7 +55,7 @@ const jsonLd = [
 
       <ol class="ci__list" role="list">
         {courses.map((c, i) => (
-          <li class="ci__item" data-reveal style={`--i:${i % 3}`}>
+          <li class="ci__item" data-reveal={i >= 2 ? '' : undefined} style={`--i:${i % 3}`}>
             <article class="ci__card" aria-labelledby={`ci-${c.slug}`}>
               <div class="ci__visual frame" aria-hidden="true">
                 {c.image ? (
@@ -75,7 +76,7 @@ const jsonLd = [
               <h2 class="h2" id={`ci-${c.slug}`}>
                 <a class="ci__link" href={`/courses/${c.slug}/`}>{c.title}</a>
               </h2>
-              <p class="ci__summary">{c.summary}</p>
+              <p class="ci__summary">{keep(c.summary)}</p>
               <CourseFacts course={c} compact />
               <span class="link-arrow ci__more" aria-hidden="true">Մանրամասն<Icon name="arrow" /></span>
             </article>
@@ -95,8 +96,8 @@ const jsonLd = [
 <style>
   .ci { padding-top: calc(var(--header-h) + clamp(24px, 4vw, 56px)); background: var(--paper); }
 
-  .ci__crumbs ol { display: flex; flex-wrap: wrap; gap: 6px; font-size: 0.82rem; color: var(--muted); }
-  .ci__crumbs li + li::before { content: '/'; margin-right: 6px; opacity: 0.6; }
+  .ci__crumbs ol { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px; font-size: 0.82rem; color: var(--muted); }
+  .ci__crumbs li + li::before { content: '/'; content: '/' / ''; margin-right: 6px; opacity: 0.6; }
   .ci__crumbs a { display: inline-block; padding-block: 10px; text-decoration: none; }
   .ci__crumbs a:hover { color: var(--red); }
 
@@ -106,7 +107,8 @@ const jsonLd = [
   .ci__list { display: grid; gap: clamp(32px, 4vw, 56px) clamp(16px, 2vw, 32px); }
 
   /* The whole card opens the course page; the title link carries the name and the focus ring. */
-  .ci__card { position: relative; display: grid; gap: 12px; align-content: start; }
+  .ci__card { position: relative; display: flex; flex-direction: column; gap: 12px; height: 100%; }
+  .ci__summary { flex: 1; }
   .ci__visual { aspect-ratio: 4 / 3; }
   .ci__visual :global(img) { transition: transform 1.2s var(--ease-out); }
   .ci__card:hover .ci__visual :global(img) { transform: scale(1.05); }

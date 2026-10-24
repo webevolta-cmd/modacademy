@@ -1,0 +1,79 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PageHeader from '../../components/PageHeader.astro';
+import VideoCard from '../../components/VideoCard.astro';
+import { videos, videoCategoryLabels } from '../../data/videos';
+
+const categories = [...new Set(videos.map((v) => v.category))];
+
+const jsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'ItemList',
+    name: 'MOD Academy — տեսանյութեր',
+    itemListElement: videos.map((v, i) => ({ '@type': 'ListItem', position: i + 1, url: v.url, name: v.title })),
+  },
+];
+---
+<BaseLayout
+  title="Տեսանյութեր — MOD Academy, Երևան"
+  description="Ընտրված տեսանյութեր MOD Academy-ի գործնական դասերից, դասընթացներից և ուսանողների աշխատանքից։ Դիտումը բացվում է Instagram-ում։"
+  jsonLd={jsonLd}
+>
+  <PageHeader
+    title="Տեսանյութեր"
+    kicker={`${videos.length} ընտրված տեսանյութ`}
+    lead="Կարճ ընտրանի ակադեմիայի տեսանյութերից, որոնք օգնում են պատկերացնել ուսուցումը։ Սեղմելով քարտը՝ տեսանյութը կբացվի Instagram-ում՝ նոր ներդիրում։"
+    crumbs={[{ label: 'Գլխավոր', href: '/' }, { label: 'Տեսանյութեր' }]}
+  />
+
+  <section class="vp" aria-label="Տեսանյութերի ցանկ" data-work-filter data-wf-noun="տեսանյութ">
+    <div class="wrap">
+      {categories.length > 2 && (
+        <div class="vp__filters" role="group" aria-label="Զտել ըստ թեմայի">
+          <button type="button" class="chip" data-wf="all" aria-pressed="true">Բոլորը</button>
+          {categories.map((c) => (
+            <button type="button" class="chip" data-wf={c} aria-pressed="false">{videoCategoryLabels[c]}</button>
+          ))}
+          <p class="muted vp__status" aria-live="polite" data-wf-status></p>
+        </div>
+      )}
+      <div class="vp__grid">
+        {videos.map((v, i) => <VideoCard video={v} index={i} />)}
+      </div>
+      <p class="vp__note muted">
+        Տեսանյութերը ակադեմիայի պաշտոնական Instagram էջից են․ նկարագրությունները գրված են տեսանյութերը դիտելուց հետո։
+      </p>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .vp { padding-block: clamp(24px, 4vw, 48px) clamp(72px, 8vw, 128px); }
+  .vp__filters { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-bottom: clamp(24px, 3vw, 40px); }
+  .vp__status { width: 100%; font-size: 0.85rem; }
+  .chip {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    padding: 8px 16px;
+    border: 1px solid var(--line-strong);
+    border-radius: 999px;
+    background: transparent;
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: background-color 0.35s var(--ease-out), color 0.35s var(--ease-out), border-color 0.35s;
+  }
+  .chip:hover { border-color: var(--ink); }
+  .chip[aria-pressed='true'] { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+  .vp__grid { display: grid; gap: clamp(28px, 4vw, 48px) 18px; }
+  .vp__note { margin-top: clamp(32px, 4vw, 56px); font-size: 0.85rem; max-width: 52rem; }
+
+  @media (min-width: 640px) {
+    .vp__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  }
+
+  @media (min-width: 1000px) {
+    .vp__grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  }
+</style>

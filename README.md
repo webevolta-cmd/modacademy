@@ -1,13 +1,31 @@
 # MOD Academy — website
 
-Armenian-language website for **MOD Academy** (Yerevan, Tigran Mets Ave 4): courses, student work,
-practical lessons, FAQ and a course inquiry form, opened by a scroll-driven cinematic hero generated with
-Higgsfield from a student’s 3Ds Max render.
+Armenian-language website for **MOD Academy** (Yerevan, Tigran Mets Ave 4). It tells one story — from a first
+idea to learning, a portfolio, a certificate and the next professional step — and keeps everything a future
+student needs: courses and their facts, a course finder and comparison, practical lessons, graduates, student
+work, videos, FAQ and an inquiry form.
 
 - Static site built with [Astro 7](https://astro.build) (no server runtime), vanilla TypeScript for interaction.
 - Fonts: Noto Serif Armenian + Noto Sans Armenian (variable, self-hosted from npm, OFL).
-- Images: masters in `src/assets/`, responsive AVIF/WebP generated at build time.
-- Research and sources: [`docs/RESEARCH.md`](docs/RESEARCH.md). Media provenance: [`media-source/README.md`](media-source/README.md).
+- Images: masters in `src/assets/`, responsive AVIF/WebP generated at build time; the hero film and its stills
+  are committed in `public/media/` — nothing is loaded from Higgsfield, Instagram or any other expiring URL.
+- Research and sources: [`docs/RESEARCH.md`](docs/RESEARCH.md) (courses, facts) and
+  [`docs/research/SOURCES.md`](docs/research/SOURCES.md) (graduates, certificate photos, student work, videos).
+  Media provenance: [`media-source/README.md`](media-source/README.md).
+
+## Pages
+
+| Route | What it is |
+|---|---|
+| `/` | Journey hero, introduction, courses + finder + comparison, practical learning and guidance, graduates, student-work and video entry points, FAQ, inquiry and contact |
+| `/courses/`, `/courses/<slug>/` | Course index and one page per course (facts, sources, inquiry) |
+| `/graduates/` | Certificate-ceremony photos and documented graduate stories, each with its source |
+| `/student-work/`, `/student-work/<slug>/` | Student projects with author, course, every view (lightbox) and the original post |
+| `/videos/` | Curated videos from the academy's Instagram; each card opens the exact post |
+| `/inquiry-sent/` | No-JavaScript confirmation after a successful form post |
+
+The old homepage anchors still work: `/#work` lands on the student-work entry point, `/#practice` and
+`/#teaching` on the learning section.
 
 ## Requirements
 
@@ -73,17 +91,21 @@ and values set in the shell or on Netlify take precedence.
 
 ```
 src/
-  data/          site.ts, courses.ts, media.ts, faq.ts, journey.ts — all content, easy to update
-  components/    Hero, About, Courses, Finder, Journey, Work, Practice, Teaching, Faq, Contact, …
-  pages/         index, courses/ (index + [slug]), inquiry-sent, 404, robots.txt, build-info.json
-  scripts/       hero scroll engine, reveals, parallax, filters, finder, lightbox, form, map
+  data/          site, courses, faq, media, hero (story + film timing), graduates, projects, videos
+  components/    JourneyHero, About, Courses, Finder, Learning, GraduatesFeature, WorkTeaser, VideosTeaser,
+                 Faq, FinalCta, Contact, InquiryForm, PageHeader, ProjectFilm, VideoCard, Lightbox, …
+  pages/         index, courses/, graduates/, student-work/ (index + [slug]), videos/, inquiry-sent, 404,
+                 robots.txt, build-info.json
+  scripts/       journey-hero (scroll story), motion (shared frame loop), reveal, draw (red lines), parallax,
+                 filters, finder, lightbox, project-film, inquiry form, map
   styles/        global.css — design tokens, type, layout, motion
 public/
-  media/hero/    optimized hero film (desktop + mobile) and exact first-frame posters
-  media/og/      Open Graph image
-media-source/    master/source media (not served)
-docs/            research record and raw findings
-scripts/         generate-brand-assets.mjs (favicons, logo PNG, OG image)
+  media/hero/journey/   the four film segments (desktop + mobile) and their exact first/last frames
+  media/hero/           the earlier film, used on the student-work page as a labelled AI interpretation
+  media/og/             Open Graph image
+media-source/    master/source media (not served): Higgsfield keyframes and clips, Instagram originals
+docs/            research record, source log for graduates/videos/student work
+scripts/         generate-brand-assets.mjs (favicons, logo PNG, OG image), serve-dist.mjs (static test server)
 tests/           Playwright end-to-end tests
 ```
 
@@ -91,22 +113,43 @@ tests/           Playwright end-to-end tests
 
 - Course facts (duration, schedule, fee, start date): `src/data/courses.ts`. Leave a field `null` when it
   is not confirmed — the site then shows “Ճշտեք ընթացիկ տվյալները” instead of a guess.
-- Contact details and social links: `src/data/site.ts`.
+- Contact details, social links and the navigation: `src/data/site.ts`.
 - FAQ answers: `src/data/faq.ts`.
-- New student work: add the image to `src/assets/work/` and an entry in `src/data/media.ts`.
+- Graduates and certificate photos: `src/data/graduates.ts`. Every story needs a `source` link and an
+  `attribution` — `academy` (the academy's own post says it), `own` (the graduate published it) or
+  `independent` (confirmed elsewhere). A statement only the academy makes must stay attributed to it.
+  Add the source to `docs/research/SOURCES.md`.
+- Student work: put the images in `src/assets/work/` and add a project to `src/data/projects.ts` (author,
+  course, source post and date). The `/student-work/` filters appear by themselves once two categories exist.
+- Videos: `src/data/videos.ts` — thumbnail in `src/assets/videos/`, the exact Instagram post URL, an Armenian
+  title and a description written after watching the video.
+- Sections without data (e.g. no videos yet) are left out of the page automatically.
 
-## Hero film
+## Homepage hero
 
-`public/media/hero/hero-desktop-v2.mp4` (1280×1280, 5.2 MB) and `hero-mobile-v2.mp4` (portrait screens,
-900×1200, 3.5 MB) are loaded after the page has rendered, into memory, and scrubbed by scroll position. Both
-are H.264 with short keyframe intervals and no B-frames, which keeps seeking fast. The exact first frame of
-each encode is the poster, so the swap is invisible; the video element joins the page only on the first
-scroll, so the poster stays the page's Largest Contentful Paint. Encoding commands: `media-source/README.md`.
-When re-encoding, give the files a new version suffix (the files are cached for a week).
+A five-chapter scroll story (`src/components/JourneyHero.astro`, `src/scripts/journey-hero.ts`, timing in
+`src/data/hero.ts`): 01 the first idea → 02 learning → 03 the project (sketch, 3D model, materials, light,
+visualization) → 04 portfolio and certificate → 05 the next step, ending with «Հաջորդ պատմությունը կարող է
+լինել քոնը» and two calls to action. The heading and both buttons are visible at once.
 
-The hero pins and scrubs only when motion is allowed and the screen is at least 540 px tall. Visitors with
-*reduced motion*, short screens (landscape phones, strongly zoomed-in browsers), *data saver* or a slow
-connection get the poster and/or a static layout; all text and links are available without the animation.
+- **Film:** Higgsfield, generated for the site (Nano Banana Pro keyframes, MiniMax H3 2K clips with start
+  and end frames, 2560×1440 at a native 24 fps, no frame interpolation). It is labelled on the page as an
+  AI illustration, not student work or the academy's classroom. Details: `media-source/README.md`.
+- **Delivery:** four H.264 segments (desktop 1920×1080, 11.3 MB in total; phones 960×720, 4.9 MB), loaded
+  one after another as in-memory blobs after the page has rendered and scrubbed by scroll position with
+  smoothing. Until a segment is ready, the exact boundary frame is shown as a still, so the picture never jumps.
+- **Real photographs** — practical lessons, certificate ceremonies and graduate stories — are HTML layers
+  on top of the film, taken from `src/data/media.ts` and `src/data/graduates.ts`.
+- **Controls:** a chapter indicator with direct links to each chapter, «Անցնել դասընթացներին» to skip the
+  story, keyboard focus support and pointer depth on desktop. Phones get a shorter story (about 4.8 instead of 6
+  screen heights of scrolling) and a 4:3 film window with the text below.
+- **Fallbacks:** the story pins only when motion is allowed, the screen is at least 560 px tall and every
+  chapter's text fits. Otherwise — *reduced motion*, landscape phones, very large text — the same five
+  chapters are shown as a storyboard with stills. *Data saver* and 2G/3G connections never download the film.
+  There is no audio and nothing traps scrolling.
+- Offscreen, the frame loop stops; the film never plays on its own.
+
+When re-encoding, give the files a new name (media is cached for a week).
 
 ## Tests
 
@@ -116,6 +159,11 @@ npx playwright install chromium   # once, if no Chromium is available
 npm run test:e2e
 ```
 
-`tests/site.spec.ts` checks every page for console errors and horizontal overflow at several widths,
-the hero scroll engine, course filtering, course → form hand-off, the course finder, the lightbox,
-the FAQ, form validation and the honest offline fallback, the mobile menu, and reduced motion.
+`tests/site.spec.ts` checks every page for console errors and horizontal overflow on desktop and mobile,
+the journey hero (scrubbing, chapters, chapter links, skip link, pointer depth, AI label, short-screen and
+reduced-motion fallbacks), the navigation and old anchors, image reveals, the student-work lightbox and film,
+video links, graduate sources, course filtering, course → form hand-off, the course finder, the FAQ, form
+validation and the honest offline fallback, and the mobile menu.
+
+Set `PW_CHROMIUM_PATH` to use an installed Chromium instead of `npx playwright install`, or `BASE_URL` to
+test a deployed copy.

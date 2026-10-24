@@ -2,13 +2,14 @@
 import Icon from './Icon.astro';
 import SplitText from './SplitText.astro';
 import { site } from '../data/site';
+import { keep } from '../lib/text';
 ---
 <section class="cta on-night" aria-labelledby="cta-title">
   <div class="cta__arc" aria-hidden="true" data-parallax style="--ps:1"></div>
   <div class="wrap cta__inner">
-    <p class="label label--red" data-reveal>Հերթը քոնն է</p>
-    <SplitText id="cta-title" class="display cta__title" text="Պատրա՞ստ ես սկսել քո ուղին" accent="ուղին" />
-    <p class="lead" data-reveal>Ուղարկիր հայտ կամ զանգահարիր՝ ակադեմիան կներկայացնի ընթացիկ խմբերը, գրաֆիկը և պայմանները։</p>
+    <p class="label label--red" data-reveal>Հաջորդ քայլը</p>
+    <SplitText id="cta-title" class="display cta__title" text="Պատրա՞ստ եք սկսել Ձեր ուղին" accent="ուղին" />
+    <p class="lead" data-reveal>{keep('Ուղարկեք հայտ կամ զանգահարեք՝ ակադեմիան կներկայացնի ընթացիկ խմբերը, ժամանակացույցը և պայմանները։ Կարող եք գրել նաև Instagram-ում։')}</p>
     <div class="cta__actions" data-reveal>
       <a class="btn btn--red" href="#inquiry">Ուղարկել հայտ<Icon name="arrow" class="btn__icon" /></a>
       <a class="btn btn--ghost" href={site.phone.href}><Icon name="phone" class="btn__icon" />{site.phone.display}</a>
