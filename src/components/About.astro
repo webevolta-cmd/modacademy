@@ -5,8 +5,10 @@ import { site } from '../data/site';
 import { courses } from '../data/courses';
 import { keep } from '../lib/text';
 
+// How the section reads the academy's figures (the values themselves come from its bio).
+const statLabels: Record<string, string> = { 'տարի': 'տարվա փորձ' };
 const figures = [
-  ...site.stats.map((s) => ({ ...s, note: true })),
+  ...site.stats.map((s) => ({ ...s, label: statLabels[s.label] ?? s.label, note: true })),
   { value: courses.length, suffix: '', label: 'դասընթաց', note: false },
 ];
 // Armenian convention leaves four-digit numbers unspaced (1000+), as in the academy's own bio.
@@ -19,7 +21,7 @@ const format = (n: number) => String(n);
       <SplitText
         id="about-title"
         class="h1 about__title"
-        text="Դիզայն սովորում են՝ տեսնելով, փորձելով և ստեղծելով"
+        text="Այստեղ սովորում ես՝ տեսնելով, փորձելով և ստեղծելով"
         accent="ստեղծելով"
       />
       <div class="about__intro" data-reveal>
@@ -29,8 +31,8 @@ const format = (n: number) => String(n);
           )}
         </p>
         <p class="muted">
-          Նախկինում հայտնի էր որպես {site.formerName}։ Դասերն անցնում են Տիգրան Մեծի պողոտայում՝ Հանրապետության
-          հրապարակի մոտ, իսկ գործնական դասերը՝ Երևանի դիզայնի սրահներում։
+          Նախկինում հայտնի էինք որպես {site.formerName}։ Մենք Տիգրան Մեծի պողոտայում ենք՝ Հանրապետության հրապարակի
+          մոտ, իսկ ինտերիերի գործնական դասերի համար միասին այցելում ենք Երևանի դիզայնի սրահները։
         </p>
       </div>
     </div>

@@ -458,6 +458,9 @@ test.describe('site structure', () => {
 
   test('the homepage project film starts by itself in view, pauses off-screen and respects a pause', async ({ page }) => {
     await page.goto('/');
+    // Under the site's smooth scrolling, Playwright's own scroll-into-view retries animate and can carry the
+    // film out of view mid-click, which (correctly) pauses it and turns the click into "play". Scroll instantly.
+    await page.addStyleTag({ content: 'html { scroll-behavior: auto !important; }' });
     const film = page.locator('#featured-film [data-pfilm]');
     const video = film.locator('video');
     await expect(film).toHaveAttribute('data-autoplay', '');

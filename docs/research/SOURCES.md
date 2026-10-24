@@ -1,6 +1,6 @@
 # Sources — graduates, certificate photos, student work and videos
 
-Every graduate statement, photograph, project and video on the site comes from a public post listed here. Research was done on 2026-10-24, logged out, through Instagram's public post embeds (`/p/<code>/embed/captioned/`), the academy's TikTok creator embed, and public Behance pages. No private APIs, logged-in sessions or credentials were used. Photos are published as they appear in the source: cropped out of the academy's slide templates or taken from video frames, with no AI upscaling or retouching of faces or documents.
+Every graduate statement, photograph, project and video on the site comes from a public post listed here. Research was done on 2026-10-24, logged out, through Instagram's public post embeds (`/p/<code>/embed/captioned/`), the academy's TikTok creator embed, and public Behance pages. No private APIs, logged-in sessions or credentials were used. Graduation and certificate photos are published as they appear in the source: cropped out of the academy's slide templates or taken from video frames, with no AI upscaling or retouching of faces or documents. (The practical-lesson and sales-class stills in `src/assets/environment/` are a separate set: since 2026-10-24 they are 2K upscales of the reel frames, with nothing in the frames changed; see `media-source/README.md`.)
 
 ## How claims are attributed
 
@@ -16,12 +16,12 @@ A caption that only wishes someone success is never presented as an achievement.
 
 | Graduate | Course | Statement on the site | Attribution | Source |
 |---|---|---|---|---|
-| Սյուզի Արսենյան (Syuzi Arsenyan) | Ինտերիեր դիզայն | Ավարտելուց հետո Սյուզին սկսեց աշխատել ոլորտում և այսօր ստեղծում է արժեքավոր ու ֆունկցիոնալ դիզայններ խոշոր նախագծերի համար։ | academy | https://www.instagram.com/p/DcyiPfRiK_b/ |
-| Շուշան Թևոսյան (Shushan Tevosyan) | 3Ds Max | Այսօր Շուշանն աշխատում է որպես ֆրիլանս ինտերիեր դիզայներ և 3D վիզուալիզատոր՝ ստեղծելով ֆունկցիոնալ ու գեղեցիկ տարածքներ և դրանց ֆոտոռեալիստիկ վիզուալիզացիաները 3ds Max-ով և Corona Renderer-ով։ | own | https://www.behance.net/shushantevosyan |
-| Հասմիկ Աբովյան (Hasmik Abovyan) | 3Ds Max | Դասընթացն ավարտելուց հետո Հասմիկը ձեռք բերած հմտությունները հաջողությամբ կիրառում է իրական նախագծերում։ | academy | https://www.instagram.com/p/DaSbG-BCEUr/ |
+| Սյուզի Արսենյան (Syuzi Arsenyan) | Ինտերիեր դիզայն | Ավարտելուց հետո Սյուզին սկսեց աշխատել ոլորտում և այսօր արդեն ստեղծում է արժեքավոր ու ֆունկցիոնալ դիզայններ խոշոր նախագծերի համար։ | academy | https://www.instagram.com/p/DcyiPfRiK_b/ |
+| Շուշան Թևոսյան (Shushan Tevosyan) | 3Ds Max | Այսօր Շուշանը ֆրիլանս ինտերիեր դիզայներ և 3D վիզուալիզատոր է․ նա ստեղծում է ֆունկցիոնալ ու գեղեցիկ տարածքներ և դրանց ֆոտոռեալիստիկ վիզուալիզացիաները՝ 3ds Max-ով և Corona Renderer-ով։ | own | https://www.behance.net/shushantevosyan |
+| Հասմիկ Աբովյան (Hasmik Abovyan) | 3Ds Max | Դասընթացն ավարտելուց հետո Հասմիկն արդեն հաջողությամբ կիրառում է ձեռք բերած հմտություններն իրական նախագծերում։ | academy | https://www.instagram.com/p/DaSbG-BCEUr/ |
 
 Notes:
-- Syuzi Arsenyan: the statement is the academy's caption, verbatim; no independent confirmation was found (tagged account @syuusiee is private or unavailable; no Behance/LinkedIn found).
+- Syuzi Arsenyan: the statement is the academy's caption (one word, «արդեն», added in the 2026-10-24 copy pass); no independent confirmation was found (tagged account @syuusiee is private or unavailable; no Behance/LinkedIn found).
 - Shushan Tevosyan: her Behance profile ("Interior Design & 3D Visualization Specialist", "I work as a freelance designer"; graduated NUACA in interior design) — self-description, no client or employer named. Her academy post: https://www.instagram.com/p/DezOW2GCMyH/ (22.10.2026). Her Behance project https://www.behance.net/gallery/243652373/Neoclassical-interior-design contains the same renders.
 - Hasmik Abovyan: academy caption «Ուսումնական ճանապարհի ընթացքում ձեռք բերված հմտությունները նա գերազանց կիրառում է իրական նախագծերում։» — not corroborated by her own profile.
 - Considered and not published as stories: Astghik Sayadyan (caption is encouragement only), Kristine Simonyan (her profile offers visualisation services, but the post predates the course end and shows no realised project), the other graduates (no documented professional step).
@@ -31,7 +31,7 @@ Notes:
 | Photo (asset id) | Caption on the site | Published | Source |
 |---|---|---|---|
 | `elen-vanoyan-certificate` | Էլեն Վանոյան՝ «3D MAX and Corona Renderer» դասընթացի վկայականով | 10.07.2025 | https://www.instagram.com/p/DL7D_2WBfWl/ |
-| `graduation-evening-2026-group` | Ավարտական երեկո․ շրջանավարտները վկայականներով | 02.06.2026 | https://www.instagram.com/p/DZFIICBoU_4/ |
+| `graduation-evening-2026-group` | Ավարտական երեկո․ նոր մասնագետները՝ վկայականներով | 02.06.2026 | https://www.instagram.com/p/DZFIICBoU_4/ |
 | `syuzi-arsenyan-certificate` | Սյուզի Արսենյան՝ «Ինտերիեր դիզայն» դասընթացի վկայականով | 02.09.2026 | https://www.instagram.com/p/DcyiPfRiK_b/ |
 | `karolina-sargsyan-certificate` | Կառոլինա Սարգսյան՝ «3D MAX and Corona Renderer» դասընթացի վկայականով | 12.07.2025 | https://www.instagram.com/p/DMALEmitD1l/ |
 | `kristine-sahakyan-ceremony` | Քրիստինե Սահակյան՝ վկայականների հանձնման օրը | 06.09.2026 | https://www.instagram.com/p/Dc8z8vGCPHB/ |
@@ -42,10 +42,10 @@ Notes:
 | `susanna-vardanyan-certificate` | Սուսաննա Վարդանյան՝ վկայականով | 24.03.2026 | https://www.instagram.com/p/DWRVsRziMjT/ |
 | `kristine-sahakyan-certificate` | Քրիստինե Սահակյան՝ վկայականով | 06.09.2026 | https://www.instagram.com/p/Dc8z8vGCPHB/ |
 | `graduation-evening-2026-certificate` | Ավարտական երեկո․ վկայականը ձեռքին | 02.06.2026 | https://www.instagram.com/p/DZFIICBoU_4/ |
-| `graduation-evening-2026-toast` | Ավարտական երեկոյից հետո՝ շնորհավորանքներ | 02.06.2026 | https://www.instagram.com/p/DZFIICBoU_4/ |
+| `graduation-evening-2026-toast` | Ավարտական երեկոյից հետո՝ նոր սկզբի կենացը | 02.06.2026 | https://www.instagram.com/p/DZFIICBoU_4/ |
 | `syuzi-arsenyan-ceremony` | Սյուզի Արսենյան՝ վկայականների հանձնման արարողությանը | 02.09.2026 | https://www.instagram.com/p/DcyiPfRiK_b/ |
 | `astghik-sayadyan-ceremony` | Աստղիկ Սայադյան՝ վկայականների հանձնման արարողությանը | 11.09.2026 | https://www.instagram.com/p/DdJpOP8CJLc/ |
-| `graduation-evening-2026-walk` | Ավարտական երեկո․ վկայականը ձեռքին՝ էկրանի առջև | 02.06.2026 | https://www.instagram.com/p/DZFIICBoU_4/ |
+| `graduation-evening-2026-walk` | Ավարտական երեկո․ վստահ քայլեր՝ վկայականը ձեռքին | 02.06.2026 | https://www.instagram.com/p/DZFIICBoU_4/ |
 | `graduation-evening-2025-stage` | Ավարտական երեկո․ ելույթ բեմից | 08.12.2025 | https://www.instagram.com/p/DSAOOg6jwHX/ |
 | `dac56uvcfup-s01-certificate` | Քրիստինե Սիմոնյան՝ «Ինտերիեր դիզայն» դասընթացի վկայականով | 26.06.2026 | https://www.instagram.com/p/DaC56UvCFuP/ |
 | `da48ye0ihce-s02-certificate` | Պերճուհի Կոստանյան՝ «3Ds Max» դասընթացի վկայականով | 17.07.2026 | https://www.instagram.com/p/Da48yE0iHcE/ |
