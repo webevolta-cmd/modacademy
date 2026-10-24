@@ -17,7 +17,6 @@ const prints = graduationPhotos.slice(0, 4);
 const stories = graduateStories.slice(0, 3);
 
 const first = filmSegments[0];
-const fmt = (iso: string) => iso.split('-').reverse().join('.');
 
 // Stills used by the storyboard (static) layout, one per chapter.
 const stills = [
@@ -40,6 +39,7 @@ const stills = [
             class="jh__video"
             data-jh-video={i}
             data-desktop={s.desktop}
+            data-desktop-lite={s.desktopLite}
             data-mobile={s.mobile}
             data-still-start={s.stillStart}
             data-still-end={s.stillEnd}
@@ -109,7 +109,7 @@ const stills = [
         {glimpse.map((g, k) => (
           <figure class="jh__print" data-jh-item={k} style={`--k:${k}`}>
             <Picture src={g.image} alt={g.alt} widths={[320, 480]} sizes="(min-width: 900px) 15vw, 30vw" formats={['avif', 'webp']} fallbackFormat="webp" loading="lazy" />
-            <figcaption>{keep(`${g.partner} · ${fmt(g.date)}`)}</figcaption>
+            <figcaption>{keep(g.partner)}</figcaption>
           </figure>
         ))}
         <p class="jh__note">Մեր գործնական դասերից</p>
@@ -119,7 +119,7 @@ const stills = [
         {prints.map((g, k) => (
           <figure class="jh__print jh__print--grad" data-jh-item={k} style={`--k:${k}`}>
             <Picture src={g.image} alt={g.alt} widths={[360, 540, 720]} sizes="(min-width: 900px) 18vw, 40vw" formats={['avif', 'webp']} fallbackFormat="webp" loading="lazy" />
-            <figcaption>{keep(`${g.caption} · ${fmt(g.date)}`)}</figcaption>
+            <figcaption>{keep(g.caption)}</figcaption>
           </figure>
         ))}
         <p class="jh__note">Մեր շրջանավարտները</p>

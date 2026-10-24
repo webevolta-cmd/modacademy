@@ -9,6 +9,8 @@
 export interface FilmSegment {
   id: string;
   desktop: string;
+  /** 1280×720 version of the desktop file for slower connections (about half the size). */
+  desktopLite: string;
   mobile: string;
   /** Scroll progress (0–1 of the pinned range) over which the segment plays. */
   from: number;
@@ -26,6 +28,7 @@ export const filmSegments: FilmSegment[] = [
   {
     id: 'idea',
     desktop: media('journey-1-idea-1920.mp4'),
+    desktopLite: media('journey-1-idea-1280.mp4'),
     mobile: media('journey-1-idea-960.mp4'),
     from: 0.03,
     to: 0.19,
@@ -37,6 +40,7 @@ export const filmSegments: FilmSegment[] = [
   {
     id: 'learning',
     desktop: media('journey-2-learning-1920.mp4'),
+    desktopLite: media('journey-2-learning-1280.mp4'),
     mobile: media('journey-2-learning-960.mp4'),
     from: 0.2,
     to: 0.31,
@@ -48,6 +52,7 @@ export const filmSegments: FilmSegment[] = [
   {
     id: 'project',
     desktop: media('journey-3-project-1920.mp4'),
+    desktopLite: media('journey-3-project-1280.mp4'),
     mobile: media('journey-3-project-960.mp4'),
     from: 0.37,
     to: 0.64,
@@ -59,6 +64,7 @@ export const filmSegments: FilmSegment[] = [
   {
     id: 'portfolio',
     desktop: media('journey-4-portfolio-1920.mp4'),
+    desktopLite: media('journey-4-portfolio-1280.mp4'),
     mobile: media('journey-4-portfolio-960.mp4'),
     from: 0.65,
     to: 0.74,

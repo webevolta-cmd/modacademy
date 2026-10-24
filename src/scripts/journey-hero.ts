@@ -7,10 +7,17 @@ import { clamp, smooth, request, onScroll, motionAllowed } from './motion';
 // Must match the pre-paint check in BaseLayout.astro.
 const PIN_QUERY = '(min-height: 560px)';
 const FRAME = 1 / 24;
+// A segment already this close (seconds) to the story position needs no seek before it is shown.
+const SWITCH_TOLERANCE = 0.5;
+// A seek that has not reported back after this long is treated as finished.
+const SEEK_WATCHDOG = 700;
+const wait = (ms: number) => new Promise<void>((r) => setTimeout(r, ms));
 
 interface Segment {
   video: HTMLVideoElement;
   src: string;
+  /** Lighter file for slower connections (desktop only; phones already get a small file). */
+  lite: string;
   stillStart: string;
   stillEnd: string;
   from: number;
@@ -19,7 +26,10 @@ interface Segment {
   loading: Promise<void> | null;
   duration: number;
   seeking: boolean;
+  seekStart: number;
+  seekedAt: number;
   want: number;
+  url: string;
 }
 
 type Window4 = [number, number, number, number];
@@ -80,6 +90,7 @@ export function initJourneyHero(root: HTMLElement): void {
     return {
       video,
       src: (mobile ? video.dataset.mobile : video.dataset.desktop) ?? '',
+      lite: (mobile ? '' : video.dataset.desktopLite) ?? '',
       stillStart: (mobile ? video.dataset.stillStartMobile : video.dataset.stillStart) ?? '',
       stillEnd: (mobile ? video.dataset.stillEndMobile : video.dataset.stillEnd) ?? '',
       from: Number(video.dataset.from),
@@ -88,7 +99,10 @@ export function initJourneyHero(root: HTMLElement): void {
       loading: null,
       duration: 0,
       seeking: false,
+      seekStart: 0,
+      seekedAt: 0,
       want: 0,
+      url: '',
     };
   });
 
@@ -111,45 +125,66 @@ export function initJourneyHero(root: HTMLElement): void {
   };
 
   // ── Film ───────────────────────────────────────────────────────────────────
-  const nav = navigator as Navigator & { connection?: { saveData?: boolean; effectiveType?: string } };
+  const nav = navigator as Navigator & { connection?: { saveData?: boolean; effectiveType?: string; downlink?: number } };
   const filmAllowed = !(nav.connection?.saveData || /(^|-)2g|3g/.test(nav.connection?.effectiveType ?? ''));
+  // Slower connections get the 1280×720 files: decided from the browser's estimate when it offers
+  // one, and otherwise from how fast the first segment arrives.
+  const LITE_BELOW = 10; // Mbit/s
+  let lite = (nav.connection?.downlink ?? Infinity) < LITE_BELOW;
+
+  // Attach a downloaded segment to its video element and wait until a frame can be shown.
+  const attach = (s: Segment, blob: Blob) =>
+    new Promise<void>((resolve, reject) => {
+      const v = s.video;
+      const done = (ok: boolean) => {
+        clearTimeout(timer);
+        v.removeEventListener('loadeddata', onData);
+        v.removeEventListener('error', onError);
+        if (ok) resolve();
+        else reject(new Error('Film segment could not be decoded'));
+      };
+      const onData = () => done(true);
+      const onError = () => done(false);
+      const timer = setTimeout(() => done(v.readyState >= 2), 10000);
+      v.addEventListener('loadeddata', onData);
+      v.addEventListener('error', onError);
+      if (s.url) URL.revokeObjectURL(s.url);
+      s.url = URL.createObjectURL(blob);
+      // Rendered but transparent (not display:none), so every browser decodes and paints its frames.
+      // WebKit does not decode a preload="none" source until asked, so request it explicitly.
+      v.hidden = false;
+      v.preload = 'auto';
+      v.src = s.url;
+      v.load();
+    });
 
   const load = (s: Segment): Promise<void> => {
+    if (s.ready) return Promise.resolve();
     if (s.loading) return s.loading;
-    s.loading = fetch(s.src)
-      .then((res) => {
-        if (!res.ok) throw new Error(`Film segment failed: ${res.status}`);
-        return res.blob();
-      })
-      .then(
-        (blob) =>
-          new Promise<void>((resolve) => {
-            s.video.addEventListener(
-              'loadeddata',
-              async () => {
-                s.duration = s.video.duration;
-                try {
-                  // Some mobile browsers only paint seeked frames after one play() call.
-                  await s.video.play();
-                  s.video.pause();
-                } catch {
-                  /* autoplay may be refused; seeking still works */
-                }
-                s.ready = true;
-                resolve();
-                request(tick);
-              },
-              { once: true },
-            );
-            // WebKit does not decode a preload="none" source until asked, so request it explicitly.
-            s.video.preload = 'auto';
-            s.video.src = URL.createObjectURL(blob);
-            s.video.load();
-          }),
-      )
-      .catch(() => {
-        // The exact boundary stills stay in place; copy and navigation keep working.
-      });
+    s.loading = (async () => {
+      for (let attempt = 0; attempt < 3 && !s.ready; attempt++) {
+        try {
+          const started = performance.now();
+          const res = await fetch(lite && s.lite ? s.lite : s.src);
+          if (!res.ok) throw new Error(`Film segment failed: ${res.status}`);
+          const blob = await res.blob();
+          const mbps = (blob.size * 8) / 1e6 / Math.max(0.05, (performance.now() - started) / 1000);
+          if (s.lite && mbps < LITE_BELOW) lite = true;
+          await attach(s, blob);
+          s.duration = s.video.duration;
+          // Some mobile browsers only paint seeked frames after one play() call; never wait long for it.
+          await Promise.race([s.video.play().catch(() => undefined), wait(800)]);
+          s.video.pause();
+          s.ready = true;
+          request(tick);
+        } catch {
+          await wait(1500 * (attempt + 1));
+        }
+      }
+    })().finally(() => {
+      // A failed segment may be tried again later; until then its exact boundary stills stand in.
+      if (!s.ready) s.loading = null;
+    });
     return s.loading;
   };
 
@@ -164,6 +199,7 @@ export function initJourneyHero(root: HTMLElement): void {
   segments.forEach((s) => {
     s.video.addEventListener('seeked', () => {
       s.seeking = false;
+      s.seekedAt = performance.now();
       if (Math.abs(s.video.currentTime - s.want) > FRAME / 2) request(tick);
       else request(tick);
     });
@@ -171,10 +207,14 @@ export function initJourneyHero(root: HTMLElement): void {
 
   const seek = (s: Segment, t: number) => {
     s.want = t;
-    if (!s.ready || s.seeking) return;
+    if (!s.ready) return;
+    if (s.seeking && performance.now() - s.seekStart < SEEK_WATCHDOG) return;
     if (Math.abs(s.video.currentTime - t) > FRAME / 2) {
       s.seeking = true;
+      s.seekStart = performance.now();
       s.video.currentTime = t;
+    } else {
+      s.seeking = false;
     }
   };
 
@@ -189,18 +229,27 @@ export function initJourneyHero(root: HTMLElement): void {
     source?.remove();
   };
 
+  let current = -1;
+  let enteredAt = 0;
   const film = (v: number) => {
     let i = 0;
     for (let k = 0; k < segments.length; k++) if (v >= segments[k].from) i = k;
     const s = segments[i];
     if (!s) return;
+    if (i !== current) {
+      current = i;
+      enteredAt = performance.now();
+    }
     const local = clamp((v - s.from) / (s.to - s.from));
     if (filmAllowed && !s.ready && scrolled) load(s);
 
     if (s.ready && scrolled) {
-      seek(s, local * Math.max(0, s.duration - FRAME));
-      // Switch only once the incoming segment shows the right frame, so there is no flash.
-      const settled = !s.seeking && Math.abs(s.video.currentTime - s.want) <= FRAME;
+      const t = local * Math.max(0, s.duration - FRAME);
+      // Switch once the incoming segment shows a frame from this pass through it: a seek finished
+      // since the story entered it, or it already sits at the right frame. A fast scroll moves the
+      // film several times faster than real time, so waiting for an exact match would skip it.
+      // (Checked before the next seek starts, which would mark the video as seeking again.)
+      const settled = !s.seeking && (s.seekedAt > enteredAt || Math.abs(s.video.currentTime - t) <= SWITCH_TOLERANCE);
       if (shown !== i && settled) {
         s.video.hidden = false;
         s.video.classList.add('is-shown');
@@ -209,6 +258,7 @@ export function initJourneyHero(root: HTMLElement): void {
         });
         shown = i;
       }
+      seek(s, t);
     } else if (shown !== i) {
       // Not loaded yet: show the nearest exact boundary frame.
       segments.forEach((o) => o.video.classList.remove('is-shown'));
@@ -508,8 +558,9 @@ export function initJourneyHero(root: HTMLElement): void {
     if (active && target > 0.03) window.scrollTo({ top, behavior: 'smooth' });
   });
 
-  // The first segment is fetched after the page has loaded, so it never competes with first paint.
-  const prefetch = () => setTimeout(() => active && filmAllowed && segments[0] && load(segments[0]), 300);
+  // The film is fetched in story order right after the page has loaded, so it never competes with
+  // first paint and the later scenes are ready by the time the visitor scrolls to them.
+  const prefetch = () => setTimeout(() => active && inView && loadAll(), 300);
   if (document.readyState === 'complete') prefetch();
   else window.addEventListener('load', prefetch, { once: true });
 }
