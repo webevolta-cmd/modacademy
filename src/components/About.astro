@@ -37,13 +37,12 @@ const format = (n: number) => String(n);
     <ul class="about__figures" role="list">
       {figures.map((f, i) => (
         <li class="about__figure" data-reveal style={`--i:${i}`}>
-          <span class="visually-hidden">{format(f.value)}{f.suffix} {f.label}{f.note && ` (${site.statsSource.charAt(0).toLowerCase()}${site.statsSource.slice(1)})`}</span>
+          <span class="visually-hidden">{format(f.value)}{f.suffix} {f.label}</span>
           <span class="num about__n" aria-hidden="true" data-count={f.value} data-suffix={f.suffix}>{format(f.value)}{f.suffix}</span>
-          <span class="about__l" aria-hidden="true">{f.label}{f.note && <sup>*</sup>}</span>
+          <span class="about__l" aria-hidden="true">{f.label}</span>
         </li>
       ))}
     </ul>
-    <p class="about__source muted" aria-hidden="true">* {site.statsSource}</p>
 
   </div>
 </section>

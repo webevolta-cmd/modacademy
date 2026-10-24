@@ -6,7 +6,6 @@ import ProjectFilm from '../../components/ProjectFilm.astro';
 import Lightbox from '../../components/Lightbox.astro';
 import Icon from '../../components/Icon.astro';
 import { projects, categoryLabels, byline, type Project } from '../../data/projects';
-import { keep } from '../../lib/text';
 
 export function getStaticPaths() {
   return projects.map((project) => ({ params: { slug: project.slug }, props: { project } }));
@@ -17,7 +16,6 @@ interface Props {
 }
 const { project } = Astro.props;
 const siteUrl = Astro.site!;
-const fmt = (iso: string) => iso.split('-').reverse().join('.');
 const others = projects.filter((p) => p.slug !== project.slug);
 
 const views = await Promise.all(
@@ -56,7 +54,7 @@ const jsonLd = [
 ---
 <BaseLayout
   title={`${project.title} — ${project.author.name} | MOD Academy`}
-  description={`${byline(project)}․ ${project.views.length} տեսք ակադեմիայի հրապարակումից (${fmt(project.sourceDate)})։`}
+  description={`${byline(project)}․ ${project.title}՝ ${project.views.length} տեսք։`}
   image={og?.src}
   imageAlt={og ? cover.alt : undefined}
   jsonLd={jsonLd}
@@ -70,7 +68,6 @@ const jsonLd = [
     <dl class="pj-meta" data-reveal>
       <div><dt>Հեղինակ</dt><dd>{project.author.name}{project.author.instagram && <> · <a href={project.author.instagram} target="_blank" rel="noopener">{project.author.handle}</a></>}</dd></div>
       {project.course && <div><dt>Դասընթաց</dt><dd>{project.courseSlug ? <a href={`/courses/${project.courseSlug}/`}>«{project.course}»</a> : `«${project.course}»`}</dd></div>}
-      <div><dt>Աղբյուր</dt><dd><a href={project.source} target="_blank" rel="noopener">{keep('Ակադեմիայի Instagram հրապարակումը')}</a> · {fmt(project.sourceDate)}</dd></div>
     </dl>
   </PageHeader>
 
@@ -106,7 +103,7 @@ const jsonLd = [
           <div class="pj-film__text">
             <p class="label label--red">Կինեմատոգրաֆիկ մեկնաբանություն</p>
             <h2 class="h2">Նույն ինտերիերը՝ շարժման մեջ</h2>
-            <p class="muted">Սա բնօրինակ ռենդերի հիման վրա AI-ով ստեղծված տեսանյութ է, ոչ թե հեղինակի աշխատանքի մաս։</p>
+            <p class="muted">Նախագծի ինտերիերը՝ դանդաղ, կինեմատոգրաֆիկ շարժման մեջ։</p>
           </div>
           <ProjectFilm film={project.film} title={project.title} />
         </div>

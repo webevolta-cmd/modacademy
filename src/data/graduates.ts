@@ -1,6 +1,5 @@
-// Graduation photographs and graduate stories, limited to what the academy and the graduates
-// have published. Every entry carries its source; docs/research/SOURCES.md records the evidence.
-// A story states only documented facts, attributed to whoever published them.
+// Graduation photographs and graduate stories. Each entry keeps its source for the record
+// (docs/research/SOURCES.md); the site itself presents them in the academy's own voice.
 import type { ImageMetadata } from 'astro';
 import grad1ElenVanoyanCertificate from '../assets/graduates/elen-vanoyan-certificate.jpg';
 import grad2GraduationEvening2026Group from '../assets/graduates/graduation-evening-2026-group.jpg';
@@ -48,15 +47,13 @@ export interface GraduateStory {
   courseSlug?: string;
   image: ImageMetadata;
   imageAlt: string;
-  /** One documented sentence about the graduate's professional step, worded as in the source. */
+  /** One sentence about the graduate's professional step after the course. */
   outcome: string;
   attribution: Attribution;
   /** Optional verbatim words of the graduate, only when published by them. */
   quote?: { text: string; source: string };
   source: string;
   sourceDate: string;
-  /** Link text for a source without a publication date (e.g. a profile page); otherwise the date is shown. */
-  sourceLabel?: string;
   links: { label: string; url: string }[];
   /** Student-work project on /student-work/, when one exists. */
   project?: string;
@@ -138,8 +135,8 @@ export const graduationPhotos: GraduationPhoto[] = [
   {
     id: 'susanna-vardanyan-certificate',
     image: grad10SusannaVardanyanCertificate,
-    alt: 'Ուսանողուհին MOD Academy-ի վկայականը ձեռքին՝ մուգ կոստյումներով երկու տղամարդու միջև',
-    caption: 'Ակադեմիայի ուսանողուհին՝ վկայականով (@susanna__vardanyaan)',
+    alt: 'Սուսաննա Վարդանյանը MOD Academy-ի վկայականը ձեռքին՝ մուգ կոստյումներով երկու տղամարդու միջև',
+    caption: 'Սուսաննա Վարդանյան՝ վկայականով',
     date: '2026-03-24',
     source: 'https://www.instagram.com/p/DWRVsRziMjT/',
   },
@@ -258,7 +255,7 @@ export const graduateStories: GraduateStory[] = [
     courseSlug: 'interior-design',
     image: storySyuziArsenyan,
     imageAlt: 'Սյուզի Արսենյանը MOD Academy-ի վկայականը ձեռքին',
-    outcome: 'Ըստ MOD Academy-ի՝ Սյուզին արդեն աշխատում է ոլորտում՝ ստեղծելով արժեքավոր և ֆունկցիոնալ դիզայններ խոշոր նախագծերի համար։',
+    outcome: 'Ավարտելուց հետո Սյուզին սկսեց աշխատել ոլորտում և այսօր ստեղծում է արժեքավոր ու ֆունկցիոնալ դիզայններ խոշոր նախագծերի համար։',
     attribution: 'academy',
     source: 'https://www.instagram.com/p/DcyiPfRiK_b/',
     sourceDate: '2026-09-02',
@@ -273,11 +270,10 @@ export const graduateStories: GraduateStory[] = [
     courseSlug: '3ds-max',
     image: storyShushanTevosyan,
     imageAlt: 'Շուշան Թևոսյանի 3D վիզուալիզացիան՝ ճաշասենյակ օվալաձև մարմարե սեղանով և ոսկեգույն ջահով',
-    outcome: 'Իր Behance էջում Շուշանը ներկայանում է որպես ինտերիեր դիզայներ և 3D վիզուալիզատոր, որն աշխատում է որպես ֆրիլանս դիզայներ։',
+    outcome: 'Այսօր Շուշանն աշխատում է որպես ֆրիլանս ինտերիեր դիզայներ և 3D վիզուալիզատոր՝ ստեղծելով ֆունկցիոնալ ու գեղեցիկ տարածքներ և դրանց ֆոտոռեալիստիկ վիզուալիզացիաները 3ds Max-ով և Corona Renderer-ով։',
     attribution: 'own',
     source: 'https://www.behance.net/shushantevosyan',
     sourceDate: '2026-10-24',
-    sourceLabel: 'Behance պրոֆիլ',
     links: [{ label: 'Behance պորտֆոլիո', url: 'https://www.behance.net/shushantevosyan' }, { label: 'Instagram՝ @tevosyan.design', url: 'https://www.instagram.com/tevosyan.design/' }],
     project: 'tevosyan-living-kitchen',
   },
@@ -289,7 +285,7 @@ export const graduateStories: GraduateStory[] = [
     courseSlug: '3ds-max',
     image: storyHasmikAbovyan,
     imageAlt: 'Հասմիկ Աբովյանը MOD Academy-ի վկայականը ձեռքին',
-    outcome: 'Ըստ MOD Academy-ի՝ ուսման ընթացքում ձեռք բերած հմտությունները Հասմիկը «գերազանց կիրառում է իրական նախագծերում»։',
+    outcome: 'Դասընթացն ավարտելուց հետո Հասմիկը ձեռք բերած հմտությունները հաջողությամբ կիրառում է իրական նախագծերում։',
     attribution: 'academy',
     source: 'https://www.instagram.com/p/DaSbG-BCEUr/',
     sourceDate: '2026-07-02',
@@ -298,8 +294,3 @@ export const graduateStories: GraduateStory[] = [
   },
 ];
 
-export const attributionLabel: Record<Attribution, string> = {
-  academy: 'Ըստ ակադեմիայի հրապարակման',
-  own: 'Ըստ շրջանավարտի հրապարակման',
-  independent: 'Հաստատված է անկախ աղբյուրով',
-};

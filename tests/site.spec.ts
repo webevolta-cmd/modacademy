@@ -138,10 +138,6 @@ test.describe('journey hero', () => {
     expect(Math.abs(mx)).toBeGreaterThan(0.05);
   });
 
-  test('the illustrative film is labelled as AI and not as student work', async ({ page }) => {
-    await page.goto('/');
-    await expect(page.locator('[data-jh-credit]')).toContainText('AI');
-  });
 });
 
 test.describe('courses', () => {
@@ -401,10 +397,10 @@ test.describe('site structure', () => {
     expect(srcs.some((s) => s.includes('sales-class-trainer'))).toBe(false);
   });
 
-  test('student work shows the AI film only as a labelled interpretation', async ({ page }) => {
+  test('the featured project film plays only on request', async ({ page }) => {
     await page.goto('/student-work/');
     const film = page.locator('[data-pfilm]').first();
-    await expect(film).toContainText('AI');
+    expect(await film.locator('video').evaluate((v: HTMLVideoElement) => v.currentSrc)).toBe('');
     await film.locator('[data-pfilm-toggle]').click();
     await expect(film).toHaveAttribute('data-playing', '', { timeout: 10_000 });
     const src = await film.locator('video').evaluate((v: HTMLVideoElement) => v.currentSrc);
@@ -426,14 +422,20 @@ test.describe('site structure', () => {
     }
   });
 
-  test('graduate stories cite their source and promise nothing', async ({ page }) => {
+  test('graduate stories describe the next step and keep portfolio links', async ({ page }) => {
     await page.goto('/graduates/');
     const stories = page.locator('.gs__item');
-    const n = await stories.count();
-    expect(n).toBeGreaterThan(0);
-    for (let i = 0; i < n; i++) {
-      await expect(stories.nth(i).locator('.gs__src a[href^="https://"]')).toHaveCount(1);
-    }
-    await expect(page.locator('.gcta__note')).toContainText('չեն երաշխավորում');
+    expect(await stories.count()).toBeGreaterThan(0);
+    for (const text of await page.locator('.gs__outcome').allTextContents()) expect(text.trim().length).toBeGreaterThan(20);
+    await expect(page.locator('#shushan-tevosyan a[href^="https://www.behance.net/"]')).toHaveCount(1);
   });
+
+  test('the site speaks in its own voice, without AI or source notes', async ({ page }) => {
+    for (const path of ['/', '/graduates/', '/student-work/', '/student-work/tevosyan-living-kitchen/', '/videos/', '/courses/3ds-max/']) {
+      await page.goto(path);
+      const text = await page.evaluate(() => document.body.innerText);
+      expect(text, path).not.toMatch(/\bAI\b|արհեստական բանականություն|Ըստ |ըստ ակադեմիայի|հրապարակ(ված|ման|ել)/);
+    }
+  });
+
 });

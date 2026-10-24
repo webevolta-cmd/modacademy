@@ -1,13 +1,13 @@
 ---
 // Homepage hero: «from the first idea to a professional step», one scroll-driven story in five
-// chapters. A Higgsfield film (illustrative, designed for the site) carries chapters 1–4; real
-// photographs from the academy and verified graduate stories are layered over it.
+// chapters. A Higgsfield film designed for the site carries chapters 1–4; photographs from the
+// academy and graduate stories are layered over it.
 // Without JavaScript, with reduced motion or on short screens it becomes a compact storyboard.
 import { Picture } from 'astro:assets';
 import Icon from './Icon.astro';
 import Logo from './Logo.astro';
 import Upper from './Upper.astro';
-import { intro, chapters, filmSegments, projectStages, finale, filmCredit } from '../data/hero';
+import { intro, chapters, filmSegments, projectStages, finale } from '../data/hero';
 import { practice } from '../data/media';
 import { graduationPhotos, graduateStories } from '../data/graduates';
 import { keep } from '../lib/text';
@@ -21,10 +21,10 @@ const fmt = (iso: string) => iso.split('-').reverse().join('.');
 
 // Stills used by the storyboard (static) layout, one per chapter.
 const stills = [
-  { src: filmSegments[0].stillEnd, mobile: filmSegments[0].stillEndMobile, alt: 'Կարմիր թանաքով գծված ինտերիերի հատակագիծ՝ գծագրական թղթի վրա (AI նկարազարդում)' },
-  { src: filmSegments[1].stillEnd, mobile: filmSegments[1].stillEndMobile, alt: 'Հատակագիծ՝ չափսերով և նյութերի նմուշներով (AI նկարազարդում)' },
-  { src: filmSegments[2].stillEnd, mobile: filmSegments[2].stillEndMobile, alt: 'Ավարտուն ինտերիերի վիզուալիզացիա (AI նկարազարդում)' },
-  { src: filmSegments[3].stillEnd, mobile: filmSegments[3].stillEndMobile, alt: 'Պորտֆոլիո՝ նախագծի վիզուալիզացիայով (AI նկարազարդում)' },
+  { src: filmSegments[0].stillEnd, mobile: filmSegments[0].stillEndMobile, alt: 'Կարմիր թանաքով գծված ինտերիերի հատակագիծ՝ գծագրական թղթի վրա' },
+  { src: filmSegments[1].stillEnd, mobile: filmSegments[1].stillEndMobile, alt: 'Հատակագիծ՝ չափսերով և նյութերի նմուշներով' },
+  { src: filmSegments[2].stillEnd, mobile: filmSegments[2].stillEndMobile, alt: 'Ավարտուն ինտերիերի վիզուալիզացիա' },
+  { src: filmSegments[3].stillEnd, mobile: filmSegments[3].stillEndMobile, alt: 'Պորտֆոլիո՝ նախագծի վիզուալիզացիայով' },
 ];
 ---
 <section class="jh" id="top" data-jh aria-labelledby="jh-title">
@@ -112,7 +112,7 @@ const stills = [
             <figcaption>{keep(`${g.partner} · ${fmt(g.date)}`)}</figcaption>
           </figure>
         ))}
-        <p class="jh__note">Իրական լուսանկարներ՝ ակադեմիայի գործնական դասերից</p>
+        <p class="jh__note">Մեր գործնական դասերից</p>
       </div>
       {prints.length > 0 && (
       <div class="jh__prints" data-jh-group="prints" role="group" aria-label="Մեր շրջանավարտները">
@@ -122,7 +122,7 @@ const stills = [
             <figcaption>{keep(`${g.caption} · ${fmt(g.date)}`)}</figcaption>
           </figure>
         ))}
-        <p class="jh__note">MOD Academy-ի շրջանավարտները՝ ակադեմիայի հրապարակումներից</p>
+        <p class="jh__note">Մեր շրջանավարտները</p>
       </div>
       )}
       {stories.length > 0 && (
@@ -168,7 +168,6 @@ const stills = [
     <a class="jh__skip" href="#courses" data-jh-skip>
       <span class="jh__skip-t">Անցնել դասընթացներին</span><Icon name="arrow-down" />
     </a>
-    <p class="jh__credit" data-jh-credit><span class="jh__credit-long">{filmCredit}</span><span class="jh__credit-short">AI նկարազարդում՝ ոչ ուսանողական աշխատանք</span></p>
   </div>
 </section>
 
@@ -236,9 +235,6 @@ const stills = [
   .jh__ch-title { font-size: var(--fs-h3); line-height: 1.2; }
   .jh__ch-text { color: var(--ink-soft); font-size: 0.95rem; }
   .jh__project { display: none; }
-
-  .jh__credit { margin: 18px var(--hero-x) 0; font-size: 0.75rem; color: var(--muted); max-width: 52rem; }
-  .jh__credit-short { display: none; }
 
   @media (min-width: 1100px) {
     .jh__chapters { grid-auto-flow: row; grid-template-columns: repeat(5, minmax(0, 1fr)); overflow: visible; margin-inline: 0; padding-inline: 0; }
@@ -534,22 +530,6 @@ const stills = [
 
   :global(.jh-pin) .jh__skip :global(svg) { width: 16px; height: 16px; }
 
-  :global(.jh-pin) .jh__credit {
-    position: absolute;
-    right: var(--hero-x);
-    bottom: 22px;
-    max-width: 24rem;
-    margin: 0;
-    padding: 6px 10px;
-    font-size: 0.7rem;
-    line-height: 1.4;
-    text-align: right;
-    color: var(--ink-soft);
-    background: rgb(244 239 232 / 0.82);
-    opacity: var(--c, 1);
-    z-index: 3;
-  }
-
   /* Mobile and portrait: film window at the top, copy beneath, navigation along the bottom. */
   @media (max-width: 899px), (orientation: portrait) {
     :global(.jh-pin) .jh { height: 480svh; }
@@ -586,8 +566,6 @@ const stills = [
     }
     :global(.jh-pin) .jh__intro .btn--ghost::before { display: none; }
     :global(.jh-pin) .jh__intro .btn--ghost:hover { color: var(--red); }
-    :global(.jh-pin) .jh__credit-long { display: none; }
-    :global(.jh-pin) .jh__credit-short { display: inline; }
     :global(.jh-pin) .jh__lead { font-size: 1rem; line-height: 1.5; }
     :global(.jh-pin) .jh__ch-title { font-size: var(--fs-h2); }
     :global(.jh-pin) .jh__ch-text { font-size: 1rem; }
@@ -645,16 +623,6 @@ const stills = [
       :global(.jh-pin) .jh__tools { display: none; }
       :global(.jh-pin) .jh__ch-title { font-size: var(--fs-h3); }
       :global(.jh-pin) .jh__ch-text { font-size: 0.92rem; line-height: 1.45; }
-    }
-
-    :global(.jh-pin) .jh__credit {
-      top: calc(var(--header-h) + var(--jh-win) - 30px);
-      bottom: auto;
-      right: var(--gutter);
-      left: auto;
-      max-width: none;
-      font-size: 0.66rem;
-      padding: 4px 8px;
     }
   }
 </style>

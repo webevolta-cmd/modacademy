@@ -11,7 +11,6 @@ const siteUrl = Astro.site!;
 const featured = projects.find((p) => p.film) ?? projects[0];
 const categories = [...new Set(projects.map((p) => p.category))];
 const authors = new Set(projects.map((p) => p.author.name)).size;
-const fmt = (iso: string) => iso.split('-').reverse().join('.');
 
 const jsonLd = [
   {
@@ -36,7 +35,7 @@ const jsonLd = [
   <PageHeader
     title="Ուսանողական աշխատանքներ"
     kicker={`${projects.length} նախագիծ · ${authors} հեղինակ`}
-    lead="Նախագծեր, որոնք ակադեմիան հրապարակել է իր ուսանողների և շրջանավարտների անունով։ Յուրաքանչյուր նախագծի բոլոր տեսքերը հավաքված են մեկ էջում։"
+    lead="Մեր ուսանողների և շրջանավարտների նախագծերը։ Յուրաքանչյուր նախագծի բոլոր տեսքերը հավաքված են մեկ էջում։"
     crumbs={[{ label: 'Գլխավոր', href: '/' }, { label: 'Ուսանողական աշխատանքներ' }]}
   />
 
@@ -92,16 +91,11 @@ const jsonLd = [
                 <span class="label sw-card__cat">{categoryLabels[p.category]}</span>
                 <span class="sw-card__title">{p.title}</span>
                 <span class="sw-card__by">{byline(p)}</span>
-                <span class="sw-card__src">Հրապարակված՝ {fmt(p.sourceDate)}</span>
               </span>
             </a>
           </li>
         ))}
       </ul>
-      <p class="sw-list__note muted">
-        Այստեղ ներկայացված են միայն ակադեմիայի կամ հեղինակի հրապարակած ուսանողական աշխատանքները։ Ակադեմիայի ստուդիայի
-        նախագծերը և կայքի ներածական AI անիմացիան այս հավաքածուի մաս չեն։
-      </p>
     </div>
   </section>
 </BaseLayout>

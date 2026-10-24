@@ -36,7 +36,7 @@ const honeypot = formMode === 'endpoint' ? '_gotcha' : 'bot-field';
 
     <div class="inq__top">
       <h3 class="h2" id="inq-heading">{heading}</h3>
-      <p class="muted inq__intro">Լրացրեք ձևը՝ ակադեմիան կկապվի Ձեզ հետ դասընթացի, ժամանակացույցի և արժեքի մանրամասներով։</p>
+      <p class="muted inq__intro">Լրացրեք ձևը՝ մենք կկապվենք Ձեզ հետ դասընթացի, ժամանակացույցի և արժեքի մանրամասներով։</p>
     </div>
 
     <div class="inq__summary" role="alert" tabindex="-1" hidden data-inq-summary></div>
@@ -93,7 +93,7 @@ const honeypot = formMode === 'endpoint' ? '_gotcha' : 'bot-field';
         <Icon name="arrow" class="btn__icon" />
       </button>
       <p class="inq__legal muted">
-        Հայտը դեռ գրանցում չէ․ տեղը խմբում հաստատվում է ակադեմիայի հետ պայմանավորվելուց հետո։ Ձեր տվյալներն
+        Հայտը դեռ գրանցում չէ․ տեղը խմբում հաստատվում է մեզ հետ պայմանավորվելուց հետո։ Ձեր տվյալներն
         օգտագործվում են միայն Ձեզ հետ կապվելու համար։
       </p>
     </div>
@@ -102,13 +102,13 @@ const honeypot = formMode === 'endpoint' ? '_gotcha' : 'bot-field';
   <div class="inq__done" role="status" tabindex="-1" hidden data-inq-success>
     <span class="inq__done-mark" aria-hidden="true"><Icon name="check" /></span>
     <h3 class="h2">Հայտը ստացված է</h3>
-    <p>Շնորհակալություն։ Ակադեմիան կկապվի Ձեզ հետ՝ դասընթացի մանրամասներով։ Սա դեռ գրանցման հաստատում չէ։</p>
+    <p>Շնորհակալություն։ Մենք կկապվենք Ձեզ հետ՝ դասընթացի մանրամասներով։ Սա դեռ գրանցման հաստատում չէ։</p>
     <p class="muted">Շտապ հարցերի համար՝ <a href={site.phone.href}>{site.phone.display}</a></p>
   </div>
 
   <div class="inq__fallback" role="alert" tabindex="-1" hidden data-inq-fallback>
     <h3 class="h3" data-inq-fallback-title>Հայտը չհաջողվեց ուղարկել</h3>
-    <p data-inq-fallback-text>Խնդրում ենք կապվել ակադեմիայի հետ ստորև նշված եղանակներից մեկով․ Ձեր լրացրած տվյալները պահպանված են։</p>
+    <p data-inq-fallback-text>Խնդրում ենք կապվել մեզ հետ ստորև նշված եղանակներից մեկով․ Ձեր լրացրած տվյալները պահպանված են։</p>
     <div class="inq__alts">
       <a class="btn btn--sm" href={`mailto:${site.email}`} data-inq-mailto><Icon name="mail" class="btn__icon" />Ուղարկել էլ. փոստով</a>
       <a class="btn btn--ghost btn--sm" href={site.phone.href}><Icon name="phone" class="btn__icon" />{site.phone.local}</a>

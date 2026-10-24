@@ -3,6 +3,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import PageHeader from '../../components/PageHeader.astro';
 import VideoCard from '../../components/VideoCard.astro';
 import { videos, videoCategoryLabels } from '../../data/videos';
+import { site } from '../../data/site';
 
 const categories = [...new Set(videos.map((v) => v.category))];
 
@@ -23,7 +24,7 @@ const jsonLd = [
   <PageHeader
     title="Տեսանյութեր"
     kicker={`${videos.length} ընտրված տեսանյութ`}
-    lead="Կարճ ընտրանի ակադեմիայի տեսանյութերից, որոնք օգնում են պատկերացնել ուսուցումը։ Քարտի վրա սեղմելիս տեսանյութը կբացվի Instagram-ում՝ նոր ներդիրում։"
+    lead="Կարճ ընտրանի մեր տեսանյութերից, որոնք օգնում են պատկերացնել ուսուցումը։ Քարտի վրա սեղմելիս տեսանյութը կբացվի Instagram-ում՝ նոր ներդիրում։"
     crumbs={[{ label: 'Գլխավոր', href: '/' }, { label: 'Տեսանյութեր' }]}
   />
 
@@ -42,7 +43,7 @@ const jsonLd = [
         {videos.map((v, i) => <VideoCard video={v} index={i} />)}
       </div>
       <p class="vp__note muted">
-        Տեսանյութերն ակադեմիայի պաշտոնական Instagram էջից են, իսկ նկարագրությունները գրվել են դրանք դիտելուց հետո։
+        Ավելի շատ տեսանյութեր՝ մեր <a href={site.social.instagram} target="_blank" rel="noopener">Instagram էջում</a>։
       </p>
     </div>
   </section>

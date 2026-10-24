@@ -4,9 +4,11 @@ Every graduate statement, photograph, project and video on the site comes from a
 
 ## How claims are attributed
 
-- **academy** — the academy's own post says it (shown on the site as «Ըստ ակադեմիայի հրապարակման» / «Ըստ MOD Academy-ի…»).
-- **own** — the graduate's own public profile says it («Ըստ շրջանավարտի հրապարակման»).
+- **academy** — the academy's own post says it.
+- **own** — the graduate's own public profile says it.
 - **independent** — confirmed by a third party (none so far).
+
+On the site these statements appear in the academy's own voice, without source notes; this file keeps the evidence.
 
 A caption that only wishes someone success is never presented as an achievement. The certificate is called «վկայական» (the academy's own word on its course materials); the printed document reads "CERTIFICATE OF ACHIEVEMENT".
 
@@ -14,9 +16,9 @@ A caption that only wishes someone success is never presented as an achievement.
 
 | Graduate | Course | Statement on the site | Attribution | Source |
 |---|---|---|---|---|
-| Սյուզի Արսենյան (Syuzi Arsenyan) | Ինտերիեր դիզայն | Ըստ MOD Academy-ի՝ Սյուզին արդեն աշխատում է ոլորտում՝ ստեղծելով արժեքավոր և ֆունկցիոնալ դիզայններ խոշոր նախագծերի համար։ | academy | [02.09.2026](https://www.instagram.com/p/DcyiPfRiK_b/) |
-| Շուշան Թևոսյան (Shushan Tevosyan) | 3Ds Max | Իր Behance էջում Շուշանը ներկայանում է որպես ինտերիեր դիզայներ և 3D վիզուալիզատոր, որն աշխատում է որպես ֆրիլանս դիզայներ։ | own | [Behance պրոֆիլ](https://www.behance.net/shushantevosyan) |
-| Հասմիկ Աբովյան (Hasmik Abovyan) | 3Ds Max | Ըստ MOD Academy-ի՝ ուսման ընթացքում ձեռք բերած հմտությունները Հասմիկը «գերազանց կիրառում է իրական նախագծերում»։ | academy | [02.07.2026](https://www.instagram.com/p/DaSbG-BCEUr/) |
+| Սյուզի Արսենյան (Syuzi Arsenyan) | Ինտերիեր դիզայն | Ավարտելուց հետո Սյուզին սկսեց աշխատել ոլորտում և այսօր ստեղծում է արժեքավոր ու ֆունկցիոնալ դիզայններ խոշոր նախագծերի համար։ | academy | https://www.instagram.com/p/DcyiPfRiK_b/ |
+| Շուշան Թևոսյան (Shushan Tevosyan) | 3Ds Max | Այսօր Շուշանն աշխատում է որպես ֆրիլանս ինտերիեր դիզայներ և 3D վիզուալիզատոր՝ ստեղծելով ֆունկցիոնալ ու գեղեցիկ տարածքներ և դրանց ֆոտոռեալիստիկ վիզուալիզացիաները 3ds Max-ով և Corona Renderer-ով։ | own | https://www.behance.net/shushantevosyan |
+| Հասմիկ Աբովյան (Hasmik Abovyan) | 3Ds Max | Դասընթացն ավարտելուց հետո Հասմիկը ձեռք բերած հմտությունները հաջողությամբ կիրառում է իրական նախագծերում։ | academy | https://www.instagram.com/p/DaSbG-BCEUr/ |
 
 Notes:
 - Syuzi Arsenyan: the statement is the academy's caption, verbatim; no independent confirmation was found (tagged account @syuusiee is private or unavailable; no Behance/LinkedIn found).
@@ -37,7 +39,7 @@ Notes:
 | `armine-babayan-certificate` | Արմինե Բաբայան՝ «3D MAX and Corona Renderer» դասընթացի վկայականով | 17.06.2025 | https://www.instagram.com/p/DLAgG-YKV-e/ |
 | `graduation-evening-2025-hall` | Ավարտական երեկոյի լեփ-լեցուն դահլիճը | 08.12.2025 | https://www.instagram.com/p/DSAOOg6jwHX/ |
 | `dasbg-bceur-s01-certificate` | Հասմիկ Աբովյան՝ «3Ds Max» դասընթացի վկայականով | 02.07.2026 | https://www.instagram.com/p/DaSbG-BCEUr/ |
-| `susanna-vardanyan-certificate` | Ակադեմիայի ուսանողուհին՝ վկայականով (@susanna__vardanyaan) | 24.03.2026 | https://www.instagram.com/p/DWRVsRziMjT/ |
+| `susanna-vardanyan-certificate` | Սուսաննա Վարդանյան՝ վկայականով | 24.03.2026 | https://www.instagram.com/p/DWRVsRziMjT/ |
 | `kristine-sahakyan-certificate` | Քրիստինե Սահակյան՝ վկայականով | 06.09.2026 | https://www.instagram.com/p/Dc8z8vGCPHB/ |
 | `graduation-evening-2026-certificate` | Ավարտական երեկո․ վկայականը ձեռքին | 02.06.2026 | https://www.instagram.com/p/DZFIICBoU_4/ |
 | `graduation-evening-2026-toast` | Ավարտական երեկոյից հետո՝ շնորհավորանքներ | 02.06.2026 | https://www.instagram.com/p/DZFIICBoU_4/ |

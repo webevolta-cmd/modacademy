@@ -46,7 +46,6 @@ export const site = {
     { value: 7, suffix: '+', label: 'տարի' },
     { value: 1000, suffix: '+', label: 'ուսանող' },
   ],
-  statsSource: 'Ըստ ակադեմիայի Instagram էջի',
   dataAsOf: '2026-10-23',
 } as const;
 

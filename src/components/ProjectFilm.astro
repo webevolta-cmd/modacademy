@@ -1,6 +1,5 @@
 ---
-// A short film shown with a project, played only when the visitor asks. Always captioned with
-// what it is (e.g. an AI interpretation of a student's render) so it is never mistaken for the work.
+// A short film shown with a project, played only when the visitor asks.
 import type { ProjectFilm } from '../data/projects';
 
 interface Props {
@@ -27,7 +26,6 @@ const { film, title } = Astro.props;
       <span class="pf__icon" aria-hidden="true"></span>
       <span class="pf__label" data-pfilm-label>Դիտել տեսանյութը</span>
     </button>
-    <span class="pf__tag">AI մեկնաբանություն</span>
   </div>
   <figcaption class="pf__note">{film.note}</figcaption>
 </figure>
@@ -77,19 +75,6 @@ const { film, title } = Astro.props;
   .pf[data-playing] .pf__play { left: auto; top: auto; right: 14px; bottom: 14px; transform: none; padding: 8px 14px 8px 8px; font-size: 0.85rem; }
   .pf[data-playing] .pf__icon { width: 30px; height: 30px; }
   .pf[data-playing] .pf__icon::before { border: 0; width: 10px; height: 12px; margin: 0; background: linear-gradient(90deg, #fff 35%, transparent 35% 65%, #fff 65%); }
-
-  .pf__tag {
-    position: absolute;
-    left: 14px;
-    top: 14px;
-    padding: 5px 10px;
-    font-size: 0.72rem;
-    font-weight: 600;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: #fff;
-    background: rgb(17 15 13 / 0.62);
-  }
 
   .pf__note { font-size: 0.82rem; color: var(--muted); line-height: 1.5; }
 </style>

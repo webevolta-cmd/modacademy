@@ -4,7 +4,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import PageHeader from '../../components/PageHeader.astro';
 import Lightbox from '../../components/Lightbox.astro';
 import Icon from '../../components/Icon.astro';
-import { graduationPhotos, graduateStories, attributionLabel } from '../../data/graduates';
+import { graduationPhotos, graduateStories } from '../../data/graduates';
 import { keep } from '../../lib/text';
 
 const siteUrl = Astro.site!;
@@ -25,13 +25,13 @@ const jsonLd = [
 ---
 <BaseLayout
   title="Շրջանավարտներ — MOD Academy, Երևան"
-  description="MOD Academy-ի շրջանավարտները՝ ավարտական լուսանկարներ և փաստագրված պատմություններ՝ աղբյուրների հղումներով։"
+  description="MOD Academy-ի շրջանավարտները՝ վկայականների հանձնման պահեր և մասնագիտական առաջին քայլեր ավարտելուց հետո։"
   jsonLd={jsonLd}
 >
   <PageHeader
     title="Մեր շրջանավարտները"
     kicker="Շրջանավարտներ"
-    lead="Ավարտական պահեր և շրջանավարտների հաջորդ քայլերը։ Յուրաքանչյուր պատմություն հիմնված է հրապարակված աղբյուրի վրա, որը նշված է պատմության տակ։"
+    lead="Ավարտելուց հետո մեր շրջանավարտները սկսում են իրենց մասնագիտական ուղին։ Ահա նրանցից մի քանիսի պատմությունը և վկայականների հանձնման պահերը։"
     crumbs={[{ label: 'Գլխավոր', href: '/' }, { label: 'Շրջանավարտներ' }]}
   />
 
@@ -57,10 +57,6 @@ const jsonLd = [
                       <footer><a href={s.quote.source} target="_blank" rel="noopener">{s.name}</a></footer>
                     </blockquote>
                   )}
-                  <p class="gs__src">
-                    {attributionLabel[s.attribution]} ·{' '}
-                    <a href={s.source} target="_blank" rel="noopener">{s.sourceLabel ?? fmt(s.sourceDate)}<Icon name="arrow-up-right" /></a>
-                  </p>
                   {(s.links.length > 0 || s.project || s.courseSlug) && (
                     <ul class="gs__links" role="list">
                       {s.project && <li><a class="link-arrow" href={`/student-work/${s.project}/`}>Նախագիծը<Icon name="arrow" /></a></li>}
@@ -84,7 +80,7 @@ const jsonLd = [
       <div class="wrap">
         <div class="gp__head">
           <h2 class="h2" id="gp-title" data-reveal>Ավարտական պահեր</h2>
-          <p class="muted" data-reveal>Լուսանկարները՝ ակադեմիայի պաշտոնական հրապարակումներից։ Նկարները կտրված և օպտիմալացված են կայքի համար՝ առանց դեմքերի, փաստաթղթերի կամ բովանդակության փոփոխության։</p>
+          <p class="muted" data-reveal>Վկայականների հանձնման արարողություններից և ավարտական երեկոներից։</p>
         </div>
         <ul class="gp__grid" role="list">
           {photos.map((g, i) => (
@@ -97,14 +93,14 @@ const jsonLd = [
                   data-lb-src={g.large}
                   data-lb-alt={g.alt}
                   data-lb-title={g.caption}
-                  data-lb-credit={`MOD Academy · Հրապարակված՝ ${fmt(g.date)}`}
+                  data-lb-credit={`MOD Academy · ${fmt(g.date)}`}
                   aria-label={`Բացել մեծ չափով՝ ${g.caption}`}
                 >
                   <Picture src={g.image} alt={g.alt} widths={[360, 540, 720, 960]} sizes="(min-width: 1000px) 30vw, (min-width: 640px) 46vw, 92vw" formats={['avif', 'webp']} fallbackFormat="webp" loading="lazy" />
                 </button>
                 <figcaption>
                   <span>{keep(g.caption)}</span>
-                  <a href={g.source} target="_blank" rel="noopener">Հրապարակված՝ {fmt(g.date)}</a>
+                  <time datetime={g.date}>{fmt(g.date)}</time>
                 </figcaption>
               </figure>
             </li>
@@ -121,7 +117,6 @@ const jsonLd = [
         <a class="btn btn--red" href="/#courses">Բացահայտել դասընթացները<Icon name="arrow" class="btn__icon" /></a>
         <a class="btn btn--ghost" href="/#inquiry">Ուղարկել հայտ</a>
       </div>
-      <p class="muted gcta__note">Շրջանավարտների պատմությունները ցույց են տալիս անհատական քայլեր և չեն երաշխավորում աշխատանք կամ եկամուտ։</p>
     </div>
   </section>
   <Lightbox />
@@ -152,7 +147,7 @@ const jsonLd = [
   .gp__btn :global(img) { width: 100%; height: 100%; object-fit: cover; object-position: 50% 28%; transition: transform 1.2s var(--ease-out); }
   .gp__btn:hover :global(img) { transform: scale(1.04); }
   .gp__item figcaption { display: grid; gap: 2px; margin-top: 10px; font-size: 0.85rem; }
-  .gp__item figcaption a { font-size: 0.78rem; color: var(--muted); }
+  .gp__item figcaption time { font-size: 0.78rem; color: var(--muted); }
 
   .gcta { background: var(--paper); }
   .gcta__inner { display: grid; gap: 22px; justify-items: start; }

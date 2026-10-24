@@ -101,7 +101,7 @@ src/
   styles/        global.css — design tokens, type, layout, motion
 public/
   media/hero/journey/   the four film segments (desktop + mobile) and their exact first/last frames
-  media/hero/           the earlier film, used on the student-work page as a labelled AI interpretation
+  media/hero/           the earlier film, played on request on the Tevosyan project page
   media/og/             Open Graph image
 media-source/    master/source media (not served): Higgsfield keyframes and clips, Instagram originals
 docs/            research record, source log for graduates/videos/student work
@@ -115,10 +115,10 @@ tests/           Playwright end-to-end tests
   is not confirmed — the site then shows “Ճշտեք ընթացիկ տվյալները” instead of a guess.
 - Contact details, social links and the navigation: `src/data/site.ts`.
 - FAQ answers: `src/data/faq.ts`.
-- Graduates and certificate photos: `src/data/graduates.ts`. Every story needs a `source` link and an
-  `attribution` — `academy` (the academy's own post says it), `own` (the graduate published it) or
-  `independent` (confirmed elsewhere). A statement only the academy makes must stay attributed to it.
-  Add the source to `docs/research/SOURCES.md`.
+- Graduates and certificate photos: `src/data/graduates.ts`. The site presents everything in the academy's own
+  voice, without source notes; each entry still keeps its `source` and `attribution` (`academy`, `own` or
+  `independent`) for the record in `docs/research/SOURCES.md`. Keep a story to what is documented about that
+  person, and add links (Behance, Instagram) only when they are public.
 - Student work: put the images in `src/assets/work/` and add a project to `src/data/projects.ts` (author,
   course, source post and date). The `/student-work/` filters appear by themselves once two categories exist.
 - Videos: `src/data/videos.ts` — thumbnail in `src/assets/videos/`, the exact Instagram post URL, an Armenian
@@ -133,8 +133,8 @@ visualization) → 04 portfolio and certificate → 05 the next step, ending wit
 լինել քոնը» and two calls to action. The heading and both buttons are visible at once.
 
 - **Film:** Higgsfield, generated for the site (Nano Banana Pro keyframes, MiniMax H3 2K clips with start
-  and end frames, 2560×1440 at a native 24 fps, no frame interpolation). It is labelled on the page as an
-  AI illustration, not student work or the academy's classroom. Details: `media-source/README.md`.
+  and end frames, 2560×1440 at a native 24 fps, no frame interpolation). It shows a room designed for the
+  site and is not presented as student work or the academy's classroom. Details: `media-source/README.md`.
 - **Delivery:** four H.264 segments (desktop 1920×1080, 11.3 MB in total; phones 960×720, 4.9 MB), loaded
   one after another as in-memory blobs after the page has rendered and scrubbed by scroll position with
   smoothing. Until a segment is ready, the exact boundary frame is shown as a still, so the picture never jumps.
@@ -160,7 +160,7 @@ npm run test:e2e
 ```
 
 `tests/site.spec.ts` checks every page for console errors and horizontal overflow on desktop and mobile,
-the journey hero (scrubbing, chapters, chapter links, skip link, pointer depth, AI label, short-screen and
+the journey hero (scrubbing, chapters, chapter links, skip link, pointer depth, short-screen and
 reduced-motion fallbacks), the navigation and old anchors, image reveals, the student-work lightbox and film,
 video links, graduate sources, course filtering, course → form hand-off, the course finder, the FAQ, form
 validation and the honest offline fallback, and the mobile menu.

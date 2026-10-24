@@ -5,9 +5,8 @@ by the browser; the build reads only `public/` and `src/assets/`.
 
 ## hero-journey/ — the homepage film (current)
 
-The five-chapter homepage story is an **AI-generated illustration** made for the site with Higgsfield. It
-shows an invented room, never a student's project or the academy's classroom, and the page says so next to
-the film. Real photographs (practical lessons, certificate ceremonies, graduates) are laid over it as HTML.
+The five-chapter homepage story is an illustration generated for the site with Higgsfield. It
+shows an invented room, never a student's project or the academy's classroom. Real photographs (practical lessons, certificate ceremonies, graduates) are laid over it as HTML.
 
 **Keyframes** (`keyframes/`, lossless WebP, 2752×1536): Nano Banana Pro, 2K, 16:9, generated on 2026-10-24.
 The finished room (`kf7`) was generated first; every other frame is an edit of it or of its neighbour, with
@@ -89,7 +88,7 @@ and moulding stable); mean luminance 140.4–145.9 across all 362 frames (drift 
 difference eases in and out smoothly with no jumps; one near-duplicate frame at the final hold.
 
 This film was the homepage hero until the redesign. It now plays only on request on the student-work page
-(`/student-work/`), labelled as an AI interpretation of Shushan Tevosyan’s render, with her original renders
+(`/student-work/`), as a cinematic animation of Shushan Tevosyan’s render, next to her original renders
 beside it.
 
 Web encodes (in `public/media/hero/`, made with ffmpeg 6, audio removed, `+faststart`). Short GOPs and no

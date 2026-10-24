@@ -50,7 +50,6 @@ export function initJourneyHero(root: HTMLElement): void {
   const introCtas = root.querySelector<HTMLElement>('[data-jh-intro-ctas]');
   const finalEl = root.querySelector<HTMLElement>('[data-jh-final]');
   const finalCtas = root.querySelector<HTMLElement>('[data-jh-final-ctas]');
-  const credit = root.querySelector<HTMLElement>('[data-jh-credit]');
   const navFill = root.querySelector<HTMLElement>('[data-jh-nav-fill]');
   const navLinks = [...root.querySelectorAll<HTMLAnchorElement>('[data-jh-go]')];
   const stageItems = [...root.querySelectorAll<HTMLElement>('[data-jh-stage-item]')];
@@ -288,8 +287,6 @@ export function initJourneyHero(root: HTMLElement): void {
 
     const stories = groups.stories ? smooth(0.85, 0.88, v) : 0;
     veil?.style.setProperty('--veil', Math.min(0.82, 0.25 * stories + 0.6 * f).toFixed(3));
-    // The AI-film note is shown while the illustrative film is on screen, until real photographs take over.
-    credit?.style.setProperty('--c', (1 - smooth(0.93, 0.95, v)).toFixed(3));
 
     navFill?.style.setProperty('--p', v.toFixed(4));
     navLinks.forEach((a, i) => {
@@ -313,7 +310,8 @@ export function initJourneyHero(root: HTMLElement): void {
       g.el.style.removeProperty('--b0');
       g.items.forEach((item) => item.style.removeProperty('--b'));
     }
-    [credit, veil, navFill].forEach((el) => el?.style.removeProperty(el === credit ? '--c' : el === veil ? '--veil' : '--p'));
+    veil?.style.removeProperty('--veil');
+    navFill?.style.removeProperty('--p');
     chapterOn.fill(null);
     introGone = false;
     finalOn = null;

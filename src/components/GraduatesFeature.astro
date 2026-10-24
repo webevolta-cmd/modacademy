@@ -1,11 +1,11 @@
 ---
 // Homepage graduates feature: real graduation photographs and the strongest verified stories,
-// linking to the full /graduates/ page. Every claim is attributed to whoever published it.
+// linking to the full /graduates/ page.
 import { Picture } from 'astro:assets';
 import SectionIndex from './SectionIndex.astro';
 import SplitText from './SplitText.astro';
 import Icon from './Icon.astro';
-import { graduationPhotos, graduateStories, attributionLabel } from '../data/graduates';
+import { graduationPhotos, graduateStories } from '../data/graduates';
 import { keep } from '../lib/text';
 
 const photos = graduationPhotos.slice(0, 5);
@@ -19,7 +19,7 @@ const fmt = (iso: string) => iso.split('-').reverse().join('.');
       <div class="grads__head">
         <SplitText id="grads-title" class="h1" text="Մեր շրջանավարտները" accent="շրջանավարտները" />
         <p class="lead" data-reveal>
-          Իրական ավարտական պահեր և շրջանավարտների փաստագրված հաջորդ քայլերը՝ ակադեմիայի և իրենց հրապարակումներից։
+          Վկայականների հանձնման պահեր և մեր շրջանավարտների առաջին քայլերը մասնագիտական աշխարհում։
         </p>
       </div>
 
@@ -50,7 +50,6 @@ const fmt = (iso: string) => iso.split('-').reverse().join('.');
                   <span class="grads__story-name">{s.name}</span>
                   <span class="grads__story-course">«{s.course}» դասընթաց</span>
                   <span class="grads__story-outcome">{keep(s.outcome)}</span>
-                  <span class="grads__story-src">{attributionLabel[s.attribution]} · {s.sourceLabel ?? fmt(s.sourceDate)}</span>
                 </span>
               </a>
             </li>

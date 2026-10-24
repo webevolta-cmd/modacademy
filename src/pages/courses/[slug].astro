@@ -209,7 +209,7 @@ const description =
             <span class="num">{site.address.short}</span>
           </div>
         </dl>
-        <p class="cp__note muted">{course.fee || course.schedule ? priceNote : 'Այս դասընթացի ընթացիկ տևողությունը, ժամանակացույցը և արժեքը հրապարակված չեն․ ուղարկեք հայտ՝ ակադեմիան կտրամադրի թարմ տվյալները։'}</p>
+        <p class="cp__note muted">{course.fee || course.schedule ? priceNote : 'Այս դասընթացի տևողության, ժամանակացույցի և արժեքի թարմ տվյալները կներկայացնենք Ձեր հայտից հետո։'}</p>
       </div>
     </section>
 
@@ -252,17 +252,6 @@ const description =
               </ul>
             </div>
           )}
-          <div class="cp__box cp__box--src" data-reveal>
-            <h2 class="label">Տեղեկատվության աղբյուր</h2>
-            <ul role="list" class="cp__src">
-              {course.sources.map((s) => (
-                <li>
-                  <a href={s.url} target="_blank" rel="noopener">{keep(s.label)}<Icon name="arrow-up-right" /></a>
-                  <time class="muted" datetime={s.date}>{fmt(s.date)}</time>
-                </li>
-              ))}
-            </ul>
-          </div>
         </aside>
       </div>
     </section>
@@ -274,7 +263,7 @@ const description =
             {course.related === 'work'
               ? ownWork
                 ? 'Ուսանողական աշխատանքներ'
-                : `Ակադեմիայի ուսանողական աշխատանքներ («${student.course.replace(' ', '\u00a0')}» դասընթաց)`
+                : `Մեր ուսանողների աշխատանքները («${student.course.replace(' ', '\u00a0')}» դասընթաց)`
               : course.related === 'practice'
                 ? 'Գործնական դասերից'
                 : 'Դասերից'}
@@ -317,7 +306,7 @@ const description =
         <div class="cp__form-intro">
           <p class="label label--red">Հայտ · {course.title}</p>
           <h2 class="h1">Ստացեք ընթացիկ մանրամասները</h2>
-          <p class="lead">Ակադեմիան կկապվի Ձեզ հետ՝ խմբերի, ժամանակացույցի և արժեքի թարմ տվյալներով։</p>
+          <p class="lead">Մենք կկապվենք Ձեզ հետ՝ խմբերի, ժամանակացույցի և արժեքի թարմ տվյալներով։</p>
           <a class="link-arrow" href={site.phone.href}><Icon name="phone" />{site.phone.display}</a>
         </div>
         <InquiryForm preselect={course.slug} heading={`Հայտ «${course.title}» դասընթացին`} />

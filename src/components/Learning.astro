@@ -29,7 +29,7 @@ const steps = [
   {
     n: '04',
     title: 'Պորտֆոլիո և վկայական',
-    text: 'Ուսանողական աշխատանքները կարող են դառնալ պորտֆոլիոյի հիմք․ ավարտին, ըստ ակադեմիայի, տրվում է վկայական։',
+    text: 'Ուսանողական աշխատանքները կարող են դառնալ պորտֆոլիոյի հիմք․ ավարտին տրվում է վկայական։',
   },
 ];
 
@@ -37,7 +37,6 @@ const shots = [practice[1], practice[2], practice[0], practice[4]];
 const items = await Promise.all(
   shots.map(async (p) => ({ ...p, large: (await getImage({ src: p.image, width: 720, format: 'webp', quality: 86 })).src })),
 );
-const fmt = (iso: string) => iso.split('-').reverse().join('.');
 const partners = [...new Map(practice.filter((p) => p.partnerUrl).map((p) => [p.partner, p])).values()];
 ---
 <section class="learn section" id="learning" aria-labelledby="learn-title">
@@ -73,8 +72,8 @@ const partners = [...new Map(practice.filter((p) => p.partnerUrl).map((p) => [p.
         <p class="label label--red">Գործնական դասեր</p>
         <p class="learn__big">Նյութը պետք է տեսնել և շոշափել։</p>
         <p class="muted">
-          Ակադեմիայի հրապարակումներում ներկայացված են գործնական դասեր Երևանի դիզայնի սրահներում՝ գործվածքներ,
-          պաստառներ, կահույք և լուսավորություն։
+          Գործնական դասերն անցկացնում ենք Երևանի դիզայնի սրահներում՝ գործվածքների, պաստառների, կահույքի և
+          լուսավորության իրական նմուշներով։
         </p>
         <ul class="learn__partners" role="list" aria-label="Գործնական դասերի վայրեր">
           {partners.map((p) => (
@@ -95,7 +94,7 @@ const partners = [...new Map(practice.filter((p) => p.partnerUrl).map((p) => [p.
                 data-lb-src={p.large}
                 data-lb-alt={p.alt}
                 data-lb-title={p.caption}
-                data-lb-credit={`${p.partner} · ${p.course} · Հրապարակված՝ ${fmt(p.date)}`}
+                data-lb-credit={`${p.partner} · ${p.course}`}
                 aria-label={`Բացել մեծ չափով՝ ${p.caption}`}
               >
                 <Picture
@@ -110,7 +109,7 @@ const partners = [...new Map(practice.filter((p) => p.partnerUrl).map((p) => [p.
               </button>
               <figcaption>
                 <span class="learn__cap-t">{keep(p.caption)}</span>
-                <span class="learn__cap-m">{keep(p.partner)} · Հրապարակված՝ <time datetime={p.date}>{fmt(p.date)}</time></span>
+                <span class="learn__cap-m">{keep(p.partner)}</span>
               </figcaption>
             </figure>
           </li>
@@ -133,12 +132,12 @@ const partners = [...new Map(practice.filter((p) => p.partnerUrl).map((p) => [p.
             style="--ps:1.1"
           />
         </div>
-        <figcaption class="credit">{keep('Գործնական դաս Classis Decor Armenia-ում · հրապարակված՝ 08.10.2026')}</figcaption>
+        <figcaption class="credit">{keep('Գործնական դաս Classis Decor Armenia-ում')}</figcaption>
       </figure>
       <div class="learn__guide-text">
         <p class="label label--red" data-reveal>Ուղղորդում</p>
         <p class="learn__quote" data-reveal>
-          Ըստ ակադեմիայի՝ դասընթացները վարում են «փորձառու դասախոսներ», իսկ գործնական դասերի ժամանակ իրենց փորձով
+          Դասընթացները վարում են փորձառու դասախոսներ, իսկ գործնական դասերի ժամանակ իրենց փորձով մեր
           ուսանողների հետ կիսվում են նաև դիզայնի սրահների մասնագետները։
         </p>
         <p class="muted" data-reveal>
@@ -146,7 +145,7 @@ const partners = [...new Map(practice.filter((p) => p.partnerUrl).map((p) => [p.
           զանգահարելով։
         </p>
         <a class="learn__studio" href={site.studio.instagram} target="_blank" rel="noopener" data-reveal>
-          <span class="label">Ակադեմիայի հետ կապված ստուդիա</span>
+          <span class="label">Մեր գործընկեր ստուդիան</span>
           <span class="learn__studio-name">{site.studio.name}</span>
           <span class="learn__studio-meta">{site.studio.handle}<Icon name="arrow-up-right" /></span>
         </a>
