@@ -59,7 +59,7 @@ const jsonLd = [
                   )}
                   <p class="gs__src">
                     {attributionLabel[s.attribution]} ·{' '}
-                    <a href={s.source} target="_blank" rel="noopener">{fmt(s.sourceDate)}<Icon name="arrow-up-right" /></a>
+                    <a href={s.source} target="_blank" rel="noopener">{s.sourceLabel ?? fmt(s.sourceDate)}<Icon name="arrow-up-right" /></a>
                   </p>
                   {(s.links.length > 0 || s.project || s.courseSlug) && (
                     <ul class="gs__links" role="list">

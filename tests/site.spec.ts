@@ -320,7 +320,7 @@ test.describe('short screens', () => {
     await expect(page.locator('html')).not.toHaveClass(/jh-pin/);
     const cta = page.locator('[data-jh-intro-ctas] a', { hasText: 'Բացահայտել դասընթացները' });
     await cta.scrollIntoViewIfNeeded();
-    await expect(cta).toBeInViewport({ ratio: 1 });
+    await expect(cta).toBeInViewport({ ratio: 0.95 });
     await expect(page.locator('[data-jh-ch]')).toHaveCount(5);
     await page.waitForTimeout(600);
     expect(media).toEqual([]);

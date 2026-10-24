@@ -16,7 +16,9 @@ try {
 }
 
 const env = process.env;
-const publicUrl = env.SITE_URL || env.URL || '';
+// Netlify previews and branch deploys use their own address, not the production URL.
+const netlifyUrl = env.CONTEXT && env.CONTEXT !== 'production' ? env.DEPLOY_PRIME_URL || env.URL : env.URL;
+const publicUrl = env.SITE_URL || netlifyUrl || '';
 
 export const siteUrl = (publicUrl || 'http://localhost:4321').replace(/\/$/, '');
 

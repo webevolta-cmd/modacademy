@@ -2,7 +2,7 @@
 // Mirrors a plain static host: directory indexes, 404.html, byte ranges, and no form handling.
 import { createServer } from 'node:http';
 import { createReadStream, statSync, existsSync } from 'node:fs';
-import { extname, join, normalize, resolve } from 'node:path';
+import { extname, join, normalize, resolve, sep } from 'node:path';
 
 const root = resolve(process.argv[2] ?? 'dist');
 const port = Number(process.env.PORT ?? process.argv[3] ?? 4322);
@@ -29,8 +29,14 @@ createServer((req, res) => {
     return;
   }
   const url = new URL(req.url ?? '/', 'http://localhost');
-  let file = normalize(join(root, decodeURIComponent(url.pathname)));
-  if (!file.startsWith(root)) return res.writeHead(403).end();
+  let pathname;
+  try {
+    pathname = decodeURIComponent(url.pathname);
+  } catch {
+    return res.writeHead(400).end();
+  }
+  let file = normalize(join(root, pathname));
+  if (file !== root && !file.startsWith(root + sep)) return res.writeHead(403).end();
   if (existsSync(file) && statSync(file).isDirectory()) {
     if (!url.pathname.endsWith('/')) return res.writeHead(301, { Location: `${url.pathname}/` }).end();
     file = join(file, 'index.html');

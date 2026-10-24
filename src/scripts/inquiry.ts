@@ -24,6 +24,8 @@ const emailOk = (v: string) => /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v.trim());
 export function initInquiry(wrapper: HTMLElement): void {
   const form = wrapper.querySelector<HTMLFormElement>('[data-inquiry-form]');
   if (!form) return;
+  // Script-driven validation replaces the browser's; without JavaScript the required fields still apply.
+  form.noValidate = true;
   const summary = wrapper.querySelector<HTMLElement>('[data-inq-summary]')!;
   const success = wrapper.querySelector<HTMLElement>('[data-inq-success]')!;
   const fallback = wrapper.querySelector<HTMLElement>('[data-inq-fallback]')!;

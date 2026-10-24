@@ -106,6 +106,13 @@ const organization = {
         if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
         d.classList.add('motion');
         if (window.matchMedia('(min-height: 560px)').matches) d.classList.add('jh-pin');
+        // Failsafe: if the story engine never starts (script blocked or failed), fall back to the
+        // storyboard instead of leaving a frozen pinned hero.
+        window.addEventListener('load', function () {
+          setTimeout(function () {
+            if (!d.classList.contains('jh-ready')) d.classList.remove('jh-pin');
+          }, 3000);
+        });
       })();
     </script>
 

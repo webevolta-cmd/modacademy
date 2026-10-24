@@ -40,6 +40,8 @@ export function initJourneyHero(root: HTMLElement): void {
   if (!motionAllowed()) return;
 
   const html = document.documentElement;
+  // Tells the pre-paint failsafe in BaseLayout that the story engine is running.
+  html.classList.add('jh-ready');
   const stage = root.querySelector<HTMLElement>('[data-jh-stage]');
   const depth = root.querySelector<HTMLElement>('[data-jh-depth]');
   const still = root.querySelector<HTMLImageElement>('[data-jh-still]');
@@ -62,20 +64,16 @@ export function initJourneyHero(root: HTMLElement): void {
     ]),
   );
 
-  // Chapter windows come from the data attributes rendered by the component.
-  const windows: Window4[] = [
-    [0.045, 0.08, 0.17, 0.2],
-    [0.2, 0.23, 0.34, 0.37],
-    [0.37, 0.4, 0.62, 0.65],
-    [0.65, 0.68, 0.8, 0.83],
-    [0.83, 0.86, 0.93, 0.95],
-  ];
+  // Chapter and finale windows come from src/data/hero.ts via data-window attributes.
+  const parseWindow = (el: HTMLElement | null | undefined) => (el?.dataset.window ?? '').split(',').map(Number);
+  const windows = chapterEls.map((el) => parseWindow(el) as Window4);
   const groupWindows: Record<string, { start: number; step: number; span: number; out: [number, number] }> = {
     glimpse: { start: 0.245, step: 0.014, span: 0.03, out: [0.34, 0.37] },
     prints: { start: 0.735, step: 0.014, span: 0.03, out: [0.8, 0.83] },
     stories: { start: 0.855, step: 0.018, span: 0.03, out: [0.93, 0.95] },
   };
-  const FINAL: [number, number] = [0.945, 0.975];
+  const finalWindow = parseWindow(root.querySelector<HTMLElement>('[data-jh-final]'));
+  const FINAL: [number, number] = finalWindow.length === 2 ? [finalWindow[0], finalWindow[1]] : [0.945, 0.975];
 
   const portrait = () => window.matchMedia('(max-width: 899px), (orientation: portrait)').matches;
   const segments: Segment[] = [...root.querySelectorAll<HTMLVideoElement>('[data-jh-video]')].map((video) => {
@@ -144,7 +142,10 @@ export function initJourneyHero(root: HTMLElement): void {
               },
               { once: true },
             );
+            // WebKit does not decode a preload="none" source until asked, so request it explicitly.
+            s.video.preload = 'auto';
             s.video.src = URL.createObjectURL(blob);
+            s.video.load();
           }),
       )
       .catch(() => {
@@ -219,7 +220,7 @@ export function initJourneyHero(root: HTMLElement): void {
 
   // ── Copy, photographs, stories ─────────────────────────────────────────────
   let introGone = false;
-  let finalOn = false;
+  let finalOn: boolean | null = null;
   const chapterOn: (boolean | null)[] = chapterEls.map(() => null);
 
   const apply = (v: number) => {
@@ -288,7 +289,7 @@ export function initJourneyHero(root: HTMLElement): void {
     const stories = groups.stories ? smooth(0.85, 0.88, v) : 0;
     veil?.style.setProperty('--veil', Math.min(0.82, 0.25 * stories + 0.6 * f).toFixed(3));
     // The AI-film note is shown while the illustrative film is on screen, until real photographs take over.
-    credit?.style.setProperty('--c', (1 - smooth(0.72, 0.75, v)).toFixed(3));
+    credit?.style.setProperty('--c', (1 - smooth(0.93, 0.95, v)).toFixed(3));
 
     navFill?.style.setProperty('--p', v.toFixed(4));
     navLinks.forEach((a, i) => {
@@ -307,9 +308,15 @@ export function initJourneyHero(root: HTMLElement): void {
     });
     if (introCtas) introCtas.inert = false;
     if (finalCtas) finalCtas.inert = false;
+    for (const g of Object.values(groups)) {
+      g.el.style.removeProperty('visibility');
+      g.el.style.removeProperty('--b0');
+      g.items.forEach((item) => item.style.removeProperty('--b'));
+    }
+    [credit, veil, navFill].forEach((el) => el?.style.removeProperty(el === credit ? '--c' : el === veil ? '--veil' : '--p'));
     chapterOn.fill(null);
     introGone = false;
-    finalOn = false;
+    finalOn = null;
     navLinks.forEach((a) => a.removeAttribute('aria-current'));
   };
 
@@ -354,7 +361,7 @@ export function initJourneyHero(root: HTMLElement): void {
     root.style.setProperty('--mx', mx.toFixed(3));
     root.style.setProperty('--my', my.toFixed(3));
 
-    if (scrolled) loadAll();
+    if (scrolled && inView) loadAll();
     const pending = segments.some((s) => s.seeking);
     return p !== target || mx !== tx || my !== ty || pending;
   };
@@ -372,13 +379,22 @@ export function initJourneyHero(root: HTMLElement): void {
     unsubscribe = null;
   };
 
-  // The pinned story only runs when its copy fits; otherwise the storyboard layout stays.
+  // The pinned story only runs when its copy fits. On phones the copy sits between the film window
+  // and the chapter controls at the bottom, so each block must end above them.
+  const navEl = root.querySelector<HTMLElement>('.jh__nav');
+  const skipEl = root.querySelector<HTMLElement>('[data-jh-skip]');
   const fits = () => {
     const sr = stage.getBoundingClientRect();
-    const blocks = [introEl, ...chapterEls];
-    return blocks.every((el) => {
-      const r = el.getBoundingClientRect();
-      return r.height <= sr.height - 120 && el.scrollWidth <= el.clientWidth + 1;
+    const phone = portrait();
+    const floor = phone
+      ? Math.min(...[navEl, skipEl].filter((e): e is HTMLElement => !!e).map((e) => e.getBoundingClientRect().top - sr.top)) - 8
+      : sr.height;
+    return [introEl, ...chapterEls].every((el) => {
+      const h = el.offsetHeight;
+      if (h > sr.height - 120 || el.scrollWidth > el.clientWidth + 1) return false;
+      if (!phone) return true;
+      const shift = parseFloat(el.style.getPropertyValue('--y')) || 0;
+      return el.getBoundingClientRect().top - sr.top - shift + h <= floor;
     });
   };
 
@@ -396,7 +412,14 @@ export function initJourneyHero(root: HTMLElement): void {
     applied = Number.NaN;
     request(tick);
     subscribe();
+    // A shared link to a chapter (#journey-03) opens the story at that chapter.
+    if (!hashDone) {
+      hashDone = true;
+      const link = navLinks.find((a) => a.getAttribute('href') === location.hash);
+      if (link) window.scrollTo({ top: top + Number(link.dataset.anchor) * range, behavior: 'instant' as ScrollBehavior });
+    }
   };
+  let hashDone = false;
 
   const stop = () => {
     if (!active) return;
@@ -436,6 +459,35 @@ export function initJourneyHero(root: HTMLElement): void {
   };
   pinQuery.addEventListener('change', sync);
   sync();
+
+  // The first fit check may run with the fallback font; check again once the display fonts are in,
+  // and retry the pinned story whenever the window size really changes.
+  const retry = () => {
+    if (active) {
+      measure();
+      if (!fits()) {
+        stop();
+        html.classList.remove('jh-pin');
+      }
+      return;
+    }
+    if (!pinQuery.matches) return;
+    html.classList.add('jh-pin');
+    start();
+  };
+  document.fonts?.ready.then(retry);
+  let lastW = window.innerWidth;
+  let lastH = window.innerHeight;
+  let resizeTimer = 0;
+  window.addEventListener('resize', () => {
+    clearTimeout(resizeTimer);
+    resizeTimer = window.setTimeout(() => {
+      if (window.innerWidth === lastW && window.innerHeight === lastH) return;
+      lastW = window.innerWidth;
+      lastH = window.innerHeight;
+      retry();
+    }, 250);
+  });
 
   // Chapter navigation scrolls to the point where each chapter is fully told.
   navLinks.forEach((a) => {

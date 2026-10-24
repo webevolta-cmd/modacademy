@@ -50,7 +50,7 @@ const fmt = (iso: string) => iso.split('-').reverse().join('.');
                   <span class="grads__story-name">{s.name}</span>
                   <span class="grads__story-course">«{s.course}» դասընթաց</span>
                   <span class="grads__story-outcome">{keep(s.outcome)}</span>
-                  <span class="grads__story-src">{attributionLabel[s.attribution]} · {fmt(s.sourceDate)}</span>
+                  <span class="grads__story-src">{attributionLabel[s.attribution]} · {s.sourceLabel ?? fmt(s.sourceDate)}</span>
                 </span>
               </a>
             </li>

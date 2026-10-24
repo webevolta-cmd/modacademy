@@ -484,7 +484,7 @@ section[tabindex='-1']:focus { outline: none; }
   transition-delay: calc(var(--i, 0) * 110ms);
 }
 
-.motion [data-reveal='mask'] img:not([data-parallax]) {
+:where(.motion [data-reveal='mask']) img:where(:not([data-parallax])) {
   transform: scale(1.14);
   transition: transform 1.6s var(--ease-out);
   transition-delay: calc(var(--i, 0) * 110ms);
@@ -492,8 +492,8 @@ section[tabindex='-1']:focus { outline: none; }
 
 /* The open state reaches past the box so focus rings and shadows are not cut off. */
 .motion [data-reveal='mask'].is-in > *,
-.motion [data-reveal='mask']:focus-within > * { clip-path: inset(-16px); }
-.motion [data-reveal='mask'].is-in img:not([data-parallax]) { transform: none; }
+.motion [data-reveal='mask']:focus-within > * { clip-path: inset(-16px); transition: none; }
+:where(.motion [data-reveal='mask'].is-in) img:where(:not([data-parallax])) { transform: none; }
 .motion [data-reveal='left'] { transform: translate3d(-32px, 0, 0); }
 .motion [data-reveal='scale'] { transform: scale(0.96); }
 

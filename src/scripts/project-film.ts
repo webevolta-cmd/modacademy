@@ -5,18 +5,17 @@ export function initProjectFilm(root: HTMLElement): void {
   const label = root.querySelector<HTMLElement>('[data-pfilm-label]');
   if (!video || !toggle || !label) return;
 
-  const portrait = window.matchMedia('(max-aspect-ratio: 4/5)').matches;
   let loaded = false;
 
   const set = (playing: boolean) => {
-    toggle.setAttribute('aria-pressed', String(playing));
     label.textContent = playing ? 'Դադար' : 'Դիտել տեսանյութը';
     root.toggleAttribute('data-playing', playing);
   };
 
   toggle.addEventListener('click', async () => {
     if (!loaded) {
-      video.src = (portrait ? video.dataset.mobile : video.dataset.desktop) ?? '';
+      // The frame is square, so the square master is the right file on every screen.
+      video.src = video.dataset.desktop ?? '';
       loaded = true;
     }
     if (video.paused) {

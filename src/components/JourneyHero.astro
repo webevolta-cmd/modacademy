@@ -75,7 +75,7 @@ const stills = [
 
       <ol class="jh__chapters" role="list" aria-label="Ճանապարհի հինգ փուլերը" tabindex="0" data-jh-chapters>
         {chapters.map((c, i) => (
-          <li class="jh__ch" data-jh-ch={i} id={`journey-${c.n}`}>
+          <li class="jh__ch" data-jh-ch={i} id={`journey-${c.n}`} data-window={c.window.join(',')}>
             {i < stills.length && (
               <picture class="jh__frame">
                 <source media="(max-width: 899px)" srcset={stills[i].mobile} width="960" height="720" />
@@ -141,7 +141,7 @@ const stills = [
       )}
       </div>
 
-      <div class="jh__final" data-jh-final>
+      <div class="jh__final" data-jh-final data-window={finale.window.join(',')}>
         <Logo class="jh__final-logo" />
         <p class="display jh__final-title">{finale.title}</p>
         <div class="jh__ctas" data-jh-final-ctas>
@@ -166,7 +166,7 @@ const stills = [
     </nav>
 
     <a class="jh__skip" href="#courses" data-jh-skip>
-      Անցնել դասընթացներին<Icon name="arrow-down" />
+      <span class="jh__skip-t">Անցնել դասընթացներին</span><Icon name="arrow-down" />
     </a>
     <p class="jh__credit" data-jh-credit><span class="jh__credit-long">{filmCredit}</span><span class="jh__credit-short">AI նկարազարդում՝ ոչ ուսանողական աշխատանք</span></p>
   </div>
@@ -240,13 +240,14 @@ const stills = [
   .jh__credit { margin: 18px var(--hero-x) 0; font-size: 0.75rem; color: var(--muted); max-width: 52rem; }
   .jh__credit-short { display: none; }
 
-  @media (min-width: 900px) {
+  @media (min-width: 1100px) {
     .jh__chapters { grid-auto-flow: row; grid-template-columns: repeat(5, minmax(0, 1fr)); overflow: visible; margin-inline: 0; padding-inline: 0; }
   }
 
   /* Wide storyboard: the real practice photographs sit beside the introduction as prints. */
   @media (min-width: 1000px) {
     .jh__copy { position: relative; }
+    :global(html:not(.jh-pin)) .jh__intro { max-width: min(44rem, 56%); }
     :global(html:not(.jh-pin)) .jh__glimpse {
       display: block;
       position: absolute;
@@ -440,7 +441,7 @@ const stills = [
     position: absolute;
     left: 50%;
     top: 50%;
-    width: min(46rem, calc(100vw - 2 * var(--hero-x)));
+    width: min(46rem, calc(100vw - 2 * var(--hero-x) - 340px));
     justify-items: center;
     gap: 22px;
     text-align: center;
@@ -450,6 +451,8 @@ const stills = [
   }
 
   :global(.jh-pin) .jh__final.is-on { pointer-events: auto; }
+  /* Invisible finale buttons must never catch clicks meant for the intro below them. */
+  :global(.jh-pin) .jh__final:not(.is-on) a { pointer-events: none; }
   :global(.jh-pin) .jh__final :global(.jh__final-logo) { width: clamp(150px, 14vw, 200px); height: auto; color: var(--ink); }
   :global(.jh-pin) .jh__final-title { font-size: clamp(2rem, 1rem + 3.6vw, 4.4rem); overflow-wrap: normal; }
   :global(.jh-pin) .jh__final .jh__ctas { justify-content: center; }
@@ -554,16 +557,18 @@ const stills = [
     :global(.jh-pin) .jh__film {
       top: var(--header-h);
       bottom: auto;
-      height: min(46svh, 75vw);
+      height: var(--jh-win);
     }
 
     :global(.jh-pin) .jh__depth { inset: 0; transform: none; }
 
     :global(.jh-pin) .jh__veil { background: rgb(244 239 232 / var(--veil, 0)); }
 
+    :global(.jh-pin) .jh { --jh-win: min(46svh, 75vw); }
+
     :global(.jh-pin) .jh__intro,
     :global(.jh-pin) .jh__ch {
-      top: calc(var(--header-h) + min(46svh, 75vw) + 20px);
+      top: calc(var(--header-h) + var(--jh-win) + 20px);
       left: var(--gutter);
       right: var(--gutter);
       width: auto;
@@ -592,7 +597,7 @@ const stills = [
     :global(.jh-pin) .jh__stories {
       top: calc(var(--header-h) + 10px);
       bottom: auto;
-      height: calc(min(46svh, 75vw) - 20px);
+      height: calc(var(--jh-win) - 20px);
       left: var(--gutter);
       right: var(--gutter);
       transform: none;
@@ -607,7 +612,7 @@ const stills = [
     :global(.jh-pin) .jh__story-outcome { display: none; }
     :global(.jh-pin) .jh__story-name { font-size: 1.05rem; }
 
-    :global(.jh-pin) .jh__final { top: auto; bottom: 88px; transform: translate3d(-50%, calc((1 - var(--f, 0)) * 28px), 0); }
+    :global(.jh-pin) .jh__final { width: calc(100vw - 2 * var(--gutter)); top: auto; bottom: 88px; transform: translate3d(-50%, calc((1 - var(--f, 0)) * 28px), 0); }
     :global(.jh-pin) .jh__final :global(.jh__final-logo) { width: 112px; }
 
     :global(.jh-pin) .jh__nav {
@@ -626,8 +631,24 @@ const stills = [
 
     :global(.jh-pin) .jh__skip { left: var(--gutter); bottom: 22px; font-size: 0.8rem; }
 
+    /* Narrow phones: the skip link keeps its text for assistive technology but shows only the arrow. */
+    @media (max-width: 400px) {
+      :global(.jh-pin) .jh__skip { min-width: 44px; min-height: 44px; justify-content: center; bottom: 14px; }
+      :global(.jh-pin) .jh__skip-t { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+    }
+
+    /* Short phones (browser toolbars visible): a smaller film window and a tighter intro. */
+    @media (max-height: 760px) {
+      :global(.jh-pin) .jh { --jh-win: min(36svh, 72vw); }
+      :global(.jh-pin) .jh__lead { display: none; }
+      :global(.jh-pin) .jh__intro { gap: 10px; }
+      :global(.jh-pin) .jh__tools { display: none; }
+      :global(.jh-pin) .jh__ch-title { font-size: var(--fs-h3); }
+      :global(.jh-pin) .jh__ch-text { font-size: 0.92rem; line-height: 1.45; }
+    }
+
     :global(.jh-pin) .jh__credit {
-      top: calc(var(--header-h) + min(46svh, 75vw) - 30px);
+      top: calc(var(--header-h) + var(--jh-win) - 30px);
       bottom: auto;
       right: var(--gutter);
       left: auto;

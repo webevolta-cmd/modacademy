@@ -13,14 +13,17 @@ interface Props {
 }
 const { video, index = 0, sizes = '(min-width: 1000px) 30vw, (min-width: 640px) 46vw, 92vw' } = Astro.props;
 const fmt = (iso: string) => iso.split('-').reverse().join('.');
-const mmss = (s?: number) => (s ? `${Math.floor(s / 60)}:${String(Math.round(s % 60)).padStart(2, '0')}` : '');
+const mmss = (s: number) => {
+  const t = Math.round(s);
+  return `${Math.floor(t / 60)}:${String(t % 60).padStart(2, '0')}`;
+};
 ---
 <article class="vc" data-category={video.category} data-reveal="mask" style={`--i:${index % 3}`}>
   <a class="vc__link" href={video.url} target="_blank" rel="noopener" aria-describedby={`vc-${video.id}-meta`}>
     <span class="vc__media">
       <Picture src={video.thumb} alt={video.thumbAlt} widths={[360, 540, 720]} sizes={sizes} formats={['avif', 'webp']} fallbackFormat="webp" loading="lazy" />
       <span class="vc__play" aria-hidden="true"></span>
-      {video.duration && <span class="vc__dur num">{mmss(video.duration)}</span>}
+      {video.duration ? <span class="vc__dur num">{mmss(video.duration)}</span> : null}
     </span>
     <span class="vc__body">
       <span class="label vc__cat">{videoCategoryLabels[video.category]}</span>

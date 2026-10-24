@@ -23,13 +23,13 @@ const jsonLd = [
   <PageHeader
     title="Տեսանյութեր"
     kicker={`${videos.length} ընտրված տեսանյութ`}
-    lead="Կարճ ընտրանի ակադեմիայի տեսանյութերից, որոնք օգնում են պատկերացնել ուսուցումը։ Սեղմելով քարտը՝ տեսանյութը կբացվի Instagram-ում՝ նոր ներդիրում։"
+    lead="Կարճ ընտրանի ակադեմիայի տեսանյութերից, որոնք օգնում են պատկերացնել ուսուցումը։ Քարտի վրա սեղմելիս տեսանյութը կբացվի Instagram-ում՝ նոր ներդիրում։"
     crumbs={[{ label: 'Գլխավոր', href: '/' }, { label: 'Տեսանյութեր' }]}
   />
 
   <section class="vp" aria-label="Տեսանյութերի ցանկ" data-work-filter data-wf-noun="տեսանյութ">
     <div class="wrap">
-      {categories.length > 2 && (
+      {categories.length > 1 && (
         <div class="vp__filters" role="group" aria-label="Զտել ըստ թեմայի">
           <button type="button" class="chip" data-wf="all" aria-pressed="true">Բոլորը</button>
           {categories.map((c) => (
@@ -42,7 +42,7 @@ const jsonLd = [
         {videos.map((v, i) => <VideoCard video={v} index={i} />)}
       </div>
       <p class="vp__note muted">
-        Տեսանյութերը ակադեմիայի պաշտոնական Instagram էջից են․ նկարագրությունները գրված են տեսանյութերը դիտելուց հետո։
+        Տեսանյութերն ակադեմիայի պաշտոնական Instagram էջից են, իսկ նկարագրությունները գրվել են դրանք դիտելուց հետո։
       </p>
     </div>
   </section>

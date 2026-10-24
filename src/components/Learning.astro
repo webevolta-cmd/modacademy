@@ -19,7 +19,7 @@ const steps = [
   {
     n: '02',
     title: 'Նյութն իրական տարածքում',
-    text: 'Գործնական դասեր Երևանի դիզայնի սրահներում՝ կահույքի, գործվածքների և լուսավորության իրական նմուշներով։',
+    text: '«Ինտերիեր դիզայն» դասընթացում՝ գործնական դասեր Երևանի դիզայնի սրահներում՝ կահույքի, գործվածքների և լուսավորության իրական նմուշներով։',
   },
   {
     n: '03',
@@ -182,7 +182,6 @@ const partners = [...new Map(practice.filter((p) => p.partnerUrl).map((p) => [p.
     fill: none;
     stroke: var(--red);
     stroke-width: 2;
-    vector-effect: non-scaling-stroke;
     stroke-dasharray: 1;
     stroke-dashoffset: calc(1 - var(--draw, 1));
   }
@@ -262,7 +261,7 @@ const partners = [...new Map(practice.filter((p) => p.partnerUrl).map((p) => [p.
     .learn__practice { grid-template-columns: minmax(0, 0.7fr) minmax(0, 1.3fr); align-items: start; }
     .learn__shots {
       grid-auto-flow: row;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
+      grid-template-columns: repeat(2, minmax(0, 1fr));
       overflow: visible;
       margin-inline: 0;
       padding-inline: 0;
@@ -270,5 +269,9 @@ const partners = [...new Map(practice.filter((p) => p.partnerUrl).map((p) => [p.
     .learn__shot--1,
     .learn__shot--3 { margin-top: 18%; }
     .learn__guide { grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr); gap: clamp(40px, 6vw, 96px); }
+  }
+  /* Four photo columns only where the longest caption word fits its column. */
+  @media (min-width: 1280px) {
+    .learn__shots { grid-template-columns: repeat(4, minmax(0, 1fr)); }
   }
 </style>

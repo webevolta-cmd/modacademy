@@ -3,7 +3,7 @@
 import { Picture } from 'astro:assets';
 import SectionIndex from './SectionIndex.astro';
 import Icon from './Icon.astro';
-import { projects } from '../data/projects';
+import { projects, byline } from '../data/projects';
 
 const covers = projects.slice(0, 3).map((p) => ({ ...p.views[0], project: p }));
 const authors = new Set(projects.map((p) => p.author.name)).size;
@@ -27,7 +27,7 @@ const views = projects.reduce((n, p) => n + p.views.length, 0);
           <Picture src={c.image} alt="" widths={[480, 720, 960]} sizes="(min-width: 1000px) 30vw, 70vw" formats={['avif', 'webp']} fallbackFormat="webp" loading="lazy" data-parallax style={`--ps:${1.08 + i * 0.02}`} />
         </span>
       ))}
-      <span class="wt__caption">{covers[0]?.project.author.name} · «{covers[0]?.project.course}»</span>
+      {covers[0] && <span class="wt__caption">{byline(covers[0].project)}</span>}
     </a>
   </div>
 </section>

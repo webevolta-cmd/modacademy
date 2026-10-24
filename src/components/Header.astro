@@ -9,7 +9,8 @@ interface Props {
 const { ctaHref = '/#inquiry' } = Astro.props;
 // Page links (not in-page sections) are marked current on their own page and its sub-pages.
 const path = Astro.url.pathname;
-const isCurrent = (href: string) => !href.includes('#') && path.startsWith(href);
+// The exact page is the current page; a parent collection is only marked as the current section.
+const isCurrent = (href: string) => (href.includes('#') ? undefined : path === href ? 'page' : path.startsWith(href) ? 'true' : undefined);
 ---
 <header class="header" data-header>
   <div class="header__bar wrap">
@@ -20,7 +21,7 @@ const isCurrent = (href: string) => !href.includes('#') && path.startsWith(href)
     <nav class="header__nav" aria-label="Հիմնական նավարկություն">
       <ul role="list">
         {nav.map((item) => (
-          <li><a href={item.href} aria-current={isCurrent(item.href) ? 'page' : undefined}>{item.label}</a></li>
+          <li><a href={item.href} aria-current={isCurrent(item.href)}>{item.label}</a></li>
         ))}
       </ul>
     </nav>
@@ -59,7 +60,7 @@ const isCurrent = (href: string) => !href.includes('#') && path.startsWith(href)
       <ol class="menu__list" role="list">
         {nav.map((item, i) => (
           <li style={`--i:${i}`}>
-            <a href={item.href} data-menu-link aria-current={isCurrent(item.href) ? 'page' : undefined}>
+            <a href={item.href} data-menu-link aria-current={isCurrent(item.href)}>
               <span class="menu__n" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
               {item.label}
             </a>

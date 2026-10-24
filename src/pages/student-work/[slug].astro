@@ -5,7 +5,7 @@ import PageHeader from '../../components/PageHeader.astro';
 import ProjectFilm from '../../components/ProjectFilm.astro';
 import Lightbox from '../../components/Lightbox.astro';
 import Icon from '../../components/Icon.astro';
-import { projects, categoryLabels, type Project } from '../../data/projects';
+import { projects, categoryLabels, byline, type Project } from '../../data/projects';
 import { keep } from '../../lib/text';
 
 export function getStaticPaths() {
@@ -37,7 +37,7 @@ const jsonLd = [
     '@type': 'CreativeWork',
     name: project.title,
     author: { '@type': 'Person', name: project.author.name, ...(project.author.instagram ? { sameAs: [project.author.instagram] } : {}) },
-    about: `«${project.course}» դասընթաց, MOD Academy`,
+    about: project.course ? `«${project.course}» դասընթաց, MOD Academy` : 'MOD Academy',
     datePublished: project.sourceDate,
     url: new URL(`/student-work/${project.slug}/`, siteUrl).href,
     image: views.map((v) => new URL(v.large, siteUrl).href),
@@ -56,7 +56,7 @@ const jsonLd = [
 ---
 <BaseLayout
   title={`${project.title} — ${project.author.name} | MOD Academy`}
-  description={`${project.author.name}, «${project.course}» դասընթաց․ ${project.views.length} տեսք ակադեմիայի հրապարակումից (${fmt(project.sourceDate)})։`}
+  description={`${byline(project)}․ ${project.views.length} տեսք ակադեմիայի հրապարակումից (${fmt(project.sourceDate)})։`}
   image={og?.src}
   imageAlt={og ? cover.alt : undefined}
   jsonLd={jsonLd}
@@ -69,7 +69,7 @@ const jsonLd = [
   >
     <dl class="pj-meta" data-reveal>
       <div><dt>Հեղինակ</dt><dd>{project.author.name}{project.author.instagram && <> · <a href={project.author.instagram} target="_blank" rel="noopener">{project.author.handle}</a></>}</dd></div>
-      <div><dt>Դասընթաց</dt><dd>{project.courseSlug ? <a href={`/courses/${project.courseSlug}/`}>«{project.course}»</a> : `«${project.course}»`}</dd></div>
+      {project.course && <div><dt>Դասընթաց</dt><dd>{project.courseSlug ? <a href={`/courses/${project.courseSlug}/`}>«{project.course}»</a> : `«${project.course}»`}</dd></div>}
       <div><dt>Աղբյուր</dt><dd><a href={project.source} target="_blank" rel="noopener">{keep('Ակադեմիայի Instagram հրապարակումը')}</a> · {fmt(project.sourceDate)}</dd></div>
     </dl>
   </PageHeader>
@@ -88,7 +88,7 @@ const jsonLd = [
                 data-lb-srcset={`${v.medium} 1280w, ${v.large} 1920w`}
                 data-lb-alt={v.alt}
                 data-lb-title={v.title}
-                data-lb-credit={`${project.author.name} · «${project.course}» դասընթաց`}
+                data-lb-credit={byline(project)}
                 aria-label={`Բացել մեծ չափով՝ ${v.title}`}
               >
                 <Picture src={v.image} alt={v.alt} widths={[480, 800, 1200, 1600]} sizes={i === 0 ? '(min-width: 1000px) 66vw, 92vw' : '(min-width: 1000px) 33vw, 92vw'} formats={['avif', 'webp']} fallbackFormat="webp" loading={i < 2 ? 'eager' : 'lazy'} />
