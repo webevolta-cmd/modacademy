@@ -68,7 +68,7 @@ export function initFinder(root: HTMLElement): void {
 
       const reason = fits
         ? c.reason[level] ?? ''
-        : 'Նախատեսված է ոլորտում արդեն աշխատող մասնագետների համար՝ կարող է լինել հաջորդ քայլը հիմքերից հետո։';
+        : 'Նախատեսված է ոլորտում արդեն աշխատող մասնագետների համար՝ այն կարող է դառնալ քո հաջորդ քայլը հիմքերից հետո։';
       if (reason) li.append(el('p', '', reason));
 
       const meta = [c.kicker, c.duration, c.fee].filter(Boolean).join(' · ');

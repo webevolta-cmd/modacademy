@@ -18,13 +18,13 @@ const jsonLd = [
 ---
 <BaseLayout
   title="Տեսանյութեր — MOD Academy, Երևան"
-  description="Ընտրված տեսանյութեր MOD Academy-ի գործնական դասերից, դասընթացներից և ուսանողների աշխատանքից։ Դիտումը բացվում է Instagram-ում։"
+  description="Տես, թե ինչպես են անցնում MOD Academy-ի դասերը՝ դիզայնի սրահներից ու կահույքի արտադրամասից մինչև լսարան։ Դիտումը բացվում է Instagram-ում։"
   jsonLd={jsonLd}
 >
   <PageHeader
     title="Տեսանյութեր"
     kicker={`${videos.length} ընտրված տեսանյութ`}
-    lead="Կարճ ընտրանի մեր տեսանյութերից, որոնք օգնում են պատկերացնել ուսուցումը։ Քարտի վրա սեղմելիս տեսանյութը կբացվի Instagram-ում՝ նոր ներդիրում։"
+    lead="Դիզայնի սրահներ, արտադրամաս, լսարան․ տես, թե ինչպես են անցնում մեր դասերը, և պատկերացրու քեզ այնտեղ։ Քարտի վրա սեղմելիս տեսանյութը կբացվի Instagram-ում՝ նոր ներդիրում։"
     crumbs={[{ label: 'Գլխավոր', href: '/' }, { label: 'Տեսանյութեր' }]}
   />
 
@@ -43,7 +43,7 @@ const jsonLd = [
         {videos.map((v, i) => <VideoCard video={v} index={i} />)}
       </div>
       <p class="vp__note muted">
-        Ավելի շատ տեսանյութեր՝ մեր <a href={site.social.instagram} target="_blank" rel="noopener">Instagram էջում</a>։
+        Ավելի շատ տեսանյութեր կգտնես մեր <a href={site.social.instagram} target="_blank" rel="noopener">Instagram էջում</a>։
       </p>
     </div>
   </section>

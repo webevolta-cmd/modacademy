@@ -111,7 +111,7 @@ const jsonLd = [
   },
 ];
 
-const ask = 'Ճշտեք ընթացիկ տվյալները';
+const ask = 'Ճշտիր ընթացիկ տվյալները';
 const sheet = [
   { k: 'Տևողություն', v: course.duration },
   { k: 'Ժամանակացույց', v: course.schedule ? 'schedule' : null },
@@ -210,7 +210,7 @@ const description =
             <span class="num">{site.address.short}</span>
           </div>
         </dl>
-        <p class="cp__note muted">{course.fee ? priceNote : 'Այս դասընթացի տևողության և արժեքի թարմ տվյալները կներկայացնենք Ձեր հայտից հետո։'}</p>
+        <p class="cp__note muted">{course.fee ? priceNote : 'Ուղարկիր հայտ, և կներկայացնենք այս դասընթացի տևողության ու արժեքի թարմ տվյալները։'}</p>
       </div>
     </section>
 
@@ -222,7 +222,7 @@ const description =
 
           {course.focus.length > 0 && (
             <>
-              <h2 class="h2 cp__h" data-reveal>{course.slug === 'interior-design' ? 'Գործնական դասեր' : 'Ինչ է ներառում'}</h2>
+              <h2 class="h2 cp__h" data-reveal>{course.slug === 'interior-design' ? 'Գործնական դասեր' : 'Ինչ կստանաս'}</h2>
               <ol class="cp__focus" role="list">
                 {course.focus.map((f, i) => (
                   <li data-reveal style={`--i:${i}`}>
@@ -238,7 +238,7 @@ const description =
 
         <aside class="cp__side">
           <div class="cp__box" data-reveal>
-            <h2 class="label">Ում համար է</h2>
+            <h2 class="label">Քեզ համար է</h2>
             <ul class="cp__aud">
               {course.audience.map((a) => (
                 <li><Icon name="check" class="cp__tick" />{a}</li>
@@ -270,7 +270,7 @@ const description =
                 : 'Դասերից'}
           </h2>
           {course.related === 'work' && !ownWork && (
-            <p class="muted cp__gnote" data-reveal>«{course.title}» դասընթացի աշխատանքներ դեռ չեն հրապարակվել։</p>
+            <p class="muted cp__gnote" data-reveal>«{course.title}» դասընթացի աշխատանքներն այստեղ դեռ չենք ներկայացրել։</p>
           )}
           <ul class="cp__grid" role="list">
             {galleryItems.map((g, i) => (
@@ -306,8 +306,8 @@ const description =
       <div class="wrap cp__form-grid">
         <div class="cp__form-intro">
           <p class="label label--red">Հայտ · {course.title}</p>
-          <h2 class="h1">Ստացեք ընթացիկ մանրամասները</h2>
-          <p class="lead">Մենք կկապվենք Ձեզ հետ՝ խմբերի, ժամանակացույցի և արժեքի թարմ տվյալներով։</p>
+          <h2 class="h1">Սկսիր քո մասնագիտական ուղին</h2>
+          <p class="lead">Ուղարկիր հայտ․ կկապվենք քեզ հետ՝ խմբերի, ժամանակացույցի և արժեքի թարմ տվյալներով։</p>
           <a class="link-arrow" href={site.phone.href}><Icon name="phone" />{site.phone.display}</a>
         </div>
         <InquiryForm preselect={course.slug} heading={`Հայտ «${course.title}» դասընթացին`} />

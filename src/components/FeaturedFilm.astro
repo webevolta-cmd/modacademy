@@ -22,7 +22,7 @@ const featured = projects.find((p) => p.film);
         <p class="muted" data-reveal>{keep(featured.summary)} {keep(featured.film.note)}</p>
         <div class="ff__links" data-reveal>
           <a class="btn btn--red" href={`/student-work/${featured.slug}/`}>Դիտել նախագիծը<Icon name="arrow" class="btn__icon" /></a>
-          {featured.courseSlug && <a class="link-arrow" href={`/courses/${featured.courseSlug}/`}>«{featured.course}» դասընթաց<Icon name="arrow" /></a>}
+          {featured.courseSlug && <a class="link-arrow" href={`/courses/${featured.courseSlug}/`}>Սովորիր «{featured.course}» դասընթացում<Icon name="arrow" /></a>}
         </div>
       </div>
       <div class="ff__media" data-reveal="mask">

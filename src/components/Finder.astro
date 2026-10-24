@@ -31,17 +31,17 @@ const finderData = courses.map((c) => ({
 <section class="finder section section--tight" id="finder" aria-labelledby="finder-title" data-finder>
   <div class="wrap finder__grid">
     <div class="finder__intro">
-      <SectionIndex n="03" label="Գտեք Ձեր դասընթացը" />
-      <SplitText id="finder-title" class="h1" text="Ո՞րն է Ձեր առաջին քայլը" />
-      <p class="lead" data-reveal>Նշեք՝ ինչն է Ձեզ հետաքրքրում և որտեղից եք սկսում․ ստորև կհայտնվեն համապատասխան դասընթացները՝ բացատրությամբ։</p>
+      <SectionIndex n="03" label="Գտիր քո դասընթացը" />
+      <SplitText id="finder-title" class="h1" text="Ո՞րն է քո առաջին քայլը" />
+      <p class="lead" data-reveal>Նշիր՝ ինչն է քեզ հետաքրքրում և որտեղից ես սկսում․ ստորև կտեսնես քեզ հարմար դասընթացները և կիմանաս՝ ինչու հենց դրանք։</p>
       <p class="finder__disclaimer muted" data-reveal>
-        Սա ուղղորդող առաջարկ է, այլ ոչ թե մասնագիտական գնահատում։ Վերջնական ընտրության համար խորհրդակցեք ակադեմիայի հետ։
+        Սա ուղղորդող առաջարկ է, այլ ոչ թե մասնագիտական գնահատում։ Վերջնական ընտրության համար խորհրդակցիր մեզ հետ․ սիրով կօգնենք։
       </p>
     </div>
 
     <form class="finder__form" data-finder-form data-reveal>
       <fieldset class="finder__set">
-        <legend><span class="label">1 · Ի՞նչն է Ձեզ հետաքրքրում</span> <span class="finder__hint muted">(կարող եք ընտրել մի քանիսը)</span></legend>
+        <legend><span class="label">1 · Ի՞նչն է քեզ հետաքրքրում</span> <span class="finder__hint muted">(կարող ես ընտրել մի քանիսը)</span></legend>
         <div class="finder__options">
           {interests.map((o) => (
             <label class="opt">
@@ -53,7 +53,7 @@ const finderData = courses.map((c) => ({
         </div>
       </fieldset>
       <fieldset class="finder__set">
-        <legend><span class="label">2 · Ձեր փորձը</span></legend>
+        <legend><span class="label">2 · Քո փորձը</span></legend>
         <div class="finder__options finder__options--row">
           {levels.map((o, i) => (
             <label class="opt opt--radio">
@@ -67,11 +67,11 @@ const finderData = courses.map((c) => ({
 
       <div class="finder__results" data-finder-results>
         <p class="visually-hidden" aria-live="polite" data-finder-status></p>
-        <p class="finder__empty muted" data-finder-empty>Ընտրեք առնվազն մեկ հետաքրքրություն՝ առաջարկները տեսնելու համար։</p>
+        <p class="finder__empty muted" data-finder-empty>Ընտրիր առնվազն մեկ հետաքրքրություն՝ առաջարկները տեսնելու համար։</p>
         <ol class="finder__list" role="list" data-finder-list></ol>
       </div>
       <noscript>
-        <p class="muted">Առաջարկների համար անհրաժեշտ է JavaScript։ Բոլոր դասընթացները տեսեք <a href="#courses">վերևում</a>։</p>
+        <p class="muted">Առաջարկների համար անհրաժեշտ է JavaScript։ Բոլոր դասընթացները տես <a href="#courses">վերևում</a>։</p>
       </noscript>
     </form>
   </div>

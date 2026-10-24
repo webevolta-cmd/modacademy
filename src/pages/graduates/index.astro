@@ -24,20 +24,20 @@ const jsonLd = [
 ---
 <BaseLayout
   title="Շրջանավարտներ — MOD Academy, Երևան"
-  description="MOD Academy-ի շրջանավարտները՝ վկայականների հանձնման պահեր և մասնագիտական առաջին քայլեր ավարտելուց հետո։"
+  description="Ծանոթացիր MOD Academy-ի շրջանավարտներին, որոնք ավարտելուց հետո սկսեցին իրենց մասնագիտական ուղին։ Սա կարող է լինել նաև քո պատմությունը։"
   jsonLd={jsonLd}
 >
   <PageHeader
     title="Մեր շրջանավարտները"
     kicker="Շրջանավարտներ"
-    lead="Ավարտելուց հետո մեր շրջանավարտները սկսում են իրենց մասնագիտական ուղին։ Ահա նրանցից մի քանիսի պատմությունը և վկայականների հանձնման պահերը։"
+    lead="Ավարտելուց հետո մեր շրջանավարտները սկսում են իրենց մասնագիտական ուղին։ Կարդա նրանց պատմությունները և ոգեշնչվիր վկայականների հանձնման պահերով։"
     crumbs={[{ label: 'Գլխավոր', href: '/' }, { label: 'Շրջանավարտներ' }]}
   />
 
   {graduateStories.length > 0 && (
     <section class="gs" aria-labelledby="gs-title">
       <div class="wrap">
-        <h2 class="h2 gs__title" id="gs-title" data-reveal>Պատմություններ</h2>
+        <h2 class="h2 gs__title" id="gs-title" data-reveal>Ինչպես սկսեցին</h2>
         <ol class="gs__list" role="list">
           {graduateStories.map((s, i) => (
             <li class="gs__item" id={s.slug} data-reveal style={`--i:${i % 2}`}>
@@ -58,11 +58,11 @@ const jsonLd = [
                   )}
                   {(s.links.length > 0 || s.project || s.courseSlug) && (
                     <ul class="gs__links" role="list">
-                      {s.project && <li><a class="link-arrow" href={`/student-work/${s.project}/`}>Նախագիծը<Icon name="arrow" /></a></li>}
+                      {s.project && <li><a class="link-arrow" href={`/student-work/${s.project}/`}>Դիտել նախագիծը<Icon name="arrow" /></a></li>}
                       {s.links.map((l) => (
                         <li><a class="link-arrow" href={l.url} target="_blank" rel="noopener">{l.label}<Icon name="arrow-up-right" /></a></li>
                       ))}
-                      {s.courseSlug && <li><a class="link-arrow" href={`/courses/${s.courseSlug}/`}>«{s.course}» դասընթաց<Icon name="arrow" /></a></li>}
+                      {s.courseSlug && <li><a class="link-arrow" href={`/courses/${s.courseSlug}/`}>Սովորիր «{s.course}» դասընթացում<Icon name="arrow" /></a></li>}
                     </ul>
                   )}
                 </div>
@@ -78,8 +78,8 @@ const jsonLd = [
     <section class="gp" aria-labelledby="gp-title">
       <div class="wrap">
         <div class="gp__head">
-          <h2 class="h2" id="gp-title" data-reveal>Ավարտական պահեր</h2>
-          <p class="muted" data-reveal>Վկայականների հանձնման արարողություններից և ավարտական երեկոներից։</p>
+          <h2 class="h2" id="gp-title" data-reveal>Վկայականը ձեռքին</h2>
+          <p class="muted" data-reveal>Պահեր, երբ ջանքը վերածվում է վկայականի՝ արարողություններից և ավարտական երեկոներից։</p>
         </div>
         <ul class="gp__grid" role="list">
           {photos.map((g, i) => (
@@ -110,7 +110,7 @@ const jsonLd = [
 
   <section class="gcta section--tight">
     <div class="wrap gcta__inner">
-      <p class="display gcta__title" data-reveal>Հաջորդ պատմությունը կարող է լինել Ձերը</p>
+      <p class="display gcta__title" data-reveal>Հաջորդ պատմությունը կարող է լինել քոնը</p>
       <div class="gcta__actions" data-reveal>
         <a class="btn btn--red" href="/#courses">Բացահայտել դասընթացները<Icon name="arrow" class="btn__icon" /></a>
         <a class="btn btn--ghost" href="/#inquiry">Ուղարկել հայտ</a>

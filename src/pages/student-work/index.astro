@@ -29,13 +29,13 @@ const jsonLd = [
 ---
 <BaseLayout
   title="Ուսանողական աշխատանքներ — MOD Academy, Երևան"
-  description="MOD Academy-ի ուսանողների և շրջանավարտների նախագծերը՝ հեղինակի անունով և դասընթացով։"
+  description="Ինտերիերներ, որոնք ստեղծել են MOD Academy-ի ուսանողներն ու շրջանավարտները։ Տես նրանց նախագծերը և պատկերացրու քո ապագա պորտֆոլիոն։"
   jsonLd={jsonLd}
 >
   <PageHeader
     title="Ուսանողական աշխատանքներ"
     kicker={`${projects.length} նախագիծ · ${authors} հեղինակ`}
-    lead="Մեր ուսանողների և շրջանավարտների նախագծերը։ Յուրաքանչյուր նախագծի բոլոր տեսքերը հավաքված են մեկ էջում։"
+    lead="Ինտերիերներ, որոնք ստեղծել են մեր ուսանողներն ու շրջանավարտները։ Բացիր ցանկացած նախագիծ և պատկերացրու քո ապագա պորտֆոլիոն։"
     crumbs={[{ label: 'Գլխավոր', href: '/' }, { label: 'Ուսանողական աշխատանքներ' }]}
   />
 
@@ -51,7 +51,7 @@ const jsonLd = [
           <p class="muted" data-reveal>{keep(featured.summary)}</p>
           <div class="sw-feature__links" data-reveal>
             <a class="btn btn--red" href={`/student-work/${featured.slug}/`}>Դիտել նախագիծը<Icon name="arrow" class="btn__icon" /></a>
-            {featured.courseSlug && <a class="link-arrow" href={`/courses/${featured.courseSlug}/`}>«{featured.course}» դասընթաց<Icon name="arrow" /></a>}
+            {featured.courseSlug && <a class="link-arrow" href={`/courses/${featured.courseSlug}/`}>Սովորիր «{featured.course}» դասընթացում<Icon name="arrow" /></a>}
           </div>
         </div>
         <div class="sw-feature__media" data-reveal="mask">

@@ -26,7 +26,7 @@ const mmss = (s: number) => {
     </span>
     <span class="vc__body">
       <span class="label vc__cat">{videoCategoryLabels[video.category]}</span>
-      <span class="vc__title">{video.title}</span>
+      <span class="vc__title">{keep(video.title)}</span>
       <span class="vc__desc">{keep(video.description)}</span>
       <span class="vc__cta" id={`vc-${video.id}-meta`}>
         Դիտել Instagram-ում<Icon name="arrow-up-right" /><span class="visually-hidden"> (բացվում է նոր ներդիրում)</span>

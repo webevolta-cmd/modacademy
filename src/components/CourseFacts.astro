@@ -9,7 +9,7 @@ interface Props {
   compact?: boolean;
 }
 const { course, compact = false } = Astro.props;
-const ask = 'Ճշտեք ընթացիկ տվյալները';
+const ask = 'Ճշտիր ընթացիկ տվյալները';
 ---
 <dl class:list={['facts', { 'facts--compact': compact }]}>
   <div class="facts__item">
