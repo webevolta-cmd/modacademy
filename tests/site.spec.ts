@@ -80,8 +80,10 @@ test.describe('journey hero', () => {
     await expect(page.locator('#jh-title')).toContainText('Քո մասնագիտական ճանապարհը սկսվում');
     await expect(page.locator('[data-jh-intro-ctas] a', { hasText: 'Բացահայտել դասընթացները' })).toBeInViewport();
     await expect(page.locator('[data-jh-intro-ctas] a', { hasText: 'Մեր շրջանավարտների պատմությունները' })).toBeInViewport();
-    // Film segments stay out of rendering (and out of LCP) until the visitor scrolls.
-    expect(await page.locator('[data-jh-video]').evaluateAll((vs) => vs.every((v) => (v as HTMLVideoElement).hidden))).toBe(true);
+    // No film is on screen (or in LCP) until the visitor scrolls: loaded segments stay transparent.
+    expect(
+      await page.locator('[data-jh-video]').evaluateAll((vs) => vs.every((v) => (v as HTMLVideoElement).hidden || (!v.classList.contains('is-shown') && getComputedStyle(v).opacity === '0'))),
+    ).toBe(true);
     expect(errors).toEqual([]);
   });
 
@@ -117,6 +119,26 @@ test.describe('journey hero', () => {
     await expect(page.locator('[data-jh-intro-ctas] a').first()).toBeInViewport();
     expect(await page.locator('[data-jh-intro-ctas]').evaluate((el) => (el as HTMLElement).inert)).toBe(false);
     expect(errors).toEqual([]);
+  });
+
+  test('continuous scrolling plays every film scene, none is skipped', async ({ page }) => {
+    await page.goto('/');
+    await page.waitForTimeout(1500);
+    const { top, range } = await heroRange(page);
+    const segments = await page.locator('[data-jh-video]').evaluateAll((vs) => vs.map((v) => [Number((v as HTMLElement).dataset.from), Number((v as HTMLElement).dataset.to)]));
+    const seen: number[][] = segments.map(() => []);
+    const steps = 80;
+    for (let i = 0; i <= steps; i++) {
+      const p = i / steps;
+      await page.evaluate((y) => window.scrollTo(0, y), top + range * p);
+      await page.waitForTimeout(90);
+      const shown = await page.locator('[data-jh-video]').evaluateAll((vs) => vs.findIndex((v) => v.classList.contains('is-shown')));
+      segments.forEach(([from, to], k) => {
+        if (p >= from && p <= to) seen[k].push(shown === k ? 1 : 0);
+      });
+    }
+    // Each scene must be on screen for most of its own stretch (a single handover frame is allowed).
+    seen.forEach((hits, k) => expect(hits.reduce((a, b) => a + b, 0), `scene ${k + 1}`).toBeGreaterThanOrEqual(hits.length - 2));
   });
 
   test('chapter controls jump to a chapter and the skip link leaves the story', async ({ page }) => {
@@ -371,9 +393,9 @@ test.describe('site structure', () => {
   test('the homepage keeps its section order', async ({ page }) => {
     await page.goto('/');
     const ids = await page.locator('main > section[id], main > div > section[id]').evaluateAll((els) => els.map((e) => e.id));
-    const order = ['top', 'about', 'courses', 'learning', 'graduates', 'work', 'videos', 'faq', 'contact'].filter((id) => ids.includes(id));
+    const order = ['top', 'about', 'courses', 'learning', 'graduates', 'work', 'featured-film', 'videos', 'faq', 'contact'].filter((id) => ids.includes(id));
     expect(order.map((id) => ids.indexOf(id))).toEqual([...order.map((id) => ids.indexOf(id))].sort((a, b) => a - b));
-    expect(order).toEqual(expect.arrayContaining(['top', 'courses', 'learning', 'work', 'faq', 'contact']));
+    expect(order).toEqual(expect.arrayContaining(['top', 'courses', 'learning', 'work', 'featured-film', 'faq', 'contact']));
   });
 
   test('image reveals open once they scroll into view', async ({ page }) => {
@@ -407,6 +429,60 @@ test.describe('site structure', () => {
     expect(src).toMatch(/\.mp4$/);
   });
 
+  test('the homepage project film starts by itself in view, pauses off-screen and respects a pause', async ({ page }) => {
+    await page.goto('/');
+    const film = page.locator('#featured-film [data-pfilm]');
+    const video = film.locator('video');
+    await expect(film).toHaveAttribute('data-autoplay', '');
+    // Nothing is downloaded before the section is reached.
+    expect(await video.evaluate((v: HTMLVideoElement) => v.currentSrc)).toBe('');
+    await film.evaluate((e) => e.scrollIntoView({ block: 'center', behavior: 'instant' }));
+    await expect(film).toHaveAttribute('data-playing', '', { timeout: 10_000 });
+    expect(await video.evaluate((v: HTMLVideoElement) => v.currentSrc)).toMatch(/\.mp4$/);
+    await expect.poll(() => video.evaluate((v: HTMLVideoElement) => v.currentTime), { timeout: 5_000 }).toBeGreaterThan(0.2);
+    // Leaving the section pauses it; coming back resumes it.
+    await page.evaluate(() => window.scrollTo({ top: 0, behavior: 'instant' }));
+    await expect(film).not.toHaveAttribute('data-playing', '');
+    expect(await video.evaluate((v: HTMLVideoElement) => v.paused)).toBe(true);
+    await film.evaluate((e) => e.scrollIntoView({ block: 'center', behavior: 'instant' }));
+    await expect(film).toHaveAttribute('data-playing', '');
+    // A visitor's pause sticks, even after scrolling away and back.
+    await film.locator('[data-pfilm-toggle]').click();
+    await expect(film.locator('[data-pfilm-label]')).toHaveText('Դիտել տեսանյութը');
+    await page.evaluate(() => window.scrollTo({ top: 0, behavior: 'instant' }));
+    await film.evaluate((e) => e.scrollIntoView({ block: 'center', behavior: 'instant' }));
+    await page.waitForTimeout(600);
+    expect(await video.evaluate((v: HTMLVideoElement) => v.paused)).toBe(true);
+    await film.locator('[data-pfilm-toggle]').click();
+    await expect(film).toHaveAttribute('data-playing', '');
+  });
+
+  test('the homepage project film does not start by itself with reduced motion', async ({ browser }) => {
+    const context = await browser.newContext({ reducedMotion: 'reduce' });
+    const page = await context.newPage();
+    await page.goto('/');
+    const film = page.locator('#featured-film [data-pfilm]');
+    await film.evaluate((e) => e.scrollIntoView({ block: 'center', behavior: 'instant' }));
+    await page.waitForTimeout(800);
+    await expect(film).not.toHaveAttribute('data-playing', '');
+    expect(await film.locator('video').evaluate((v: HTMLVideoElement) => v.currentSrc)).toBe('');
+    await film.locator('[data-pfilm-toggle]').click();
+    await expect(film).toHaveAttribute('data-playing', '', { timeout: 10_000 });
+    await context.close();
+  });
+
+  test('photo and video captions carry no post dates', async ({ page }) => {
+    for (const path of ['/', '/graduates/', '/videos/', '/courses/3ds-max/', '/courses/sales-management/']) {
+      await page.goto(path);
+      const text = await page.evaluate(() => document.body.innerText);
+      expect(text, path).not.toMatch(/\b\d{2}\.\d{2}\.20\d{2}\b/);
+      expect(await page.locator('figcaption time, .vc__date').count(), path).toBe(0);
+    }
+    await page.goto('/graduates/');
+    const credits = await page.locator('[data-lb-credit]').evaluateAll((els) => els.map((e) => e.getAttribute('data-lb-credit')));
+    for (const c of credits) expect(c).not.toMatch(/\d{4}/);
+  });
+
   test('video cards open the exact Instagram post in a new tab', async ({ page }) => {
     await page.goto('/videos/');
     const cards = page.locator('.vp__grid a');
@@ -434,7 +510,7 @@ test.describe('site structure', () => {
     for (const path of ['/', '/graduates/', '/student-work/', '/student-work/tevosyan-living-kitchen/', '/videos/', '/courses/3ds-max/']) {
       await page.goto(path);
       const text = await page.evaluate(() => document.body.innerText);
-      expect(text, path).not.toMatch(/\bAI\b|արհեստական բանականություն|Ըստ |ըստ ակադեմիայի|հրապարակ(ված|ման|ել)/);
+      expect(text, path).not.toMatch(/\bAI\b|արհեստական բանականություն|Ըստ |ըստ ակադեմիայի|հրապարակ(ված|ման|ել|ում)/);
     }
   });
 

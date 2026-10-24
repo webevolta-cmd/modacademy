@@ -10,7 +10,6 @@ import { keep } from '../lib/text';
 
 const photos = graduationPhotos.slice(0, 5);
 const stories = graduateStories.slice(0, 3);
-const fmt = (iso: string) => iso.split('-').reverse().join('.');
 ---
 {(photos.length > 0 || stories.length > 0) && (
   <section class="grads section" id="graduates" aria-labelledby="grads-title">
@@ -31,7 +30,7 @@ const fmt = (iso: string) => iso.split('-').reverse().join('.');
                 <div class="frame grads__frame">
                   <Picture src={g.image} alt={g.alt} widths={[360, 540, 720, 960]} sizes={i === 0 ? '(min-width: 1000px) 40vw, 92vw' : '(min-width: 1000px) 20vw, 46vw'} formats={['avif', 'webp']} fallbackFormat="webp" loading="lazy" />
                 </div>
-                <figcaption class="credit">{keep(`${g.caption} · ${fmt(g.date)}`)}</figcaption>
+                <figcaption class="credit">{keep(g.caption)}</figcaption>
               </figure>
             </li>
           ))}

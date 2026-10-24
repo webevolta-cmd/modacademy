@@ -17,7 +17,7 @@ work, videos, FAQ and an inquiry form.
 
 | Route | What it is |
 |---|---|
-| `/` | Journey hero, introduction, courses + finder + comparison, practical learning and guidance, graduates, student-work and video entry points, FAQ, inquiry and contact |
+| `/` | Journey hero, introduction, courses + finder + comparison, practical learning and guidance, graduates, student-work entry point, a featured project film, video entry point, FAQ, inquiry and contact |
 | `/courses/`, `/courses/<slug>/` | Course index and one page per course (facts, sources, inquiry) |
 | `/graduates/` | Certificate-ceremony photos and documented graduate stories, each with its source |
 | `/student-work/`, `/student-work/<slug>/` | Student projects with author, course, every view (lightbox) and the original post |
@@ -92,8 +92,8 @@ and values set in the shell or on Netlify take precedence.
 ```
 src/
   data/          site, courses, faq, media, hero (story + film timing), graduates, projects, videos
-  components/    JourneyHero, About, Courses, Finder, Learning, GraduatesFeature, WorkTeaser, VideosTeaser,
-                 Faq, FinalCta, Contact, InquiryForm, PageHeader, ProjectFilm, VideoCard, Lightbox, …
+  components/    JourneyHero, About, Courses, Finder, Learning, GraduatesFeature, WorkTeaser, FeaturedFilm,
+                 VideosTeaser, Faq, FinalCta, Contact, InquiryForm, PageHeader, ProjectFilm, VideoCard, Lightbox, …
   pages/         index, courses/, graduates/, student-work/ (index + [slug]), videos/, inquiry-sent, 404,
                  robots.txt, build-info.json
   scripts/       journey-hero (scroll story), motion (shared frame loop), reveal, draw (red lines), parallax,
@@ -138,6 +138,9 @@ visualization) → 04 portfolio and certificate → 05 the next step, ending wit
 - **Delivery:** four H.264 segments (desktop 1920×1080, 11.3 MB in total; phones 960×720, 4.9 MB), loaded
   one after another as in-memory blobs after the page has rendered and scrubbed by scroll position with
   smoothing. Until a segment is ready, the exact boundary frame is shown as a still, so the picture never jumps.
+  Desktops on a connection below 10 Mbit/s (reported by the browser, or measured on the first download) get
+  1280×720 versions (`*-1280.mp4`, 5.4 MB in total); a failed download is retried. A new scene appears only
+  once its frame has caught up with the scroll position, so fast scrolling never skips a scene.
 - **Real photographs** — practical lessons, certificate ceremonies and graduate stories — are HTML layers
   on top of the film, taken from `src/data/media.ts` and `src/data/graduates.ts`.
 - **Controls:** a chapter indicator with direct links to each chapter, «Անցնել դասընթացներին» to skip the
@@ -151,6 +154,14 @@ visualization) → 04 portfolio and certificate → 05 the next step, ending wit
 
 When re-encoding, give the files a new name (media is cached for a week).
 
+## Featured project film
+
+`src/components/FeaturedFilm.astro` (homepage, after the student-work entry point) shows Shushan Tevosyan's
+project with its short film (`ProjectFilm` with `autoplay`). The film downloads only when the section is
+reached, then plays muted and looped while it is in view and pauses when it leaves. A visitor's pause sticks;
+*reduced motion* and *data saver* never start it on their own. Phones get the 3:4 version. On the
+student-work pages the same film still plays only when asked.
+
 ## Tests
 
 ```bash
@@ -161,7 +172,8 @@ npm run test:e2e
 
 `tests/site.spec.ts` checks every page for console errors and horizontal overflow on desktop and mobile,
 the journey hero (scrubbing, chapters, chapter links, skip link, pointer depth, short-screen and
-reduced-motion fallbacks), the navigation and old anchors, image reveals, the student-work lightbox and film,
+reduced-motion fallbacks, no skipped scenes while scrolling), the homepage project film (autoplay in view,
+pause off-screen, a visitor's pause sticks, no autoplay with reduced motion), captions without post dates, the navigation and old anchors, image reveals, the student-work lightbox and film,
 video links, graduate sources, course filtering, course → form hand-off, the course finder, the FAQ, form
 validation and the honest offline fallback, and the mobile menu.
 

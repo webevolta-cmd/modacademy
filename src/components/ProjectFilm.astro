@@ -1,14 +1,17 @@
 ---
-// A short film shown with a project, played only when the visitor asks.
+// A short project film. With autoplay it starts (muted, looping) when it scrolls into view and
+// pauses when it leaves; otherwise it plays when the visitor asks. A pause button is always there.
 import type { ProjectFilm } from '../data/projects';
 
 interface Props {
   film: ProjectFilm;
   title: string;
+  autoplay?: boolean;
+  caption?: boolean;
 }
-const { film, title } = Astro.props;
+const { film, title, autoplay = false, caption = true } = Astro.props;
 ---
-<figure class="pf" data-pfilm>
+<figure class="pf" data-pfilm data-autoplay={autoplay ? '' : undefined}>
   <div class="pf__frame">
     <video
       class="pf__video"
@@ -20,6 +23,7 @@ const { film, title } = Astro.props;
       loop
       preload="none"
       poster={film.poster}
+      data-poster-mobile={film.posterMobile}
       aria-label={`${title} — կինեմատոգրաֆիկ մեկնաբանություն`}
     ></video>
     <button type="button" class="pf__play" data-pfilm-toggle>
@@ -27,12 +31,16 @@ const { film, title } = Astro.props;
       <span class="pf__label" data-pfilm-label>Դիտել տեսանյութը</span>
     </button>
   </div>
-  <figcaption class="pf__note">{film.note}</figcaption>
+  {caption && <figcaption class="pf__note">{film.note}</figcaption>}
 </figure>
 
 <style>
   .pf { display: grid; gap: 12px; }
   .pf__frame { position: relative; aspect-ratio: 1; overflow: hidden; background: var(--paper-3); }
+  /* Phones get the portrait (3:4) file, so the frame follows it. */
+  @media (max-width: 640px) {
+    .pf__frame { aspect-ratio: 3 / 4; }
+  }
   .pf__video { width: 100%; height: 100%; object-fit: cover; }
 
   .pf__play {

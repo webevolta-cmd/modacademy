@@ -1,0 +1,48 @@
+---
+// Homepage feature: a graduate's project shown as a short film that starts on its own once it is in view.
+import SectionIndex from './SectionIndex.astro';
+import ProjectFilm from './ProjectFilm.astro';
+import Icon from './Icon.astro';
+import { projects } from '../data/projects';
+import { keep } from '../lib/text';
+
+interface Props {
+  n?: string;
+}
+const { n = '07' } = Astro.props;
+const featured = projects.find((p) => p.film);
+---
+{featured?.film && (
+  <section class="ff section on-night" id="featured-film" aria-labelledby="ff-title">
+    <div class="wrap ff__grid">
+      <div class="ff__text">
+        <SectionIndex n={n} label="Ընտրված նախագիծ" />
+        <h2 class="h1" id="ff-title" data-reveal>{featured.title}</h2>
+        <p class="ff__by" data-reveal>{featured.author.name} · {featured.author.role}</p>
+        <p class="muted" data-reveal>{keep(featured.summary)} {keep(featured.film.note)}</p>
+        <div class="ff__links" data-reveal>
+          <a class="btn btn--red" href={`/student-work/${featured.slug}/`}>Դիտել նախագիծը<Icon name="arrow" class="btn__icon" /></a>
+          {featured.courseSlug && <a class="link-arrow" href={`/courses/${featured.courseSlug}/`}>«{featured.course}» դասընթաց<Icon name="arrow" /></a>}
+        </div>
+      </div>
+      <div class="ff__media" data-reveal="mask">
+        <ProjectFilm film={featured.film} title={featured.title} autoplay caption={false} />
+      </div>
+    </div>
+  </section>
+)}
+
+<style>
+  .ff__grid { display: grid; gap: clamp(28px, 4vw, 64px); align-items: center; }
+  .ff__grid > * { min-width: 0; }
+  .ff__text { display: grid; gap: 16px; align-content: start; justify-items: start; }
+  .ff__by { font-weight: 560; }
+  .ff__links { display: flex; flex-wrap: wrap; align-items: center; gap: 14px 24px; margin-top: 8px; }
+  .ff__links .link-arrow { color: var(--on-night); }
+
+  @media (min-width: 1000px) {
+    .ff__grid { grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr); }
+    /* The square film stays within one screen, so text, buttons and film are seen together. */
+    .ff__media { width: 100%; max-width: max(420px, calc(100svh - 200px)); justify-self: end; }
+  }
+</style>

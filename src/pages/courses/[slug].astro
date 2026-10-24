@@ -43,11 +43,11 @@ if (course.related === 'work') {
   gallery = practice
     .filter((p) => p.partner !== site.name)
     .slice(0, 4)
-    .map((p) => ({ image: p.image, alt: p.alt, title: p.caption, credit: `${p.partner} · հրապարակում՝ ${fmt(p.date)}` }));
+    .map((p) => ({ image: p.image, alt: p.alt, title: p.caption, credit: p.partner }));
 } else if (course.related === 'sales') {
   gallery = [
-    { image: practice[5].image, alt: practice[5].alt, title: practice[5].caption, credit: '«Վաճառքի կառավարում» դասընթաց · հրապարակում՝ 09.10.2026' },
-    { image: extraImages.salesTrainer, alt: 'Վաճառքի կառավարման դասը վարողը բացատրում է նյութը մասնակիցներին', title: 'Ինտերակտիվ դաս', credit: '«Վաճառքի կառավարում» դասընթաց · հրապարակում՝ 09.10.2026' },
+    { image: practice[5].image, alt: practice[5].alt, title: practice[5].caption, credit: '«Վաճառքի կառավարում» դասընթաց' },
+    { image: extraImages.salesTrainer, alt: 'Վաճառքի կառավարման դասը վարողը բացատրում է նյութը մասնակիցներին', title: 'Ինտերակտիվ դաս', credit: '«Վաճառքի կառավարում» դասընթաց' },
   ];
 }
 
@@ -117,9 +117,6 @@ const sheet = [
   { k: 'Մեկնարկ', v: course.start },
 ];
 
-function fmt(iso: string) {
-  return iso.split('-').reverse().join('.');
-}
 
 const description =
   course.summary.length > 110 ? course.summary : `${course.summary} MOD Academy, ${site.address.city}, ${site.address.short}։`;

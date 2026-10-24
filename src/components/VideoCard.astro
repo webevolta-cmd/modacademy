@@ -12,7 +12,6 @@ interface Props {
   sizes?: string;
 }
 const { video, index = 0, sizes = '(min-width: 1000px) 30vw, (min-width: 640px) 46vw, 92vw' } = Astro.props;
-const fmt = (iso: string) => iso.split('-').reverse().join('.');
 const mmss = (s: number) => {
   const t = Math.round(s);
   return `${Math.floor(t / 60)}:${String(t % 60).padStart(2, '0')}`;
@@ -31,7 +30,6 @@ const mmss = (s: number) => {
       <span class="vc__desc">{keep(video.description)}</span>
       <span class="vc__cta" id={`vc-${video.id}-meta`}>
         Դիտել Instagram-ում<Icon name="arrow-up-right" /><span class="visually-hidden"> (բացվում է նոր ներդիրում)</span>
-        <span class="vc__date">· {fmt(video.date)}</span>
       </span>
     </span>
   </a>

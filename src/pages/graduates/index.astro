@@ -8,7 +8,6 @@ import { graduationPhotos, graduateStories } from '../../data/graduates';
 import { keep } from '../../lib/text';
 
 const siteUrl = Astro.site!;
-const fmt = (iso: string) => iso.split('-').reverse().join('.');
 
 const photos = await Promise.all(
   graduationPhotos.map(async (g) => ({ ...g, large: (await getImage({ src: g.image, width: 1600, format: 'webp', quality: 82 })).src })),
@@ -93,14 +92,13 @@ const jsonLd = [
                   data-lb-src={g.large}
                   data-lb-alt={g.alt}
                   data-lb-title={g.caption}
-                  data-lb-credit={`MOD Academy · ${fmt(g.date)}`}
+                  data-lb-credit="MOD Academy"
                   aria-label={`Բացել մեծ չափով՝ ${g.caption}`}
                 >
                   <Picture src={g.image} alt={g.alt} widths={[360, 540, 720, 960]} sizes="(min-width: 1000px) 30vw, (min-width: 640px) 46vw, 92vw" formats={['avif', 'webp']} fallbackFormat="webp" loading="lazy" />
                 </button>
                 <figcaption>
                   <span>{keep(g.caption)}</span>
-                  <time datetime={g.date}>{fmt(g.date)}</time>
                 </figcaption>
               </figure>
             </li>
