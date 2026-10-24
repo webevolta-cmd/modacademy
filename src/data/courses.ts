@@ -2,7 +2,9 @@
 // Leave a field null when it is not publicly confirmed — the UI then invites visitors to
 // request current details instead of showing a guess.
 import type { ImageMetadata } from 'astro';
-import { work, practice } from './media';
+import { work } from './media';
+import interiorPlan from '../assets/courses/interior-floor-plan.jpg';
+import salesConversation from '../assets/courses/sales-conversation.jpg';
 
 export type CategoryId = 'design' | 'visual' | 'business';
 export type InterestId = 'space' | 'visual' | 'graphic' | 'sales';
@@ -36,6 +38,8 @@ export interface Course {
   fee: { amount: number; unit: string } | null;
   start: string | null;
   image: ImageMetadata | null;
+  /** CSS object-position for the image wherever a card or the course header crops it. */
+  imagePosition?: string;
   imageAlt: string;
   imageCredit: string;
   related: 'work' | 'practice' | 'sales' | null;
@@ -100,9 +104,10 @@ export const courses: Course[] = [
     schedule: weeklySchedule,
     fee: { amount: 67000, unit: 'ամսական' },
     start: null,
-    image: practice[1].image,
-    imageAlt: 'Ինտերիեր դիզայնի ուսանողները գործնական դասին՝ պաստառների և գործվածքների սրահում',
-    imageCredit: 'Գործնական դաս Classis Decor Armenia-ում',
+    image: interiorPlan,
+    imagePosition: '62% 58%',
+    imageAlt: 'Ինտերիերի հատակագիծ՝ կարմիր գծերով, կողքին՝ փայտի, բուկլե գործվածքի և արույրի նմուշներ արևոտ աշխատասեղանին',
+    imageCredit: 'Նախագծի առաջին քայլը՝ հատակագիծ և նյութերի ընտրություն',
     related: 'practice',
     finder: {
       interests: ['space'],
@@ -272,9 +277,10 @@ export const courses: Course[] = [
     schedule: weeklySchedule,
     fee: { amount: 77000, unit: 'ամսական' },
     start: null,
-    image: practice[5].image,
-    imageAlt: practice[5].alt,
-    imageCredit: '«Վաճառքի կառավարում» դասընթացի դաս',
+    image: salesConversation,
+    imagePosition: '50% 45%',
+    imageAlt: 'Բաց նոթատետր՝ կարմիր թանաքով գծված վաճառքի զրույցի սխեմայով՝ հարցից մինչև ձեռքսեղմում, կողքին՝ երկու բաժակ սուրճ և կարմիր գրիչ',
+    imageCredit: 'Վաճառքի զրույց՝ հարցից մինչև համաձայնություն',
     related: 'sales',
     finder: {
       interests: ['sales'],

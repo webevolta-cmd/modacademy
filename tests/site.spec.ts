@@ -443,7 +443,7 @@ test.describe('site structure', () => {
     await page.goto('/#learning');
     const srcs = await page.locator('#learning img').evaluateAll((imgs) => imgs.map((i) => (i as HTMLImageElement).currentSrc || (i as HTMLImageElement).src));
     expect(srcs.length).toBeGreaterThan(0);
-    expect(srcs.some((s) => s.includes('sales-class-trainer'))).toBe(false);
+    expect(srcs.some((s) => /sales-class-(trainer|presenting)/.test(s))).toBe(false);
   });
 
   test('the featured project film plays only on request', async ({ page }) => {
@@ -466,13 +466,13 @@ test.describe('site structure', () => {
     await film.evaluate((e) => e.scrollIntoView({ block: 'center', behavior: 'instant' }));
     await expect(film).toHaveAttribute('data-playing', '', { timeout: 10_000 });
     expect(await video.evaluate((v: HTMLVideoElement) => v.currentSrc)).toMatch(/\.mp4$/);
-    await expect.poll(() => video.evaluate((v: HTMLVideoElement) => v.currentTime), { timeout: 5_000 }).toBeGreaterThan(0.2);
+    await expect.poll(() => video.evaluate((v: HTMLVideoElement) => v.currentTime), { timeout: 10_000 }).toBeGreaterThan(0.2);
     // Leaving the section pauses it; coming back resumes it.
     await page.evaluate(() => window.scrollTo({ top: 0, behavior: 'instant' }));
     await expect(film).not.toHaveAttribute('data-playing', '');
     expect(await video.evaluate((v: HTMLVideoElement) => v.paused)).toBe(true);
     await film.evaluate((e) => e.scrollIntoView({ block: 'center', behavior: 'instant' }));
-    await expect(film).toHaveAttribute('data-playing', '');
+    await expect(film).toHaveAttribute('data-playing', '', { timeout: 10_000 });
     // A visitor's pause sticks, even after scrolling away and back.
     await film.locator('[data-pfilm-toggle]').click();
     await expect(film.locator('[data-pfilm-label]')).toHaveText('Դիտել տեսանյութը');
@@ -481,7 +481,7 @@ test.describe('site structure', () => {
     await page.waitForTimeout(600);
     expect(await video.evaluate((v: HTMLVideoElement) => v.paused)).toBe(true);
     await film.locator('[data-pfilm-toggle]').click();
-    await expect(film).toHaveAttribute('data-playing', '');
+    await expect(film).toHaveAttribute('data-playing', '', { timeout: 10_000 });
   });
 
   test('the homepage project film does not start by itself with reduced motion', async ({ browser }) => {

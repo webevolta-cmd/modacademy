@@ -9,6 +9,7 @@ import Icon from '../../components/Icon.astro';
 import { courses, priceNote } from '../../data/courses';
 import { site } from '../../data/site';
 import { keep } from '../../lib/text';
+import { coverScale } from '../../lib/images';
 
 const siteUrl = Astro.site!;
 
@@ -62,11 +63,12 @@ const jsonLd = [
                   <Picture
                     src={c.image}
                     alt=""
-                    widths={[360, 540, 720]}
-                    sizes="(min-width: 1000px) 30vw, (min-width: 640px) 46vw, 92vw"
+                    widths={[360, 540, 720, 1080, 1440]}
+                    sizes={`(min-width: 1000px) ${Math.round(30 * coverScale(c.image, 4 / 3))}vw, (min-width: 640px) ${Math.round(46 * coverScale(c.image, 4 / 3))}vw, ${Math.round(92 * coverScale(c.image, 4 / 3))}vw`}
                     formats={['avif', 'webp']}
                     fallbackFormat="webp"
                     loading={i < 2 ? 'eager' : 'lazy'}
+                    style={c.imagePosition && `object-position: ${c.imagePosition}`}
                   />
                 ) : (
                   <CourseArt letter={c.title.charAt(0)} />

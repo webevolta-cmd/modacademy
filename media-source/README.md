@@ -121,6 +121,21 @@ in `src/assets/work/` (Higgsfield/ByteDance 2K upscale; composition and design u
 The academy’s Instagram reels (October 2026) from which the practical-lesson stills in
 `src/assets/environment/` were taken (cropped below the burned-in captions).
 
+The four showroom stills used in the hero and the learning section (`classis-catalogues`,
+`classis-sample-books`, `electrica-showroom-group`, `capital-showroom-tour`) and the two sales-class
+stills (`sales-class-wide`, `sales-class-presenting`, the sharpest frames at 15.1 s and 7.1 s of the
+sales reel) were upscaled with Higgsfield/ByteDance 2K and saved at 1600 px wide. Nothing in the frames
+was changed; the sales stills also had a light warm white-balance correction for the office lighting.
+
+## Course covers (`src/assets/courses/`)
+
+- `interior-floor-plan.jpg`: keyframe 3 of the homepage film (the floor plan with material samples,
+  2752×1536), used as the interior design cover.
+- `sales-conversation.jpg`: a still generated for the site with Nano Banana Pro (2K, the film's
+  keyframe 3 as a style reference): a notebook with a hand-drawn sales-conversation sketch, coffee cups
+  and the red pen. It contains no people and is captioned as an illustration, not as a photo of a class.
+  The sales course page gallery shows the real class photos.
+
 ## brand/
 
 The logo source artwork (Instagram card, Facebook profile image) and the vector trace used to build

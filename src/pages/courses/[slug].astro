@@ -13,6 +13,7 @@ import { courses, formatFee, priceNote, type Course } from '../../data/courses';
 import { faq } from '../../data/faq';
 import { work, practice, student, extraImages } from '../../data/media';
 import { site } from '../../data/site';
+import { coverScale } from '../../lib/images';
 
 export function getStaticPaths() {
   return courses.map((course) => ({ params: { slug: course.slug }, props: { course } }));
@@ -47,7 +48,7 @@ if (course.related === 'work') {
 } else if (course.related === 'sales') {
   gallery = [
     { image: practice[5].image, alt: practice[5].alt, title: practice[5].caption, credit: '«Վաճառքի կառավարում» դասընթաց' },
-    { image: extraImages.salesTrainer, alt: 'Վաճառքի կառավարման դասը վարողը բացատրում է նյութը մասնակիցներին', title: 'Ինտերակտիվ դաս', credit: '«Վաճառքի կառավարում» դասընթաց' },
+    { image: extraImages.salesPresenting, alt: 'Վաճառքի կառավարման դասընթացավարը խոսում է մասնակիցների հետ ակադեմիայի լսարանում', title: 'Ինտերակտիվ դաս', credit: '«Վաճառքի կառավարում» դասընթաց' },
   ];
 }
 
@@ -60,6 +61,9 @@ const ogFromCourse = course.image && course.image.width >= 1200 && course.image.
 const ogImage = ogFromCourse
   ? (await getImage({ src: course.image!, width: 1200, height: 630, fit: 'cover', format: 'jpg', quality: 82 })).src
   : undefined;
+
+// The header frame is 4:5 and the image is scaled 1.1× for parallax.
+const headerScale = course.image ? coverScale(course.image, 4 / 5) * 1.1 : 1;
 
 const months = Number(course.duration?.match(/^(\d+)\s*ամիս/)?.[1] ?? 0);
 const monthly = course.fee?.unit === 'ամսական';
@@ -157,14 +161,14 @@ const description =
               <Picture
                 src={course.image}
                 alt={course.imageAlt}
-                widths={[480, 720, 1080, 1440]}
-                sizes="(min-width: 1000px) 46vw, 92vw"
+                widths={[480, 720, 1080, 1440, 1920, 2560]}
+                sizes={`(min-width: 1000px) ${Math.round(46 * headerScale)}vw, ${Math.round(92 * headerScale)}vw`}
                 formats={['avif', 'webp']}
                 fallbackFormat="webp"
                 loading="eager"
                 fetchpriority="high"
                 data-parallax
-                style="--ps:1.1"
+                style={`--ps:1.1${course.imagePosition ? `; object-position: ${course.imagePosition}` : ''}`}
               />
             ) : (
               <CourseArt letter={course.title.charAt(0)} />

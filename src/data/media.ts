@@ -16,8 +16,8 @@ import classisCatalogues from '../assets/environment/classis-catalogues.jpg';
 import classisSampleBooks from '../assets/environment/classis-sample-books.jpg';
 import classisTable from '../assets/environment/classis-table-group.jpg';
 import capitalTour from '../assets/environment/capital-showroom-tour.jpg';
-import salesTable from '../assets/environment/sales-class-table.jpg';
-import salesTrainer from '../assets/environment/sales-class-trainer.jpg';
+import salesWide from '../assets/environment/sales-class-wide.jpg';
+import salesPresenting from '../assets/environment/sales-class-presenting.jpg';
 
 export interface WorkItem {
   id: string;
@@ -157,11 +157,11 @@ export const practice: PracticeMoment[] = [
   },
   {
     id: 'sales-class',
-    image: salesTable,
+    image: salesWide,
     partner: 'MOD Academy',
     course: 'Վաճառքի կառավարում',
     caption: 'Ինտերակտիվ հարցուպատասխան և առարկությունների հետ աշխատանք',
-    alt: 'Վաճառքի կառավարման դասն ակադեմիայի լսարանում․ մասնակիցները նշումներ են անում, դասը վարողը կանգնած է գրատախտակի մոտ',
+    alt: 'Վաճառքի կառավարման դասն ակադեմիայի լսարանում․ դասընթացավարը բացատրում է, մասնակիցները լսում են և նշումներ անում',
     date: '2026-10-09',
     source: 'https://www.instagram.com/p/DeRoJTRoQ-A/',
   },
@@ -169,5 +169,5 @@ export const practice: PracticeMoment[] = [
 
 export const extraImages = {
   classisTable,
-  salesTrainer,
+  salesPresenting,
 };
