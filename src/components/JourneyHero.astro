@@ -14,6 +14,8 @@ import { keep } from '../lib/text';
 
 const glimpse = [practice[1], practice[0], practice[4]];
 const prints = graduationPhotos.slice(0, 4);
+// The prints are small, so they carry only who is pictured: the caption up to «՝» or «․».
+const short = (caption: string) => caption.split(/[՝․]/)[0].trim();
 const stories = graduateStories.slice(0, 3);
 
 const first = filmSegments[0];
@@ -119,7 +121,7 @@ const stills = [
         {prints.map((g, k) => (
           <figure class="jh__print jh__print--grad" data-jh-item={k} style={`--k:${k}`}>
             <Picture src={g.image} alt={g.alt} widths={[360, 540, 720]} sizes="(min-width: 900px) 18vw, 40vw" formats={['avif', 'webp']} fallbackFormat="webp" loading="lazy" />
-            <figcaption>{keep(g.caption)}</figcaption>
+            <figcaption>{keep(short(g.caption))}</figcaption>
           </figure>
         ))}
         <p class="jh__note">Մեր շրջանավարտները</p>
@@ -261,7 +263,7 @@ const stills = [
       transform: rotate(var(--r, 0deg));
     }
     :global(html:not(.jh-pin)) .jh__print :global(img) { display: block; width: 100%; aspect-ratio: 4 / 5; object-fit: cover; }
-    :global(html:not(.jh-pin)) .jh__print figcaption { position: absolute; left: 12px; right: 12px; bottom: 8px; font-size: 0.7rem; color: var(--muted); }
+    :global(html:not(.jh-pin)) .jh__print figcaption { position: absolute; left: 12px; right: 12px; bottom: 8px; font-size: 0.7rem; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
     :global(html:not(.jh-pin)) .jh__print:nth-child(1) { left: 0; top: 6%; --r: -3deg; }
     :global(html:not(.jh-pin)) .jh__print:nth-child(2) { left: 30%; top: 22%; --r: 2deg; z-index: 2; }
     :global(html:not(.jh-pin)) .jh__print:nth-child(3) { right: 0; top: 0; width: 42%; --r: 4deg; }
@@ -361,7 +363,7 @@ const stills = [
   }
 
   :global(.jh-pin) .jh__print :global(img) { display: block; width: 100%; aspect-ratio: 4 / 5; object-fit: cover; object-position: 50% 30%; }
-  :global(.jh-pin) .jh__print figcaption { position: absolute; left: 12px; right: 12px; bottom: 9px; font-size: 0.7rem; color: var(--muted); }
+  :global(.jh-pin) .jh__print figcaption { position: absolute; left: 12px; right: 12px; bottom: 9px; font-size: 0.7rem; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
   :global(.jh-pin) .jh__glimpse .jh__print:nth-child(1) { left: 0; top: 4%; --r: -3deg; }
   :global(.jh-pin) .jh__glimpse .jh__print:nth-child(2) { left: 34%; top: 22%; --r: 2deg; z-index: 2; }
