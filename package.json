@@ -9,7 +9,9 @@
   },
   "scripts": {
     "dev": "astro dev",
+    "prebuild": "node scripts/image-cache.mjs seed",
     "build": "astro build",
+    "images:save": "node scripts/image-cache.mjs save",
     "preview": "astro preview",
     "check": "astro check",
     "test:e2e": "playwright test",
