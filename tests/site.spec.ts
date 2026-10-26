@@ -341,8 +341,9 @@ test('every course meets three times a week for 90 minutes', async ({ page }) =>
 test('the sales course page carries its full description', async ({ page }) => {
   await page.goto('/courses/sales-management/');
   const body = page.locator('.cp__main');
-  await expect(body).toContainText('Ի՞նչ է իրականում պետք հաճախորդին, և ինչպե՞ս բացահայտել դա ճիշտ հարցերի միջոցով։');
-  await expect(body).toContainText('կառուցելով վստահության վրա հիմնված վաճառքի զրույց։');
+  await expect(body).toContainText('Արդյունավետ վաճառքը սկսվում է հաճախորդին հասկանալուց։');
+  await expect(body).toContainText('վստահ վարել զրույցը՝ առաջին շփումից մինչև գնման որոշում։');
+  await expect(body).toContainText('Առարկությունը դեռ մերժում չէ։');
 });
 
 test('figures keep their real values for assistive technology', async ({ page }) => {
