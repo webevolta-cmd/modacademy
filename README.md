@@ -53,6 +53,12 @@ project → GitHub →** choose this repository. Netlify reads:
 | Publish directory | `dist` |
 | Node version | `22.22.0` (set in `netlify.toml`) |
 
+The build takes about 10 seconds: `image-cache/` holds the already encoded AVIF/WebP images and is copied
+into Astro's cache before every build (`prebuild`), so Netlify does not spend ~10 minutes re-encoding
+~1,800 images (close to its 15-minute build limit). Only new or changed images are encoded. After
+changing images, run `npm run build && npm run images:save` and commit `image-cache/`; the command keeps
+exactly the images the site uses.
+
 After the first deploy:
 
 1. **Enable form detection** — *Site configuration → Forms → Enable form detection*, then trigger a redeploy.
