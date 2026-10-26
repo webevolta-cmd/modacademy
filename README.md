@@ -43,7 +43,7 @@ npm run check     # type-check .astro and .ts files (astro check)
 
 ## Deploying on Netlify
 
-`netlify.toml` already contains everything Netlify needs. In Netlify: **Add new site → Import an existing
+`netlify.toml` already contains everything Netlify needs. In Netlify: **Add new project → Import an existing
 project → GitHub →** choose this repository. Netlify reads:
 
 | Setting | Value |
@@ -51,7 +51,7 @@ project → GitHub →** choose this repository. Netlify reads:
 | Production branch | the branch you choose (this work is on `claude/mod-academy-website-ba1v5x`; merge it into `main` or select it) |
 | Build command | `npm run build` |
 | Publish directory | `dist` |
-| Node version | `22.22.0` (set in `netlify.toml`) |
+| Node version | `22.22.0` (set in `netlify.toml` and `.nvmrc`) |
 
 The build takes about 10 seconds: `image-cache/` holds the already encoded AVIF/WebP images and is copied
 into Astro's cache before every build (`prebuild`), so Netlify does not spend ~10 minutes re-encoding
@@ -59,16 +59,40 @@ into Astro's cache before every build (`prebuild`), so Netlify does not spend ~1
 changing images, run `npm run build && npm run images:save` and commit `image-cache/`; the command keeps
 exactly the images the site uses.
 
+**Plan and credits.** Netlify accounts created since September 2025 use credit-based plans: every
+successful production deploy (each push to the production branch) costs 15 credits, bandwidth 20 credits
+per GB and web requests 2 credits per 10,000; Deploy Previews, branch deploys and Netlify Forms are free.
+The Free plan's 300 credits a month is a hard limit — when it runs out, *every* project on the account
+shows "Site not available" until the next cycle. The homepage film downloads its first scene (~1.4 MB)
+on load and the rest (~10 MB on desktop, ~4 MB on phones) once the visitor scrolls, so a busy month can
+exceed Free. For the live academy site use the Personal or Pro plan, turn on usage notifications, and
+push content edits to production in batches.
+
 After the first deploy:
 
-1. **Enable form detection** — *Site configuration → Forms → Enable form detection*, then trigger a redeploy.
-   The inquiry form (`name="inquiry"`) is then captured by Netlify Forms. Add an email notification under
-   *Forms → Form notifications* so the academy receives each inquiry (e.g. to `mod.modacademy@gmail.com`).
-2. **Custom domain** (optional) — Netlify’s `URL` variable is used automatically for canonical links,
-   Open Graph tags and the sitemap. To override it, set `SITE_URL`.
-3. **Indexing** — Netlify *production* builds are indexable by default (sitemap + `robots.txt` allow).
-   Deploy previews and branch deploys are always `noindex`. To keep production hidden until launch, set
-   the environment variable `SITE_INDEXABLE=false` and redeploy.
+1. **Make the project public** — on Netlify teams created on or after 28 July 2026, new projects start
+   *private*: visitors, Google and link previews get a Netlify "no access" page and cannot send the form.
+   After the first successful production deploy select **Make public** on the project overview (or
+   *Project configuration → General → Visitor access → Project visibility*). Check from a logged-out browser.
+2. **Enable form detection** — open the project's **Forms** page → **Enable form detection**, then
+   **Deploys → Trigger deploy → Deploy project** (detection applies to deploys made after it is enabled).
+   The inquiry form (`name="inquiry"`) is then captured by Netlify Forms. Under **Forms → Submission
+   notifications** add an email notification (e.g. to `mod.modacademy@gmail.com`); each email's subject is
+   «Նոր հայտ MOD Academy կայքից». Netlify filters submissions with Akismet and emails only *verified*
+   ones: test with a realistic name and phone number, and if an email does not arrive, look in the form's
+   **Spam submissions** list and mark the entry as verified. Check that list during the first weeks.
+3. **Project name and custom domain** — canonical links, Open Graph images, `robots.txt` and the sitemap
+   take their address from Netlify's `URL` variable *at build time*. Choose the final project name (the
+   `<name>.netlify.app` address) before sharing links. After renaming the project or adding/changing the
+   primary custom domain (*Domain management*), run **Deploys → Trigger deploy → Deploy project**, then
+   open `https://<address>/build-info.json` and check that `site` shows the new address. To override the
+   address, set `SITE_URL` and redeploy.
+4. **Netlify badge** — Free-plan projects created on or after 19 August 2026 show a "Powered by Netlify"
+   badge in the bottom-right corner of every page. Turn it off under *Project configuration → General →
+   Powered by Netlify badge* (no redeploy needed).
+5. **Indexing** — Netlify *production* builds are indexable by default (sitemap + `robots.txt` allow);
+   this only matters once the project is public. Deploy previews and branch deploys are always `noindex`.
+   To keep production hidden until launch, set the environment variable `SITE_INDEXABLE=false` and redeploy.
 
 ### Environment variables (all optional, none are secrets)
 
@@ -142,7 +166,8 @@ visualization) → 04 portfolio and certificate → 05 the next step, ending wit
   and end frames, 2560×1440 at a native 24 fps, no frame interpolation). It shows a room designed for the
   site and is not presented as student work or the academy's classroom. Details: `media-source/README.md`.
 - **Delivery:** four H.264 segments (desktop 1920×1080, 11.3 MB in total; phones 960×720, 4.9 MB), loaded
-  one after another as in-memory blobs after the page has rendered and scrubbed by scroll position with
+  as in-memory blobs (the first scene after the page has rendered, the rest in story order on the visitor's
+  first scroll) and scrubbed by scroll position with
   smoothing. Until a segment is ready, the exact boundary frame is shown as a still, so the picture never jumps.
   Desktops on a connection below 10 Mbit/s (reported by the browser, or measured on the first download) get
   1280×720 versions (`*-1280.mp4`, 5.4 MB in total); a failed download is retried. A new scene appears only

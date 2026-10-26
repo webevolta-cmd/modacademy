@@ -30,6 +30,8 @@ const honeypot = formMode === 'endpoint' ? '_gotcha' : 'bot-field';
     aria-labelledby="inq-heading"
   >
     {netlify && <input type="hidden" name="form-name" value="inquiry" />}
+    {/* Subject of Netlify's notification email for each inquiry. */}
+    {netlify && <input type="hidden" name="subject" value="Նոր հայտ MOD Academy կայքից (%{submissionId})" />}
     <p class="inq__hp" aria-hidden="true">
       <label>Մի լրացրեք այս դաշտը <input name={honeypot} tabindex="-1" autocomplete="off" data-honeypot /></label>
     </p>

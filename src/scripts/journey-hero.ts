@@ -558,9 +558,10 @@ export function initJourneyHero(root: HTMLElement): void {
     if (active && target > 0.03) window.scrollTo({ top, behavior: 'smooth' });
   });
 
-  // The film is fetched in story order right after the page has loaded, so it never competes with
-  // first paint and the later scenes are ready by the time the visitor scrolls to them.
-  const prefetch = () => setTimeout(() => active && inView && loadAll(), 300);
+  // The first scene is fetched right after the page has loaded, so it never competes with first
+  // paint; the visitor's first scroll fetches the rest in story order (tick → loadAll), so a visit
+  // that never scrolls downloads ~1.4 MB instead of the whole ~11 MB film.
+  const prefetch = () => setTimeout(() => active && inView && filmAllowed && load(segments[0]), 300);
   if (document.readyState === 'complete') prefetch();
   else window.addEventListener('load', prefetch, { once: true });
 }
