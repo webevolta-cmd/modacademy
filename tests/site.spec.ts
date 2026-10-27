@@ -338,6 +338,14 @@ test('every course meets three times a week for 90 minutes', async ({ page }) =>
   expect(plain((await page.locator('#faq').textContent()) ?? '')).toContain('շաբաթական 3 անգամ՝ 90-ական րոպե');
 });
 
+test('the 3Ds Max course shows its fee and duration', async ({ page }) => {
+  await page.goto('/courses/3ds-max/');
+  const sheet = (await page.locator('.sheet').innerText()).replace(/\u2060/g, '').replace(/\s+/g, ' ');
+  expect(sheet).toContain('3 ամիս');
+  expect(sheet).toContain('50 000 ֏');
+  expect(sheet).toContain('ամսական');
+});
+
 test('the sales course page carries its full description', async ({ page }) => {
   await page.goto('/courses/sales-management/');
   const body = page.locator('.cp__main');

@@ -39,7 +39,7 @@ Pinned Instagram carousel, **2026-10-14**: https://www.instagram.com/p/DeerP2liL
 | Վաճառքի կառավարում (Sales Management) | 4 months | Tue, Thu, Sat 17:30–19:00 | 77,000 AMD / month | Interactive format, objection handling (2026-10-09, https://www.instagram.com/p/DeRoJTRoQ-A/) |
 | Գրաֆիկ դիզայն (Graphic Design) | 4 months | Tue, Thu, Sat 19:30–21:00 | 50,000 AMD / month | No curriculum published |
 | Corona Renderer Level UP | 1 month, individual | 2 days/week, 2 h; 09:00–11:00 or 11:00–13:00 | 77,000 AMD | For working interior designers / 3D visualisers / freelancers (2026-10-15, https://www.instagram.com/p/DehIqTPoOkF/) |
-| 3Ds Max | **Not currently published** | — | — | In the Instagram name; graduate portfolio posted 2026-10-22 (https://www.instagram.com/p/DezOW2GCMyH/); “learn from 0” (TikTok 2026-05-03); webinar slide “3Ds MAX + V-Ray/Corona” (YouTube 2026-05-25, https://www.youtube.com/watch?v=no6VBxqSiUU) |
+| 3Ds Max | 3 months (academy, 2026-10-27) | as all courses (see below) | 50,000 AMD / month (academy, 2026-10-27) | In the Instagram name; graduate portfolio posted 2026-10-22 (https://www.instagram.com/p/DezOW2GCMyH/); “learn from 0” (TikTok 2026-05-03); webinar slide “3Ds MAX + V-Ray/Corona” (YouTube 2026-05-25, https://www.youtube.com/watch?v=no6VBxqSiUU) |
 
 **Schedule on the site (client instruction, 2026-10-24):** every course is shown as meeting three times
 a week, 90 minutes per lesson («Շաբաթական 3 անգամ՝ 90-ական րոպե»), replacing the day and time slots
@@ -79,7 +79,7 @@ Spyur (Cloudflare 403), list.am (403), job.am (403), Facebook timeline/about (lo
 
 ## 7. Open questions for the academy
 
-1. Current 3Ds Max course duration, schedule and fee.
+1. ~~Current 3Ds Max course duration, schedule and fee.~~ Answered 2026-10-27: 3 months, 50,000 AMD per month, three 90-minute lessons a week.
 2. Opening / reception hours and floor/office number at Tigran Mets 4.
 3. Instructor names, photos and short bios (with consent).
 4. Student testimonials the academy is happy to publish (with consent), and more student portfolios.
